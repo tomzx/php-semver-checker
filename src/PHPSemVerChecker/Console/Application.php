@@ -31,7 +31,6 @@ class Application extends SymfonyApplication {
 	{
 		$commands = parent::getDefaultCommands();
 		$commands[] = $this->add(new CompareCommand());
-		$commands[] = $this->add(new ScanCommand());
 		return $commands;
 	}
 }
