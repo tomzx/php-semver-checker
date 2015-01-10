@@ -7,8 +7,8 @@ use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Scanner\Scanner;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class CompareCommand extends Command {
@@ -18,8 +18,8 @@ class CompareCommand extends Command {
 			->setName('compare')
 			->setDescription('Compare a set of files to determine what semantic versioning change needs to be done')
 			->setDefinition([
-				new InputOption('source-before', null, InputOption::VALUE_REQUIRED, 'A single file to check'),
-				new InputOption('source-after', null, InputOption::VALUE_REQUIRED, 'A single file to check against'),
+				new InputArgument('source-before', InputArgument::REQUIRED, 'A directory to check'),
+				new InputArgument('source-after', InputArgument::REQUIRED, 'A directory to check against'),
 			]);
 	}
 
@@ -29,10 +29,10 @@ class CompareCommand extends Command {
 		$beforeScanner = new Scanner();
 		$afterScanner = new Scanner();
 
-		$beforeFiles = $input->getOption('source-before');
+		$beforeFiles = $input->getArgument('source-before');
 		$beforeFiles = $fileIterator->getFilesAsArray($beforeFiles, '.php');
 
-		$afterFiles = $input->getOption('source-after');
+		$afterFiles = $input->getArgument('source-after');
 		$afterFiles = $fileIterator->getFilesAsArray($afterFiles, '.php');
 
 		$progress = new ProgressBar($output, count($beforeFiles) + count($afterFiles));

@@ -28,7 +28,7 @@ After the inspection is completed, you are given a list of changes that have occ
 ## Example
 
 ```bash
-php bin/php-semver-checker compare --before-source laravel-4.2.15 --after-source laravel-4.2.16
+php bin/php-semver-checker compare laravel-4.2.15 laravel-4.2.16
 
 Suggested semantic versioning change: MAJOR
 
