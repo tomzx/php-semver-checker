@@ -1,0 +1,41 @@
+{
+	"name": "tomzx/php-semver-checker",
+	"description": "PHP Semantic Versioning Checker",
+	"type": "library",
+	"keywords": [
+		"semantic versioning",
+		"semver",
+		"checker"
+	],
+	"homepage": "https://github.com/tomzx/php-semver-checker",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Tom Rochette",
+			"email": "tom@tomrochette.com",
+			"homepage": "http://www.tomrochette.com"
+		}
+	],
+	"support": {
+		"issues": "https://github.com/tomzx/php-semver-checker/issues"
+	},
+	"require": {
+		"php": ">=5.4.0",
+		"symfony/console": "2.7.*@dev",
+		"nikic/php-parser": "~1.0.2",
+		"tomzx/arry": "0.1.*@dev"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "~4"
+	},
+	"autoload": {
+		"psr-4": {
+			"PHPSemVerChecker\\": "src/PHPSemVerChecker"
+		}
+	},
+	"extra": {
+		"branch-alias": {
+			"dev-master": "0.1-dev"
+		}
+	}
+}

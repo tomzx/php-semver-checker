@@ -1,0 +1,25 @@
+<?php
+
+$autoload_paths = array(
+	__DIR__.'/../vendor/autoload.php',
+	__DIR__.'/../../../autoload.php',
+);
+
+$found = false;
+foreach ($autoload_paths as $path) {
+	if (file_exists($path)) {
+		require $path;
+		$found = true;
+		break;
+	}
+}
+
+if (!$found) {
+	die(
+		'php-semver-checker requires to be installed through composer.'.PHP_EOL.
+		'See http://getcomposer.org/download/'.PHP_EOL
+	);
+}
+
+$app = new PHPSemVerChecker\Console\Application();
+$app->run();
