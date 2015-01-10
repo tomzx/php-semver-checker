@@ -16,19 +16,34 @@ After the inspection is completed, you are given a list of changes that have occ
 	- Function added -> **MINOR**
 	- Function removed -> **MAJOR**
 	- Function parameter mismatch -> **MAJOR**
+	- Function implementation changed -> **PATCH**
 - Classes
 	- Class added -> **MINOR**
 	- Class removed -> **MAJOR**
 	- Class method added -> **MINOR**
 	- Class method removed -> **MAJOR**
 	- Class method parameter mismatch -> **MAJOR**
+	- Class method implementation changed -> **PATCH**
 
 ## Example
 
 ```bash
-php bin/php-semver-checker compare --before-source before/ --after-source after/
+php bin/php-semver-checker compare --before-source laravel-4.2.15 --after-source laravel-4.2.16
 
+Suggested semantic versioning change: MAJOR
 
+CLASS
+LEVEL	LOCATION	REASON
+MAJOR	src/Illuminate/Database/Eloquent/Model.php#2550 Illuminate/Database/Eloquent/Model::getMutatorMethod	Method has been removed.
+PATCH	src/Illuminate/Database/Eloquent/Model.php#243 __construct	Method implementation changed.
+PATCH	src/Illuminate/Database/Eloquent/Model.php#322 addGlobalScope	Method implementation changed.
+PATCH	src/Illuminate/Database/Eloquent/Model.php#333 hasGlobalScope	Method implementation changed.
+PATCH	src/Illuminate/Database/Eloquent/Model.php#344 getGlobalScope	Method implementation changed.
+PATCH	src/Illuminate/Database/Eloquent/Model.php#357 getGlobalScopes	Method implementation changed.
+[... cut for brievity ...]
+
+FUNCTION
+LEVEL	LOCATION	REASON
 ```
 
 ## License
