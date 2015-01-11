@@ -28,22 +28,23 @@ After the inspection is completed, you are given a list of changes that have occ
 ## Example
 
 ```bash
-php bin/php-semver-checker compare laravel-4.2.15 laravel-4.2.16
+php bin/php-semver-checker compare factory-muffin-1.6.4 factory-muffin-2.0.0
 
 Suggested semantic versioning change: MAJOR
 
 CLASS
-LEVEL	LOCATION	REASON
-MAJOR	src/Illuminate/Database/Eloquent/Model.php#2550 Illuminate/Database/Eloquent/Model::getMutatorMethod	Method has been removed.
-PATCH	src/Illuminate/Database/Eloquent/Model.php#243 __construct	Method implementation changed.
-PATCH	src/Illuminate/Database/Eloquent/Model.php#322 addGlobalScope	Method implementation changed.
-PATCH	src/Illuminate/Database/Eloquent/Model.php#333 hasGlobalScope	Method implementation changed.
-PATCH	src/Illuminate/Database/Eloquent/Model.php#344 getGlobalScope	Method implementation changed.
-PATCH	src/Illuminate/Database/Eloquent/Model.php#357 getGlobalScopes	Method implementation changed.
+LEVEL LOCATION  REASON
+MAJOR src/Zizaco/FactoryMuff/Facade/FactoryMuff.php#8 Zizaco\FactoryMuff\Facade\FactoryMuff Class was removed.
+MAJOR src/Zizaco/FactoryMuff/FactoryMuff.php#13 Zizaco\FactoryMuff\FactoryMuff  Class was removed.
+MAJOR src/Zizaco/FactoryMuff/Kind.php#7 Zizaco\FactoryMuff\Kind Class was removed.
+[...]
+MINOR src/Exceptions/DeleteFailedException.php#17 League\FactoryMuffin\Exceptions\DeleteFailedException Class was added.
+MINOR src/Exceptions/DeleteMethodNotFoundException.php#17 League\FactoryMuffin\Exceptions\DeleteMethodNotFoundException Class was added.
+MINOR src/Exceptions/DeletingFailedException.php#21 League\FactoryMuffin\Exceptions\DeletingFailedException Class was added.
 [... cut for brievity ...]
 
 FUNCTION
-LEVEL	LOCATION	REASON
+LEVEL LOCATION  REASON
 ```
 
 ## License
