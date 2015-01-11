@@ -52,7 +52,7 @@ class CompareCommand extends Command {
 		$beforeRegistry = $beforeScanner->getRegistry();
 		$afterRegistry = $afterScanner->getRegistry();
 
-		$reporter = new Reporter($beforeRegistry, $afterRegistry, $output);
+		(new Reporter())->output($beforeRegistry, $afterRegistry, $output);
 	}
 
 	protected function fileScanner($pattern)
