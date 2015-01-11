@@ -33,10 +33,19 @@ class FunctionAdded extends Operation {
 	 */
 	public function getLocation()
 	{
+
+		return $this->fileAfter . '#' . $this->functionAfter->getLine();
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getTarget()
+	{
 		$fqfn = $this->functionAfter->name;
 		if ($this->functionAfter->namespacedName) {
 			$fqfn = $this->functionAfter->namespacedName->toString() . '::' . $this->functionAfter->name;
 		}
-		return $this->fileAfter . '#' . $this->functionAfter->getLine() . ' ' . $fqfn;
+		return $fqfn;
 	}
 }

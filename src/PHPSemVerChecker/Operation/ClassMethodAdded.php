@@ -40,10 +40,18 @@ class ClassMethodAdded extends Operation {
 	 */
 	public function getLocation()
 	{
+		return $this->fileAfter . '#' . $this->classMethod->getLine();
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getTarget()
+	{
 		$fqcn = $this->classAfter->name;
 		if ($this->classAfter->namespacedName) {
 			$fqcn = $this->classAfter->namespacedName->toString();
 		}
-		return $this->fileAfter . '#' . $this->classMethod->getLine() . ' ' . $fqcn . '::' . $this->classMethod->name;
+		return $fqcn . '::' . $this->classMethod->name;
 	}
 }

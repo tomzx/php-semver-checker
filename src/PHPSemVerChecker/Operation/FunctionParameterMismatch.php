@@ -45,10 +45,18 @@ class FunctionParameterMismatch extends Operation {
 	 */
 	public function getLocation()
 	{
+		return $this->fileBefore . '#' . $this->functionAfter->getLine();
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getTarget()
+	{
 		$fqfn = $this->functionAfter->name;
 		if ($this->functionAfter->namespacedName) {
 			$fqfn = $this->functionAfter->namespacedName->toString() . '::' . $this->functionAfter->name;
 		}
-		return $this->fileBefore . '#' . $this->functionAfter->getLine() . ' ' . $fqfn;
+		return $fqfn;
 	}
 }

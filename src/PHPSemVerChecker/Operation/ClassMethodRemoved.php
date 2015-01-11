@@ -40,10 +40,18 @@ class ClassMethodRemoved extends Operation {
 	 */
 	public function getLocation()
 	{
+		return $this->fileBefore . '#' . $this->classMethodBefore->getLine();
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getTarget()
+	{
 		$fqcn = $this->classBefore->name;
 		if ($this->classBefore->namespacedName) {
 			$fqcn = $this->classBefore->namespacedName->toString();
 		}
-		return $this->fileBefore . '#' . $this->classMethodBefore->getLine() . ' ' . $fqcn . '::' . $this->classMethodBefore->name;
+		return $fqcn . '::' . $this->classMethodBefore->name;
 	}
 }

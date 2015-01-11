@@ -33,10 +33,18 @@ class FunctionRemoved extends Operation {
 	 */
 	public function getLocation()
 	{
+		return $this->fileBefore . '#' . $this->functionBefore->getLine();
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getTarget()
+	{
 		$fqfn = $this->functionBefore->name;
 		if ($this->functionBefore->namespacedName) {
 			$fqfn = $this->functionBefore->namespacedName->toString() . '::' . $this->functionBefore->name;
 		}
-		return $this->fileBefore . '#' . $this->functionBefore->getLine() . ' ' . $fqfn;
+		return $fqfn;
 	}
 }

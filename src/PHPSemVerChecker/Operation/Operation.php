@@ -11,6 +11,10 @@ abstract class Operation {
 	 * @var string
 	 */
 	protected $location;
+	/**
+	 * @var string
+	 */
+	protected $target;
 
 	/**
 	 * @return string
@@ -46,6 +50,25 @@ abstract class Operation {
 	public function setLocation($location)
 	{
 		$this->location = $location;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getTarget()
+	{
+		return $this->target;
+	}
+
+	/**
+	 * @param string $target
+	 * @return $this
+	 */
+	public function setTarget($target)
+	{
+		$this->target = $target;
 
 		return $this;
 	}

@@ -40,11 +40,11 @@ class Reporter
 	protected function outputTable(OutputInterface $output, array $differences, $type)
 	{
 		$table = new Table($output);
-		$table->setHeaders(['Level', 'Location', 'Reason']);
+		$table->setHeaders(['Level', 'Location', 'Target', 'Reason']);
 		foreach ([Registry::MAJOR, Registry::MINOR, Registry::PATCH, Registry::NONE] as $level) {
 			$differencesForLevel = $differences[$type][$level];
 			foreach ($differencesForLevel as $difference) {
-				$table->addRow([Registry::levelToString($level), $difference['location'], $difference['reason']]);
+				$table->addRow([Registry::levelToString($level), $difference->getLocation(), $difference->getTarget(), $difference->getReason()]);
 			}
 		}
 		$table->render();

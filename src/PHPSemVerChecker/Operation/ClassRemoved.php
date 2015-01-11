@@ -33,10 +33,18 @@ class ClassRemoved extends Operation {
 	 */
 	public function getLocation()
 	{
+		return $this->fileBefore . '#' . $this->classBefore->getLine();
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getTarget()
+	{
 		$fqcn = $this->classBefore->name;
 		if ($this->classBefore->namespacedName) {
 			$fqcn = $this->classBefore->namespacedName->toString();
 		}
-		return $this->fileBefore . '#' . $this->classBefore->getLine() . ' ' . $fqcn;
+		return $fqcn;
 	}
 }

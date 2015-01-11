@@ -33,10 +33,18 @@ class ClassAdded extends Operation {
 	 */
 	public function getLocation()
 	{
+		return $this->fileAfter . '#' . $this->classAfter->getLine();
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getTarget()
+	{
 		$fqcn = $this->classAfter->name;
 		if ($this->classAfter->namespacedName) {
 			$fqcn = $this->classAfter->namespacedName->toString();
 		}
-		return $this->fileAfter . '#' . $this->classAfter->getLine() . ' ' . $fqcn;
+		return $fqcn;
 	}
 }

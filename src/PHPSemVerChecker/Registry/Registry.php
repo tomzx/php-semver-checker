@@ -118,11 +118,7 @@ class Registry {
 		];
 
 		$appendDifference = function ($type, $level, Operation $data) use (&$differences, &$changeType) {
-			$differences[$type][$level][] = [
-				'reason'   => $data->getReason(),
-				'location' => $data->getLocation(),
-				'data'     => $data,
-			];
+			$differences[$type][$level][] = $data;
 			if ($level > $changeType) {
 				$changeType = $level;
 			}
@@ -135,6 +131,8 @@ class Registry {
 		$appendClassDifference = function ($level, $data) use ($appendDifference) {
 			$appendDifference('class', $level, $data);
 		};
+
+		// Function
 
 		$keysBefore = array_keys($this->data['function']);
 		$keysAfter = array_keys($registry->data['function']);
@@ -171,7 +169,7 @@ class Registry {
 					$paramTypeAfter = is_object($paramsAfter[$i]->type) ? $paramsAfter[$i]->type->toString() : $paramsAfter[$i]->type;
 					// TODO: Allow for contravariance <tom@tomrochette.com>
 					if ($paramTypeBefore !== $paramTypeAfter) {
-						$data = new FunctionParameterMismatch($fileBefore, $functionBefore, $fileBefore, $functionAfter);
+						$data = new FunctionParameterMismatch($fileBefore, $functionBefore, $fileAfter, $functionAfter);
 						$appendFunctionDifference(self::MAJOR, $data);
 						continue 2;
 					}
@@ -197,6 +195,8 @@ class Registry {
 			$data = new FunctionAdded($fileAfter, $functionAfter);
 			$appendFunctionDifference(self::MINOR, $data);
 		}
+
+		// Class
 
 		$keysBefore = array_keys($this->data['class']);
 		$keysAfter = array_keys($registry->data['class']);
@@ -278,7 +278,7 @@ class Registry {
 							// TODO: Allow for contravariance <tom@tomrochette.com>
 							// TODO: Check that this works properly with aliases <tom@tomrochette.com>
 							if ($paramTypeBefore !== $paramTypeAfter) {
-								$data = new ClassMethodParameterMismatch($fileBefore, $methodBefore, $fileBefore, $methodAfter);
+								$data = new ClassMethodParameterMismatch($fileBefore, $classBefore, $methodBefore, $fileAfter, $classAfter, $methodAfter);
 								$appendClassDifference(self::MAJOR, $data);
 								continue 2;
 							}
@@ -288,7 +288,7 @@ class Registry {
 
 						// Difference in source code
 						if ($methodBefore->stmts != $methodAfter->stmts) {
-							$appendClassDifference(self::PATCH, new ClassMethodImplementationChanged($fileBefore, $methodBefore, $fileAfter, $methodAfter));
+							$appendClassDifference(self::PATCH, new ClassMethodImplementationChanged($fileBefore, $classBefore, $methodBefore, $fileAfter, $classAfter, $methodAfter));
 							continue;
 						}
 

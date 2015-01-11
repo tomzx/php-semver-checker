@@ -3,7 +3,6 @@
 namespace PHPSemVerChecker\Console\Command;
 
 use File_Iterator_Facade;
-use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Reporter\Reporter;
 use PHPSemVerChecker\Scanner\Scanner;
 use Symfony\Component\Console\Command\Command;

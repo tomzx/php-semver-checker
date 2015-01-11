@@ -2,7 +2,6 @@
 
 namespace PHPSemVerChecker\Test;
 
-use PhpParser\Node\Expr\Assign;
 use PhpParser\Node\Expr\FuncCall;
 use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Expr\Variable;
@@ -46,7 +45,8 @@ class RegistryTest extends \PHPUnit_Framework_TestCase {
 		$differences = $before->compare($after);
 
 		$this->assertDifferences($differences, 0, 0, 0, 0, 0, 0, 0, 1);
-		$this->assertSame('Class was removed.', $differences['class'][Registry::MAJOR][0]['reason']);
+		$this->assertSame('Class was removed.', $differences['class'][Registry::MAJOR][0]->getReason());
+		$this->assertSame('tmp', $differences['class'][Registry::MAJOR][0]->getTarget());
 	}
 
 	public function testCompareNewClass()
@@ -59,7 +59,8 @@ class RegistryTest extends \PHPUnit_Framework_TestCase {
 		$differences = $before->compare($after);
 
 		$this->assertDifferences($differences, 0, 0, 0, 0, 0, 0, 1);
-		$this->assertSame('Class was added.', $differences['class'][Registry::MINOR][0]['reason']);
+		$this->assertSame('Class was added.', $differences['class'][Registry::MINOR][0]->getReason());
+		$this->assertSame('tmp', $differences['class'][Registry::MINOR][0]->getTarget());
 	}
 
 	public function testCompareSimilarClasses()
@@ -85,14 +86,14 @@ class RegistryTest extends \PHPUnit_Framework_TestCase {
 
 		$beforeClass = new Class_('tmp', [
 			'stmts' => [
-				new ClassMethod('tmp'),
+				new ClassMethod('tmpMethod'),
 			],
 		]);
 		$before->addClass($beforeClass);
 
 		$afterClass = new Class_('tmp', [
 			'stmts' => [
-				new ClassMethod('tmp'),
+				new ClassMethod('tmpMethod'),
 			],
 		]);
 		$after->addClass($afterClass);
@@ -109,7 +110,7 @@ class RegistryTest extends \PHPUnit_Framework_TestCase {
 
 		$beforeClass = new Class_('tmp', [
 			'stmts' => [
-				new ClassMethod('tmp', [
+				new ClassMethod('tmpMethod', [
 					'params' => [
 						new Param('a', null, 'A'),
 					],
@@ -120,7 +121,7 @@ class RegistryTest extends \PHPUnit_Framework_TestCase {
 
 		$afterClass = new Class_('tmp', [
 			'stmts' => [
-				new ClassMethod('tmp', [
+				new ClassMethod('tmpMethod', [
 					'params' => [
 						new Param('b', null, 'B'),
 					],
@@ -132,7 +133,8 @@ class RegistryTest extends \PHPUnit_Framework_TestCase {
 		$differences = $before->compare($after);
 
 		$this->assertDifferences($differences, 0, 0, 0, 0, 0, 0, 0, 1);
-		$this->assertSame('Method parameter mismatch.', $differences['class'][Registry::MAJOR][0]['reason']);
+		$this->assertSame('Method parameter mismatch.', $differences['class'][Registry::MAJOR][0]->getReason());
+		$this->assertSame('tmp::tmpMethod', $differences['class'][Registry::MAJOR][0]->getTarget());
 	}
 
 	public function testCompareMissingClassMethod()
@@ -142,7 +144,7 @@ class RegistryTest extends \PHPUnit_Framework_TestCase {
 
 		$beforeClass = new Class_('tmp', [
 			'stmts' => [
-				new ClassMethod('tmp'),
+				new ClassMethod('tmpMethod'),
 			],
 		]);
 		$before->addClass($beforeClass);
@@ -153,7 +155,8 @@ class RegistryTest extends \PHPUnit_Framework_TestCase {
 		$differences = $before->compare($after);
 
 		$this->assertDifferences($differences, 0, 0, 0, 0, 0, 0, 0, 1);
-		$this->assertSame('Method has been removed.', $differences['class'][Registry::MAJOR][0]['reason']);
+		$this->assertSame('Method has been removed.', $differences['class'][Registry::MAJOR][0]->getReason());
+		$this->assertSame('tmp::tmpMethod', $differences['class'][Registry::MAJOR][0]->getTarget());
 	}
 
 	public function testCompareNewClassMethod()
@@ -166,7 +169,7 @@ class RegistryTest extends \PHPUnit_Framework_TestCase {
 
 		$afterClass = new Class_('tmp', [
 			'stmts' => [
-				new ClassMethod('tmp'),
+				new ClassMethod('tmpMethod'),
 			],
 		]);
 		$after->addClass($afterClass);
@@ -174,7 +177,8 @@ class RegistryTest extends \PHPUnit_Framework_TestCase {
 		$differences = $before->compare($after);
 
 		$this->assertDifferences($differences, 0, 0, 0, 0, 0, 0, 1);
-		$this->assertSame('Method has been added.', $differences['class'][Registry::MINOR][0]['reason']);
+		$this->assertSame('Method has been added.', $differences['class'][Registry::MINOR][0]->getReason());
+		$this->assertSame('tmp::tmpMethod', $differences['class'][Registry::MINOR][0]->getTarget());
 	}
 
 	public function testCompareSimilarClassMethodImplementation()
@@ -184,7 +188,7 @@ class RegistryTest extends \PHPUnit_Framework_TestCase {
 
 		$beforeClass = new Class_('tmp', [
 			'stmts' => [
-				new ClassMethod('tmp', [
+				new ClassMethod('tmpMethod', [
 					'stmts' => [
 						new MethodCall(new Variable('test'), 'someMethod'),
 					],
@@ -195,7 +199,7 @@ class RegistryTest extends \PHPUnit_Framework_TestCase {
 
 		$afterClass = new Class_('tmp', [
 			'stmts' => [
-				new ClassMethod('tmp', [
+				new ClassMethod('tmpMethod', [
 					'stmts' => [
 						new MethodCall(new Variable('test'), 'someMethod'),
 					],
@@ -216,7 +220,7 @@ class RegistryTest extends \PHPUnit_Framework_TestCase {
 
 		$beforeClass = new Class_('tmp', [
 			'stmts' => [
-				new ClassMethod('tmp', [
+				new ClassMethod('tmpMethod', [
 					'stmts' => [
 						new MethodCall(new Variable('test'), 'someMethod'),
 					],
@@ -227,7 +231,7 @@ class RegistryTest extends \PHPUnit_Framework_TestCase {
 
 		$afterClass = new Class_('tmp', [
 			'stmts' => [
-				new ClassMethod('tmp', [
+				new ClassMethod('tmpMethod', [
 					'stmts' => [
 						new MethodCall(new Variable('test'), 'someOtherMethod'),
 					],
@@ -239,7 +243,8 @@ class RegistryTest extends \PHPUnit_Framework_TestCase {
 		$differences = $before->compare($after);
 
 		$this->assertDifferences($differences, 0, 0, 0, 0, 0, 1);
-		$this->assertSame('Method implementation changed.', $differences['class'][Registry::PATCH][0]['reason']);
+		$this->assertSame('Method implementation changed.', $differences['class'][Registry::PATCH][0]->getReason());
+		$this->assertSame('tmp::tmpMethod', $differences['class'][Registry::PATCH][0]->getTarget());
 	}
 
 	public function testCompareMissingFunction()
@@ -252,7 +257,8 @@ class RegistryTest extends \PHPUnit_Framework_TestCase {
 		$differences = $before->compare($after);
 
 		$this->assertDifferences($differences, 0, 0, 0, 1);
-		$this->assertSame('Function has been removed.', $differences['function'][Registry::MAJOR][0]['reason']);
+		$this->assertSame('Function has been removed.', $differences['function'][Registry::MAJOR][0]->getReason());
+		$this->assertSame('tmp', $differences['function'][Registry::MAJOR][0]->getTarget());
 	}
 
 	public function testCompareNewFunction()
@@ -265,7 +271,8 @@ class RegistryTest extends \PHPUnit_Framework_TestCase {
 		$differences = $before->compare($after);
 
 		$this->assertDifferences($differences, 0, 0, 1);
-		$this->assertSame('Function has been added.', $differences['function'][Registry::MINOR][0]['reason']);
+		$this->assertSame('Function has been added.', $differences['function'][Registry::MINOR][0]->getReason());
+		$this->assertSame('tmp', $differences['function'][Registry::MINOR][0]->getTarget());
 	}
 
 	public function testCompareSimilarFunction()
@@ -302,7 +309,8 @@ class RegistryTest extends \PHPUnit_Framework_TestCase {
 		$differences = $before->compare($after);
 
 		$this->assertDifferences($differences, 0, 0, 0, 1);
-		$this->assertSame('Function parameter mismatch.', $differences['function'][Registry::MAJOR][0]['reason']);
+		$this->assertSame('Function parameter mismatch.', $differences['function'][Registry::MAJOR][0]->getReason());
+		$this->assertSame('tmp', $differences['function'][Registry::MAJOR][0]->getTarget());
 	}
 
 	public function testCompareSimilarFunctionImplementation()
@@ -347,6 +355,7 @@ class RegistryTest extends \PHPUnit_Framework_TestCase {
 		$differences = $before->compare($after);
 
 		$this->assertDifferences($differences, 0, 1);
-		$this->assertSame('Function implementation changed.', $differences['function'][Registry::PATCH][0]['reason']);
+		$this->assertSame('Function implementation changed.', $differences['function'][Registry::PATCH][0]->getReason());
+		$this->assertSame('tmp', $differences['function'][Registry::PATCH][0]->getTarget());
 	}
 }
