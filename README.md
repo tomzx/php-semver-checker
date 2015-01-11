@@ -20,10 +20,10 @@ After the inspection is completed, you are given a list of changes that have occ
 - Classes
 	- Class added -> **MINOR**
 	- Class removed -> **MAJOR**
-	- Class method added -> **MINOR**
-	- Class method removed -> **MAJOR**
-	- Class method parameter mismatch -> **MAJOR**
-	- Class method implementation changed -> **PATCH**
+	- Public class method added -> **MINOR**
+	- Public class method removed -> **MAJOR**
+	- Public class method parameter mismatch -> **MAJOR**
+	- Public class method implementation changed -> **PATCH**
 
 ## Example
 
