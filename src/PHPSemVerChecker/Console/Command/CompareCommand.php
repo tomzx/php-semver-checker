@@ -54,14 +54,4 @@ class CompareCommand extends Command {
 
 		(new Reporter())->output($beforeRegistry, $afterRegistry, $output);
 	}
-
-	protected function fileScanner($pattern)
-	{
-		$dir = new RecursiveDirectoryIterator('.');
-		$ite = new RecursiveIteratorIterator($dir);
-		$files = new RegexIterator($ite, $pattern, RegexIterator::GET_MATCH);
-		foreach ($files as $file) {
-			echo $file . PHP_EOL;
-		}
-	}
 }
