@@ -103,7 +103,41 @@ class RegistryTest extends \PHPUnit_Framework_TestCase {
 		$this->assertDifferences($differences);
 	}
 
-	public function testCompareSimilarClassMethodWithDifferentSignature()
+	public function testCompareSimilarClassMethodWithDifferentSignatureVariables()
+	{
+		$before = new Registry();
+		$after = new Registry();
+
+		$beforeClass = new Class_('tmp', [
+			'stmts' => [
+				new ClassMethod('tmpMethod', [
+					'params' => [
+						new Param('a', null),
+					],
+				]),
+			],
+		]);
+		$before->addClass($beforeClass);
+
+		$afterClass = new Class_('tmp', [
+			'stmts' => [
+				new ClassMethod('tmpMethod', [
+					'params' => [
+						new Param('b', null),
+					],
+				]),
+			],
+		]);
+		$after->addClass($afterClass);
+
+		$differences = $before->compare($after);
+
+		$this->assertDifferences($differences, 0, 0, 0, 0, 0, 1);
+		$this->assertSame('Method parameter mismatch.', $differences['class'][Registry::PATCH][0]->getReason());
+		$this->assertSame('tmp::tmpMethod', $differences['class'][Registry::PATCH][0]->getTarget());
+	}
+
+	public function testCompareSimilarClassMethodWithDifferentSignatureTypehint()
 	{
 		$before = new Registry();
 		$after = new Registry();
@@ -113,6 +147,41 @@ class RegistryTest extends \PHPUnit_Framework_TestCase {
 				new ClassMethod('tmpMethod', [
 					'params' => [
 						new Param('a', null, 'A'),
+					],
+				]),
+			],
+		]);
+		$before->addClass($beforeClass);
+
+		$afterClass = new Class_('tmp', [
+			'stmts' => [
+				new ClassMethod('tmpMethod', [
+					'params' => [
+						new Param('b', null, 'B'),
+					],
+				]),
+			],
+		]);
+		$after->addClass($afterClass);
+
+		$differences = $before->compare($after);
+
+		$this->assertDifferences($differences, 0, 0, 0, 0, 0, 0, 0, 1);
+		$this->assertSame('Method parameter mismatch.', $differences['class'][Registry::MAJOR][0]->getReason());
+		$this->assertSame('tmp::tmpMethod', $differences['class'][Registry::MAJOR][0]->getTarget());
+	}
+
+	public function testCompareSimilarClassMethodWithDifferentSignatureLength()
+	{
+		$before = new Registry();
+		$after = new Registry();
+
+		$beforeClass = new Class_('tmp', [
+			'stmts' => [
+				new ClassMethod('tmpMethod', [
+					'params' => [
+						new Param('a', null, 'A'),
+						new Param('b', null, 'B'),
 					],
 				]),
 			],
@@ -289,7 +358,31 @@ class RegistryTest extends \PHPUnit_Framework_TestCase {
 		$this->assertDifferences($differences);
 	}
 
-	public function testCompareSimilarFunctionWithDifferentSignature()
+	public function testCompareSimilarFunctionWithDifferentSignatureVariables()
+	{
+		$before = new Registry();
+		$after = new Registry();
+
+		$before->addFunction(new Function_('tmp', [
+			'params' => [
+				new Param('a', null),
+			],
+		]));
+
+		$after->addFunction(new Function_('tmp', [
+			'params' => [
+				new Param('b', null),
+			],
+		]));
+
+		$differences = $before->compare($after);
+
+		$this->assertDifferences($differences, 0, 1);
+		$this->assertSame('Function parameter mismatch.', $differences['function'][Registry::PATCH][0]->getReason());
+		$this->assertSame('tmp', $differences['function'][Registry::PATCH][0]->getTarget());
+	}
+
+	public function testCompareSimilarFunctionWithDifferentSignatureTypehint()
 	{
 		$before = new Registry();
 		$after = new Registry();
@@ -297,6 +390,31 @@ class RegistryTest extends \PHPUnit_Framework_TestCase {
 		$before->addFunction(new Function_('tmp', [
 			'params' => [
 				new Param('a', null, 'A'),
+			],
+		]));
+
+		$after->addFunction(new Function_('tmp', [
+			'params' => [
+				new Param('a', null, 'B'),
+			],
+		]));
+
+		$differences = $before->compare($after);
+
+		$this->assertDifferences($differences, 0, 0, 0, 1);
+		$this->assertSame('Function parameter mismatch.', $differences['function'][Registry::MAJOR][0]->getReason());
+		$this->assertSame('tmp', $differences['function'][Registry::MAJOR][0]->getTarget());
+	}
+
+	public function testCompareSimilarFunctionWithDifferentSignatureLength()
+	{
+		$before = new Registry();
+		$after = new Registry();
+
+		$before->addFunction(new Function_('tmp', [
+			'params' => [
+				new Param('a', null, 'A'),
+				new Param('b', null, 'B'),
 			],
 		]));
 

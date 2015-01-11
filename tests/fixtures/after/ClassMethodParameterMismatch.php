@@ -2,7 +2,7 @@
 
 namespace fixtures;
 
-class ClassMethod
+class ClassMethodParameterMismatch
 {
 	public function newMethod($someParameter)
 	{

@@ -162,17 +162,16 @@ class Registry {
 				$paramsAfter = $functionAfter->params;
 				// Signature
 
-				// Argument order is different (type mismatch)
-				$iterations = min(count($paramsBefore), count($paramsAfter));
-				for ($i = 0; $i < $iterations; ++$i) {
-					$paramTypeBefore = is_object($paramsBefore[$i]->type) ? $paramsBefore[$i]->type->toString() : $paramsBefore[$i]->type;
-					$paramTypeAfter = is_object($paramsAfter[$i]->type) ? $paramsAfter[$i]->type->toString() : $paramsAfter[$i]->type;
-					// TODO: Allow for contravariance <tom@tomrochette.com>
-					if ($paramTypeBefore !== $paramTypeAfter) {
-						$data = new FunctionParameterMismatch($fileBefore, $functionBefore, $fileAfter, $functionAfter);
-						$appendFunctionDifference(self::MAJOR, $data);
-						continue 2;
-					}
+				if ( ! $this->isSameSignatureTypehint($paramsBefore, $paramsAfter)) {
+					$data = new FunctionParameterMismatch($fileBefore, $functionBefore, $fileAfter, $functionAfter);
+					$appendFunctionDifference(self::MAJOR, $data);
+					continue;
+				}
+
+				if ( ! $this->isSameSignatureVariables($paramsBefore, $paramsAfter)) {
+					$data = new FunctionParameterMismatch($fileBefore, $functionBefore, $fileAfter, $functionAfter);
+					$appendFunctionDifference(self::PATCH, $data);
+					continue;
 				}
 
 				// Different length (considering params with defaults)
@@ -270,18 +269,16 @@ class Registry {
 						$paramsAfter = $methodAfter->params;
 						// Signature
 
-						// Argument order is different (type mismatch)
-						$iterations = min(count($paramsBefore), count($paramsAfter));
-						for ($i = 0; $i < $iterations; ++$i) {
-							$paramTypeBefore = is_object($paramsBefore[$i]->type) ? $paramsBefore[$i]->type->toString() : $paramsBefore[$i]->type;
-							$paramTypeAfter = is_object($paramsAfter[$i]->type) ? $paramsAfter[$i]->type->toString() : $paramsAfter[$i]->type;
-							// TODO: Allow for contravariance <tom@tomrochette.com>
-							// TODO: Check that this works properly with aliases <tom@tomrochette.com>
-							if ($paramTypeBefore !== $paramTypeAfter) {
-								$data = new ClassMethodParameterMismatch($fileBefore, $classBefore, $methodBefore, $fileAfter, $classAfter, $methodAfter);
-								$appendClassDifference(self::MAJOR, $data);
-								continue 2;
-							}
+						if ( ! $this->isSameSignatureTypehint($paramsBefore, $paramsAfter)) {
+							$data = new ClassMethodParameterMismatch($fileBefore, $classBefore, $methodBefore, $fileAfter, $classAfter, $methodAfter);
+							$appendClassDifference(self::MAJOR, $data);
+							continue;
+						}
+
+						if ( ! $this->isSameSignatureVariables($paramsBefore, $paramsAfter)) {
+							$data = new ClassMethodParameterMismatch($fileBefore, $classBefore, $methodBefore, $fileAfter, $classAfter, $methodAfter);
+							$appendClassDifference(self::PATCH, $data);
+							continue;
 						}
 
 						// Different length (considering params with defaults)
@@ -315,6 +312,64 @@ class Registry {
 		}
 
 		return $differences;
+	}
+
+	/**
+	 * @param array $paramsA
+	 * @param array $paramsB
+	 * @return bool
+	 */
+	protected function isSameSignatureTypehint(array $paramsA, array $paramsB)
+	{
+		// TODO: Check additional parameters have defaults <tom@tomrochette.com>
+		$iterations = min(count($paramsA), count($paramsB));
+		for ($i = 0; $i < $iterations; ++$i) {
+			// TODO: Allow for contravariance <tom@tomrochette.com>
+			if ( ! $this->isSameType($paramsA[$i]->type, $paramsB[$i]->type)) {
+				return false;
+			}
+		}
+		// Only one of these will returns its remaining values, the other returning an empty array
+		$toCheck = array_slice($paramsA, $iterations) + array_slice($paramsB, $iterations);
+		// If any additional argument does not have a default value, the signature has changed
+		foreach ($toCheck as $param) {
+			if ($param->default === null) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * @param array $paramsA
+	 * @param array $paramsB
+	 * @return bool
+	 */
+	protected function isSameSignatureVariables(array $paramsA, array $paramsB)
+	{
+		if (count($paramsA) !== count($paramsB)) {
+			return false;
+		}
+
+		$iterations = min(count($paramsA), count($paramsB));
+		for ($i = 0; $i < $iterations; ++$i) {
+			if ( $paramsA[$i]->name != $paramsB[$i]->name) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * @param \PhpParser\Node\Name|string $typeA
+	 * @param \PhpParser\Node\Name|string $typeB
+	 * @return bool
+	 */
+	protected function isSameType($typeA, $typeB)
+	{
+		$typeA = is_object($typeA) ? $typeA->toString() : $typeA;
+		$typeB = is_object($typeB) ? $typeB->toString() : $typeB;
+		return $typeA === $typeB;
 	}
 
 	/**
