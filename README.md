@@ -32,19 +32,24 @@ php bin/php-semver-checker compare factory-muffin-1.6.4 factory-muffin-2.0.0
 
 Suggested semantic versioning change: MAJOR
 
-CLASS
-LEVEL LOCATION  REASON
-MAJOR src/Zizaco/FactoryMuff/Facade/FactoryMuff.php#8 Zizaco\FactoryMuff\Facade\FactoryMuff Class was removed.
-MAJOR src/Zizaco/FactoryMuff/FactoryMuff.php#13 Zizaco\FactoryMuff\FactoryMuff  Class was removed.
-MAJOR src/Zizaco/FactoryMuff/Kind.php#7 Zizaco\FactoryMuff\Kind Class was removed.
+Class
++-------+-------------------------------------------------------------------------------------------------------------------+--------------------+
+| Level | Location                                                                                                          | Reason             |
++-------+-------------------------------------------------------------------------------------------------------------------+--------------------+
+| MAJOR | src/Zizaco/FactoryMuff/Facade/FactoryMuff.php#8 Zizaco\FactoryMuff\Facade\FactoryMuff                             | Class was removed. |
+| MAJOR | src/Zizaco/FactoryMuff/FactoryMuff.php#13 Zizaco\FactoryMuff\FactoryMuff                                          | Class was removed. |
+| MAJOR | src/Zizaco/FactoryMuff/Kind.php#7 Zizaco\FactoryMuff\Kind                                                         | Class was removed. |
 [...]
-MINOR src/Exceptions/DeleteFailedException.php#17 League\FactoryMuffin\Exceptions\DeleteFailedException Class was added.
-MINOR src/Exceptions/DeleteMethodNotFoundException.php#17 League\FactoryMuffin\Exceptions\DeleteMethodNotFoundException Class was added.
-MINOR src/Exceptions/DeletingFailedException.php#21 League\FactoryMuffin\Exceptions\DeletingFailedException Class was added.
+| MINOR | src/Exceptions/DeleteFailedException.php#17 League\FactoryMuffin\Exceptions\DeleteFailedException                 | Class was added.   |
+| MINOR | src/Exceptions/DeleteMethodNotFoundException.php#17 League\FactoryMuffin\Exceptions\DeleteMethodNotFoundException | Class was added.   |
+| MINOR | src/Exceptions/DeletingFailedException.php#21 League\FactoryMuffin\Exceptions\DeletingFailedException             | Class was added.   |
 [... cut for brievity ...]
++-------+-------------------------------------------------------------------------------------------------------------------+--------------------+
 
-FUNCTION
-LEVEL LOCATION  REASON
+Function
++-------+----------+--------+
+| Level | Location | Reason |
++-------+----------+--------+
 ```
 
 ## License
