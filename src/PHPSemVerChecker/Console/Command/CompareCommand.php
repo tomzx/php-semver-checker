@@ -4,6 +4,7 @@ namespace PHPSemVerChecker\Console\Command;
 
 use File_Iterator_Facade;
 use PHPSemVerChecker\Registry\Registry;
+use PHPSemVerChecker\Reporter\Reporter;
 use PHPSemVerChecker\Scanner\Scanner;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -51,40 +52,7 @@ class CompareCommand extends Command {
 		$beforeRegistry = $beforeScanner->getRegistry();
 		$afterRegistry = $afterScanner->getRegistry();
 
-		$differences = $beforeRegistry->compare($afterRegistry);
-
-		$suggestedChange = Registry::NONE;
-		foreach ([Registry::MAJOR, Registry::MINOR, Registry::PATCH, Registry::NONE] as $level) {
-			if ( ! empty($differences['function'][$level]) || ! empty($differences['class'][$level])) {
-				$suggestedChange = $level;
-				break;
-			}
-		}
-
-		$output->writeln(''); // line clear
-		$output->writeln('Suggested semantic versioning change: ' . Registry::levelToString($suggestedChange));
-
-		$output->writeln(''); // line clear
-		$output->writeln('CLASS');
-		$output->writeln("LEVEL\tLOCATION\tREASON");
-
-		foreach ([Registry::MAJOR, Registry::MINOR, Registry::PATCH, Registry::NONE] as $level) {
-			$differencesForLevel = $differences['class'][$level];
-			foreach ($differencesForLevel as $difference) {
-				$output->writeln(Registry::levelToString($level) . "\t" . $difference['location'] . "\t" . $difference['reason']);
-			}
-		}
-
-		$output->writeln(''); // line clear
-		$output->writeln('FUNCTION');
-		$output->writeln("LEVEL\tLOCATION\tREASON");
-
-		foreach ([Registry::MAJOR, Registry::MINOR, Registry::PATCH, Registry::NONE] as $level) {
-			$differencesForLevel = $differences['function'][$level];
-			foreach ($differencesForLevel as $difference) {
-				$output->writeln(Registry::levelToString($level) . "\t" . $difference['location'] . "\t" . $difference['reason']);
-			}
-		}
+		$reporter = new Reporter($beforeRegistry, $afterRegistry, $output);
 	}
 
 	protected function fileScanner($pattern)
