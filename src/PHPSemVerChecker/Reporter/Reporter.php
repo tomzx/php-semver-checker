@@ -3,6 +3,7 @@
 namespace PHPSemVerChecker\Reporter;
 
 use PHPSemVerChecker\Registry\Registry;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class Reporter
@@ -23,25 +24,29 @@ class Reporter
 		$output->writeln('Suggested semantic versioning change: ' . Registry::levelToString($suggestedChange));
 
 		$output->writeln(''); // line clear
-		$output->writeln('CLASS');
-		$output->writeln("LEVEL\tLOCATION\tREASON");
-
-		foreach ([Registry::MAJOR, Registry::MINOR, Registry::PATCH, Registry::NONE] as $level) {
-			$differencesForLevel = $differences['class'][$level];
-			foreach ($differencesForLevel as $difference) {
-				$output->writeln(Registry::levelToString($level) . "\t" . $difference['location'] . "\t" . $difference['reason']);
-			}
-		}
+		$output->writeln('Class');
+		$this->outputTable($output, $differences, 'class');
 
 		$output->writeln(''); // line clear
-		$output->writeln('FUNCTION');
-		$output->writeln("LEVEL\tLOCATION\tREASON");
+		$output->writeln('Function');
+		$this->outputTable($output, $differences, 'function');
+	}
 
+	/**
+	 * @param \Symfony\Component\Console\Output\OutputInterface $output
+	 * @param array                                             $differences
+	 * @param string                                            $type
+	 */
+	protected function outputTable(OutputInterface $output, array $differences, $type)
+	{
+		$table = new Table($output);
+		$table->setHeaders(['Level', 'Location', 'Reason']);
 		foreach ([Registry::MAJOR, Registry::MINOR, Registry::PATCH, Registry::NONE] as $level) {
-			$differencesForLevel = $differences['function'][$level];
+			$differencesForLevel = $differences[$type][$level];
 			foreach ($differencesForLevel as $difference) {
-				$output->writeln(Registry::levelToString($level) . "\t" . $difference['location'] . "\t" . $difference['reason']);
+				$table->addRow([Registry::levelToString($level), $difference['location'], $difference['reason']]);
 			}
 		}
+		$table->render();
 	}
 }
