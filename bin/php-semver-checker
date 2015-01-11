@@ -1,3 +1,4 @@
+#!/usr/bin/env php
 <?php
 
 $autoload_paths = array(
