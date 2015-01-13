@@ -5,11 +5,11 @@ namespace PHPSemVerChecker\Operation;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassMethod;
 
-class ClassMethodParameterMismatch extends Operation {
+class ClassMethodParameterChanged extends Operation {
 	/**
 	 * @var string
 	 */
-	protected $reason = 'Method parameter mismatch.';
+	protected $reason = 'Method parameter changed.';
 	/**
 	 * @var string
 	 */

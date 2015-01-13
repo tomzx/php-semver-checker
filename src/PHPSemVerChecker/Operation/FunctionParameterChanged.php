@@ -4,11 +4,11 @@ namespace PHPSemVerChecker\Operation;
 
 use PhpParser\Node\Stmt\Function_;
 
-class FunctionParameterMismatch extends Operation {
+class FunctionParameterChanged extends Operation {
 	/**
 	 * @var string
 	 */
-	protected $reason = 'Function parameter mismatch.';
+	protected $reason = 'Function parameter changed.';
 	/**
 	 * @var string
 	 */

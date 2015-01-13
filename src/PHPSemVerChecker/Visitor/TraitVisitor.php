@@ -3,16 +3,16 @@
 namespace PHPSemVerChecker\Visitor;
 
 use PhpParser\Node;
-use PhpParser\Node\Stmt\Function_;
+use PhpParser\Node\Stmt\Trait_;
 
-class FunctionVisitor extends VisitorAbstract {
+class TraitVisitor extends VisitorAbstract {
 	/**
 	 * @param \PhpParser\Node $node
 	 */
 	public function leaveNode(Node $node)
 	{
-		if ($node instanceof Function_) {
-			$this->registry->addFunction($node);
+		if ($node instanceof Trait_) {
+			$this->registry->addTrait($node);
 		}
 	}
 }

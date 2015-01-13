@@ -26,16 +26,22 @@
 		"phpunit/php-file-iterator": "~1.3"
 	},
 	"require-dev": {
-		"phpunit/phpunit": "~4"
+		"phpunit/phpunit": "~4",
+		"mockery/mockery": "~0.9"
 	},
 	"autoload": {
 		"psr-4": {
 			"PHPSemVerChecker\\": "src/PHPSemVerChecker"
 		}
 	},
+	"autoload-dev": {
+		"psr-4": {
+			"PHPSemVerChecker\\Test\\": "tests/PHPSemVerChecker"
+		}
+	},
 	"extra": {
 		"branch-alias": {
-			"dev-master": "0.1-dev"
+			"dev-master": "0.2-dev"
 		}
 	}
 }

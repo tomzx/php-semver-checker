@@ -3,6 +3,7 @@
 namespace PHPSemVerChecker\Console\Command;
 
 use File_Iterator_Facade;
+use PHPSemVerChecker\Analyzer\Analyzer;
 use PHPSemVerChecker\Reporter\Reporter;
 use PHPSemVerChecker\Scanner\Scanner;
 use Symfony\Component\Console\Command\Command;
@@ -25,32 +26,41 @@ class CompareCommand extends Command {
 
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
+		$startTime = microtime(true);
 		$fileIterator = new File_Iterator_Facade;
-		$beforeScanner = new Scanner();
-		$afterScanner = new Scanner();
+		$scannerBefore = new Scanner();
+		$scannerAfter = new Scanner();
 
-		$beforeFiles = $input->getArgument('source-before');
-		$beforeFiles = $fileIterator->getFilesAsArray($beforeFiles, '.php');
+		$sourceBefore = $input->getArgument('source-before');
+		$sourceBefore = $fileIterator->getFilesAsArray($sourceBefore, '.php');
 
-		$afterFiles = $input->getArgument('source-after');
-		$afterFiles = $fileIterator->getFilesAsArray($afterFiles, '.php');
+		$sourceAfter = $input->getArgument('source-after');
+		$sourceAfter = $fileIterator->getFilesAsArray($sourceAfter, '.php');
 
-		$progress = new ProgressBar($output, count($beforeFiles) + count($afterFiles));
-		foreach ($beforeFiles as $file) {
-			$beforeScanner->scan($file);
+		$progress = new ProgressBar($output, count($sourceBefore) + count($sourceAfter));
+		foreach ($sourceBefore as $file) {
+			$scannerBefore->scan($file);
 			$progress->advance();
 		}
 
-		foreach ($afterFiles as $file) {
-			$afterScanner->scan($file);
+		foreach ($sourceAfter as $file) {
+			$scannerAfter->scan($file);
 			$progress->advance();
 		}
 
 		$progress->clear();
 
-		$beforeRegistry = $beforeScanner->getRegistry();
-		$afterRegistry = $afterScanner->getRegistry();
+		$registryBefore = $scannerBefore->getRegistry();
+		$registryAfter = $scannerAfter->getRegistry();
 
-		(new Reporter())->output($beforeRegistry, $afterRegistry, $output);
+		$analyzer = new Analyzer();
+		$report = $analyzer->analyze($registryBefore, $registryAfter);
+
+		$reporter = new Reporter($report);
+		$reporter->output($output);
+
+		$duration = microtime(true) - $startTime;
+		$output->writeln('');
+		$output->writeln('Time: '.round($duration, 3).' seconds, Memory: '.round(memory_get_peak_usage() / 1024 / 1024, 3).' MB');
 	}
 }

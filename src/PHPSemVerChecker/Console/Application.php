@@ -3,16 +3,15 @@
 namespace PHPSemVerChecker\Console;
 
 use PHPSemVerChecker\Console\Command\CompareCommand;
-use PHPSemVerChecker\Console\Command\ScanCommand;
 use Symfony\Component\Console\Application as SymfonyApplication;
 
 class Application extends SymfonyApplication {
 
-	private static $VERSION = '0.1';
+	private static $VERSION = '0.2';
 
 	private static $logo = '    ____  ______   _______
    / __ \/ ___/ | / / ___/
-  / /_/ (__  )| |/ / /__
+  / /_/ /__  /| |/ / /__
  / .___/____/ |___/\___/
 /_/
 ';

@@ -5,22 +5,8 @@ namespace PHPSemVerChecker\Visitor;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_ as BaseClass;
 use PhpParser\Node\Stmt\Class_;
-use PhpParser\NodeVisitorAbstract;
-use PHPSemVerChecker\Registry\Registry;
 
-class ClassVisitor extends NodeVisitorAbstract {
-	/**
-	 * @var \PHPSemVerChecker\Registry\Registry
-	 */
-	protected $registry;
-
-	/**
-	 * @param \PHPSemVerChecker\Registry\Registry $registry
-	 */
-	public function __construct(Registry $registry)
-	{
-		$this->registry = $registry;
-	}
+class ClassVisitor extends VisitorAbstract {
 
 	/**
 	 * @param \PhpParser\Node $node

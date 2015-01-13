@@ -10,6 +10,9 @@ use PhpParser\Parser;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Visitor\ClassVisitor;
 use PHPSemVerChecker\Visitor\FunctionVisitor;
+use PHPSemVerChecker\Visitor\InterfaceVisitor;
+use PHPSemVerChecker\Visitor\TraitVisitor;
+use RuntimeException;
 
 class Scanner {
 	/**
@@ -31,9 +34,17 @@ class Scanner {
 		$this->parser = new Parser(new Emulative());
 		$this->traverser = new NodeTraverser();
 
-		$this->traverser->addVisitor(new NameResolver());
-		$this->traverser->addVisitor(new ClassVisitor($this->registry));
-		$this->traverser->addVisitor(new FunctionVisitor($this->registry));
+		$visitors = [
+			new NameResolver(),
+			new ClassVisitor($this->registry),
+			new InterfaceVisitor($this->registry),
+			new FunctionVisitor($this->registry),
+			new TraitVisitor($this->registry),
+		];
+
+		foreach ($visitors as $visitor) {
+			$this->traverser->addVisitor($visitor);
+		}
 	}
 
 	/**
@@ -48,9 +59,9 @@ class Scanner {
 
 		try {
 			$statements = $this->parser->parse($code);
-			$statements = $this->traverser->traverse($statements);
+			$this->traverser->traverse($statements);
 		} catch (Error $e) {
-			echo 'Parse Error: ', $e->getMessage();
+			throw new RuntimeException('Parse Error: '.$e->getMessage().' in '.$file);
 		}
 	}
 
