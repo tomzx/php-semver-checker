@@ -1,0 +1,14 @@
+{
+    "directories": ["src"],
+    "files": ["license.txt"],
+    "finder": [
+        {
+            "name": "*.php",
+            "exclude": ["tests", "Tests", "phpunit", "mockery"],
+            "in": "vendor"
+        }
+    ],
+    "main": "bin/php-semver-checker",
+    "output": "php-semver-checker.phar",
+    "stub": true
+}
