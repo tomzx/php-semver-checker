@@ -25,6 +25,14 @@ After the inspection is completed, you are given a list of changes that have occ
 	- Public class method parameter mismatch -> **MAJOR**
 	- Public class method implementation changed -> **PATCH**
 
+## Install
+
+You can install it globally:
+```sh
+$ composer global require symfony/console:~2.7@dev
+$ composer global require tomzx/php-semver-checker:@dev
+```
+
 ## Example
 
 ```bash
