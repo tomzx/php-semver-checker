@@ -2,7 +2,7 @@
 
 namespace fixtures;
 
-function functionParameterChanged($someOtherParameterName)
+function functionParameterNameChanged($someOtherParameterName)
 {
 
 }

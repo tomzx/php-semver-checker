@@ -56,9 +56,9 @@ class TraitMethodAnalyzerTest extends TestCase {
 		$analyzer = new ClassMethodAnalyzer('trait');
 		$report = $analyzer->analyze($traitBefore, $traitAfter);
 
-		Assert::assertDifference($report, 'trait', Level::MINOR);
-		$this->assertSame('Method has been added.', $report['trait'][Level::MINOR][0]->getReason());
-		$this->assertSame('tmp::tmpMethod', $report['trait'][Level::MINOR][0]->getTarget());
+		Assert::assertDifference($report, 'trait', Level::MAJOR);
+		$this->assertSame('Method has been added.', $report['trait'][Level::MAJOR][0]->getReason());
+		$this->assertSame('tmp::tmpMethod', $report['trait'][Level::MAJOR][0]->getTarget());
 	}
 
 	public function testSimilarPublicClassMethodSignature()

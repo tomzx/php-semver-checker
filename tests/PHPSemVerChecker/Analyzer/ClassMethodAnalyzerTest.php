@@ -64,9 +64,9 @@ class ClassMethodAnalyzerTest extends TestCase {
 		$analyzer = new ClassMethodAnalyzer('class');
 		$report = $analyzer->analyze($classBefore, $classAfter);
 
-		Assert::assertDifference($report, 'class', Level::MINOR);
-		$this->assertSame('Method has been added.', $report['class'][Level::MINOR][0]->getReason());
-		$this->assertSame('tmp::tmpMethod', $report['class'][Level::MINOR][0]->getTarget());
+		Assert::assertDifference($report, 'class', Level::MAJOR);
+		$this->assertSame('Method has been added.', $report['class'][Level::MAJOR][0]->getReason());
+		$this->assertSame('tmp::tmpMethod', $report['class'][Level::MAJOR][0]->getTarget());
 	}
 
 	public function testSimilarClassMethodSignature()

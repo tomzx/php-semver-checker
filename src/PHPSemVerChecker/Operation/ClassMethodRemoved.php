@@ -22,7 +22,7 @@ class ClassMethodRemoved extends ClassMethodOperation {
 	protected $level = [
 		'class' => [Level::MAJOR, Level::MAJOR, Level::PATCH],
 		'interface' => [Level::MAJOR],
-		'trait' => [Level::MAJOR, Level::MAJOR, Level::PATCH],
+		'trait' => [Level::MAJOR, Level::MAJOR, Level::MAJOR],
 	];
 	/**
 	 * @var string

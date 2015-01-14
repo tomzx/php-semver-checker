@@ -19,9 +19,9 @@ class ClassMethodAdded extends ClassMethodOperation {
 	 * @var int
 	 */
 	protected $level = [
-		'class' => [Level::MINOR, Level::MINOR, Level::MINOR],
+		'class' => [Level::MAJOR, Level::MAJOR, Level::PATCH],
 		'interface' => [Level::MAJOR],
-		'trait' => [Level::MINOR, Level::MINOR, Level::MINOR],
+		'trait' => [Level::MAJOR, Level::MAJOR, Level::MAJOR],
 	];
 	/**
 	 * @var string
