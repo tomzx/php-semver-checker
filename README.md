@@ -8,7 +8,7 @@
 
 PHP Semantic Versioning Checker is a console/library which allows you to inspect a set of before and after source code.
 
-After the inspection is completed, you are given a list of changes that have occurred between the two changesets. For each of these changes, the level of the change (MAJOR, MINOR, PATCH, NONE) will be given, as well as the location of the change (file and line number) and a reason as to why this level change is suggested.
+After the inspection is completed, you are given a list of changes that have occurred between the two changesets. For each of these changes, the level of the change (MAJOR, MINOR, PATCH) will be given, as well as the location of the change (file and line number) and a reason as to why this level change is suggested.
 
 ## Getting started
 
@@ -22,7 +22,7 @@ As the package gets more stable, other means of distribution may become availabl
 
 ## Current ruleset & verification codes
 
-See `docs/Ruleset.md` for an exhaustive list of currently supported (and to come) ruleset.
+See [`docs/Ruleset.md`](docs/Ruleset.md) for an exhaustive list of currently supported (and to come) ruleset.
 
 Verification codes are a mean to uniquely identify a semantic versioning trigger (a condition which upon detection, requires your code changes to be versioned).
 
