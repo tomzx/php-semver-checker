@@ -34,6 +34,14 @@ $ composer global require symfony/console:~2.7@dev
 $ composer global require tomzx/php-semver-checker:@dev
 ```
 
+Or you can build a phar out of the cloned repo
+You need to have [box already installed](https://github.com/box-project/box2    ).
+```sh
+$ git clone git@github.com:tomzx/php-semver-checker.git
+$ cd php-semver-checker
+$ box build
+```
+
 ## Example
 
 ```bash
