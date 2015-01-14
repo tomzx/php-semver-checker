@@ -14,10 +14,6 @@ abstract class Operation {
 	/**
 	 * @var string
 	 */
-	protected $location;
-	/**
-	 * @var string
-	 */
 	protected $target;
 
 	/**
@@ -61,21 +57,9 @@ abstract class Operation {
 	/**
 	 * @return string
 	 */
-	public function getLocation()
-	{
-		return $this->location;
-	}
+	public abstract function getLocation();
 
-	/**
-	 * @param string $location
-	 * @return $this
-	 */
-	public function setLocation($location)
-	{
-		$this->location = $location;
-
-		return $this;
-	}
+	public abstract function getLine();
 
 	/**
 	 * @return string

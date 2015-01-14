@@ -37,4 +37,12 @@ class Unknown extends Operation {
 	{
 		return $this->fileBefore . ' ' . $this->fileAfter;
 	}
+
+	/**
+	 * @return int
+	 */
+	public function getLine()
+	{
+		return 0;
+	}
 }

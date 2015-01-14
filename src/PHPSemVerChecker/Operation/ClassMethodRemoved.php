@@ -54,7 +54,15 @@ class ClassMethodRemoved extends ClassMethodOperation {
 	 */
 	public function getLocation()
 	{
-		return $this->fileBefore . '#' . $this->classMethodBefore->getLine();
+		return $this->fileBefore;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getLine()
+	{
+		return $this->classMethodBefore->getLine();
 	}
 
 	/**

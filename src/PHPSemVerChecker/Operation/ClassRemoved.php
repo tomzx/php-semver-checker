@@ -37,7 +37,12 @@ class ClassRemoved extends Operation {
 	 */
 	public function getLocation()
 	{
-		return $this->fileBefore . '#' . $this->classBefore->getLine();
+		return $this->fileBefore;
+	}
+
+	public function getLine()
+	{
+		$this->classBefore->getLine();
 	}
 
 	/**

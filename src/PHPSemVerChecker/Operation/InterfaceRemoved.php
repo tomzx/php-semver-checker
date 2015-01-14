@@ -37,7 +37,15 @@ class InterfaceRemoved extends Operation {
 	 */
 	public function getLocation()
 	{
-		return $this->fileBefore . '#' . $this->interfaceBefore->getLine();
+		return $this->fileBefore;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getLine()
+	{
+		return $this->interfaceBefore->getLine();
 	}
 
 	/**

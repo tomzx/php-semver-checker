@@ -37,7 +37,15 @@ class ClassAdded extends Operation {
 	 */
 	public function getLocation()
 	{
-		return $this->fileAfter . '#' . $this->classAfter->getLine();
+		return $this->fileAfter;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getLine()
+	{
+		return $this->classAfter->getLine();
 	}
 
 	/**

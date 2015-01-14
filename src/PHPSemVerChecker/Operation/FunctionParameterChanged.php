@@ -49,7 +49,15 @@ class FunctionParameterChanged extends Operation {
 	 */
 	public function getLocation()
 	{
-		return $this->fileBefore . '#' . $this->functionAfter->getLine();
+		return $this->fileBefore;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getLine()
+	{
+		return $this->functionAfter->getLine();
 	}
 
 	/**

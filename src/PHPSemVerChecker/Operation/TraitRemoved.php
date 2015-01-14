@@ -37,7 +37,15 @@ class TraitRemoved extends Operation {
 	 */
 	public function getLocation()
 	{
-		return $this->fileBefore . '#' . $this->traitBefore->getLine();
+		return $this->fileBefore;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getLine()
+	{
+		return $this->traitBefore->getLine();
 	}
 
 	/**

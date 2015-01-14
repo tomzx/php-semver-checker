@@ -37,7 +37,15 @@ class FunctionRemoved extends Operation {
 	 */
 	public function getLocation()
 	{
-		return $this->fileBefore . '#' . $this->functionBefore->getLine();
+		return $this->fileBefore;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getLine()
+	{
+		return $this->functionBefore->getLine();
 	}
 
 	/**

@@ -2,9 +2,11 @@
 
 namespace PHPSemVerChecker\Reporter;
 
+use PHPSemVerChecker\Operation\Operation;
 use PHPSemVerChecker\Report\Report;
 use PHPSemVerChecker\SemanticVersioning\Level;
 use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class Reporter
@@ -13,10 +15,20 @@ class Reporter
 	 * @var \PHPSemVerChecker\Report\Report
 	 */
 	protected $report;
+	/**
+	 * @var \Symfony\Component\Console\Input\InputInterface
+	 */
+	protected $input;
+	/**
+	 * @var string
+	 */
+	protected $cwd;
 
-	public function __construct(Report $report)
+	public function __construct(Report $report, InputInterface $input)
 	{
 		$this->report = $report;
+		$this->input = $input;
+		$this->cwd = getcwd();
 	}
 
 	public function output(OutputInterface $output)
@@ -71,9 +83,21 @@ class Reporter
 			$reportForLevel = $report[$context][$level];
 			/** @var \PHPSemVerChecker\Operation\Operation $operation */
 			foreach ($reportForLevel as $operation) {
-				$table->addRow([Level::toString($level), $operation->getLocation(), $operation->getTarget(), $operation->getReason(), $operation->getCode()]);
+				$table->addRow([Level::toString($level), $this->getLocation($operation), $operation->getTarget(), $operation->getReason(), $operation->getCode()]);
 			}
 		}
 		$table->render();
+	}
+
+	protected function getLocation(Operation $operation)
+	{
+		$isFullPath = $this->input->getOption('full-path');
+		if ($isFullPath) {
+			$location = $operation->getLocation();
+		} else {
+			$fullPath = realpath($operation->getLocation());
+			$location = str_replace($this->cwd.DIRECTORY_SEPARATOR, '', $fullPath);
+		}
+		return $location.'#'.$operation->getLine();
 	}
 }

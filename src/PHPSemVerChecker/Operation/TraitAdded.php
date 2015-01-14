@@ -37,7 +37,15 @@ class TraitAdded extends Operation {
 	 */
 	public function getLocation()
 	{
-		return $this->fileAfter . '#' . $this->traitAfter->getLine();
+		return $this->fileAfter;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getLine()
+	{
+		return $this->traitAfter->getLine();
 	}
 
 	/**

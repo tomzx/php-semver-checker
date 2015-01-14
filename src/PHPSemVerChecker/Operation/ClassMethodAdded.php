@@ -54,7 +54,15 @@ class ClassMethodAdded extends ClassMethodOperation {
 	 */
 	public function getLocation()
 	{
-		return $this->fileAfter . '#' . $this->classMethod->getLine();
+		return $this->fileAfter;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getLine()
+	{
+		return $this->classMethod->getLine();
 	}
 
 	/**

@@ -10,6 +10,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class CompareCommand extends Command {
@@ -21,6 +22,7 @@ class CompareCommand extends Command {
 			->setDefinition([
 				new InputArgument('source-before', InputArgument::REQUIRED, 'A directory to check'),
 				new InputArgument('source-after', InputArgument::REQUIRED, 'A directory to check against'),
+				new InputOption('full-path', null, InputOption::VALUE_NONE, 'Display the full path to the file instead of the relative path'),
 			]);
 	}
 
@@ -56,7 +58,7 @@ class CompareCommand extends Command {
 		$analyzer = new Analyzer();
 		$report = $analyzer->analyze($registryBefore, $registryAfter);
 
-		$reporter = new Reporter($report);
+		$reporter = new Reporter($report, $input);
 		$reporter->output($output);
 
 		$duration = microtime(true) - $startTime;

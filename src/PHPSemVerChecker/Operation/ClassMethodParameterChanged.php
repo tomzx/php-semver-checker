@@ -72,7 +72,15 @@ class ClassMethodParameterChanged extends ClassMethodOperation {
 	 */
 	public function getLocation()
 	{
-		return $this->fileAfter . '#' . $this->classMethodAfter->getLine();
+		return $this->fileAfter;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getLine()
+	{
+		return $this->classMethodAfter->getLine();
 	}
 
 	/**

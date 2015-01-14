@@ -2,7 +2,7 @@
 
 namespace PHPSemVerChecker\Operation;
 
-class ClassMethodOperation extends Operation
+abstract class ClassMethodOperation extends Operation
 {
 	public function getCode()
 	{

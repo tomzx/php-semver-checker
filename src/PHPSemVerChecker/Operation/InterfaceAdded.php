@@ -37,7 +37,15 @@ class InterfaceAdded extends Operation {
 	 */
 	public function getLocation()
 	{
-		return $this->fileAfter . '#' . $this->interfaceAfter->getLine();
+		return $this->fileAfter;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getLine()
+	{
+		return $this->interfaceAfter->getLine();
 	}
 
 	/**
