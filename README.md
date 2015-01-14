@@ -26,6 +26,14 @@ See [`docs/Ruleset.md`](docs/Ruleset.md) for an exhaustive list of currently sup
 
 Verification codes are a mean to uniquely identify a semantic versioning trigger (a condition which upon detection, requires your code changes to be versioned).
 
+## Install
+
+You can install it globally:
+```sh
+$ composer global require symfony/console:~2.7@dev
+$ composer global require tomzx/php-semver-checker:@dev
+```
+
 ## Example
 
 ```bash
