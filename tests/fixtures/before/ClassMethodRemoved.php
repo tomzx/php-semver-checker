@@ -4,7 +4,17 @@ namespace fixtures;
 
 class ClassMethodRemoved
 {
-	public function newMethod()
+	public function publicMethod()
+	{
+
+	}
+
+	protected function protectedMethod()
+	{
+
+	}
+
+	private function privateMethod()
 	{
 
 	}

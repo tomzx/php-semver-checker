@@ -2,7 +2,7 @@
 
 namespace fixtures;
 
-class ClassMethodAdded
+trait TraitMethodAdded
 {
 	public function publicMethod()
 	{

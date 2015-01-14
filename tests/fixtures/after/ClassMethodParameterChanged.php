@@ -4,7 +4,17 @@ namespace fixtures;
 
 class ClassMethodParameterChanged
 {
-	public function newMethod($someParameter)
+	public function publicMethod($someParameter)
+	{
+
+	}
+
+	protected function protectedMethod($someParameter)
+	{
+
+	}
+
+	private function privateMethod($someParameter)
 	{
 
 	}

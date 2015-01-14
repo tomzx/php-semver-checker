@@ -2,7 +2,7 @@
 
 namespace fixtures;
 
-trait TraitMethodParameterChanged
+class ClassMethodParameterNameChanged
 {
 	public function publicMethod($someParameter)
 	{
