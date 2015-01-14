@@ -66,11 +66,12 @@ class Reporter
 	protected function outputTable(OutputInterface $output, Report $report, $context)
 	{
 		$table = new Table($output);
-		$table->setHeaders(['Level', 'Location', 'Target', 'Reason']);
+		$table->setHeaders(['Level', 'Location', 'Target', 'Reason', 'Code']);
 		foreach (Level::asList('desc') as $level) {
 			$reportForLevel = $report[$context][$level];
-			foreach ($reportForLevel as $difference) {
-				$table->addRow([Level::toString($level), $difference->getLocation(), $difference->getTarget(), $difference->getReason()]);
+			/** @var \PHPSemVerChecker\Operation\Operation $operation */
+			foreach ($reportForLevel as $operation) {
+				$table->addRow([Level::toString($level), $operation->getLocation(), $operation->getTarget(), $operation->getReason(), $operation->getCode()]);
 			}
 		}
 		$table->render();

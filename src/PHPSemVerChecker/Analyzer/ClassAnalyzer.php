@@ -38,10 +38,9 @@ class ClassAnalyzer
 			/** @var \PhpParser\Node\Stmt\Class_ $classBefore */
 			$classAfter = $registryAfter->data['class'][$key];
 
-			// TODO: Verify this comparison works properly <tom@tomrochette.com>
 			// Leave non-strict comparison here
 			if ($classBefore != $classAfter) {
-				$analyzer = new ClassMethodAnalyzer($fileBefore, $fileAfter);
+				$analyzer = new ClassMethodAnalyzer('class', $fileBefore, $fileAfter);
 				$classMethodReport = $analyzer->analyze($classBefore, $classAfter);
 				$report->merge($classMethodReport);
 			}

@@ -3,6 +3,13 @@
 namespace PHPSemVerChecker\Operation;
 
 class Unknown extends Operation {
+	/**
+	 * @var string
+	 */
+	protected $code = 'V000';
+	/**
+	 * @var string
+	 */
 	protected $reason = 'Reason unknown.';
 	/**
 	 * @var string

@@ -2,10 +2,22 @@
 
 namespace PHPSemVerChecker\Operation;
 
-use PhpParser\Node\Stmt\Class_;
+use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\ClassMethod;
 
-class ClassMethodRemoved extends Operation {
+class ClassMethodRemoved extends ClassMethodOperation {
+	/**
+	 * @var array
+	 */
+	protected $code = [
+		'class' => 'V006',
+		'interface' => 'V035',
+		'trait' => 'V038',
+	];
+	/**
+	 * @var string
+	 */
+	protected $context;
 	/**
 	 * @var string
 	 */
@@ -17,21 +29,23 @@ class ClassMethodRemoved extends Operation {
 	/**
 	 * @var \PhpParser\Node\Stmt\Class_
 	 */
-	protected $classBefore;
+	protected $contextBefore;
 	/**
 	 * @var \PhpParser\Node\Stmt\ClassMethod
 	 */
 	protected $classMethodBefore;
 
 	/**
+	 * @param string                           $context
 	 * @param string                           $fileBefore
-	 * @param \PhpParser\Node\Stmt\Class_      $classBefore
+	 * @param \PhpParser\Node\Stmt             $contextBefore
 	 * @param \PhpParser\Node\Stmt\ClassMethod $classMethodBefore
 	 */
-	public function __construct($fileBefore, Class_ $classBefore, ClassMethod $classMethodBefore)
+	public function __construct($context, $fileBefore, Stmt $contextBefore, ClassMethod $classMethodBefore)
 	{
+		$this->context = $context;
 		$this->fileBefore = $fileBefore;
-		$this->classBefore = $classBefore;
+		$this->contextBefore = $contextBefore;
 		$this->classMethodBefore = $classMethodBefore;
 	}
 
@@ -48,9 +62,9 @@ class ClassMethodRemoved extends Operation {
 	 */
 	public function getTarget()
 	{
-		$fqcn = $this->classBefore->name;
-		if ($this->classBefore->namespacedName) {
-			$fqcn = $this->classBefore->namespacedName->toString();
+		$fqcn = $this->contextBefore->name;
+		if ($this->contextBefore->namespacedName) {
+			$fqcn = $this->contextBefore->namespacedName->toString();
 		}
 		return $fqcn . '::' . $this->classMethodBefore->name;
 	}

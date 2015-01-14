@@ -8,6 +8,10 @@ class ClassAdded extends Operation {
 	/**
 	 * @var string
 	 */
+	protected $code = 'V014';
+	/**
+	 * @var string
+	 */
 	protected $reason = 'Class was added.';
 	/**
 	 * @var string

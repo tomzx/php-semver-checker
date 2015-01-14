@@ -8,6 +8,10 @@ class TraitRemoved extends Operation {
 	/**
 	 * @var string
 	 */
+	protected $code = 'V037';
+	/**
+	 * @var string
+	 */
 	protected $reason = 'Trait was removed.';
 	/**
 	 * @var

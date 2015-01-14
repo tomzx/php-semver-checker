@@ -8,6 +8,10 @@ class FunctionParameterChanged extends Operation {
 	/**
 	 * @var string
 	 */
+	protected $code = 'V002';
+	/**
+	 * @var string
+	 */
 	protected $reason = 'Function parameter changed.';
 	/**
 	 * @var string

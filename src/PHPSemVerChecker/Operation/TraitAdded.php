@@ -8,6 +8,10 @@ class TraitAdded extends Operation {
 	/**
 	 * @var string
 	 */
+	protected $code = 'V046';
+	/**
+	 * @var string
+	 */
 	protected $reason = 'Trait was added.';
 	/**
 	 * @var string

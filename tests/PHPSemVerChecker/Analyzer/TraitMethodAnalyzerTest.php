@@ -5,23 +5,23 @@ namespace PHPSemVerChecker\Test\Analyzer;
 use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Param;
-use PhpParser\Node\Stmt\Class_;
+use PhpParser\Node\Stmt\Trait_;
 use PhpParser\Node\Stmt\ClassMethod;
 use PHPSemVerChecker\Analyzer\ClassMethodAnalyzer;
 use PHPSemVerChecker\SemanticVersioning\Level;
 use PHPSemVerChecker\Test\Assertion\Assert;
 use PHPSemVerChecker\Test\TestCase;
 
-class ClassMethodAnalyzerTest extends TestCase {
-	public function testCompareSimilarClassMethod()
+class TraitMethodAnalyzerTest extends TestCase {
+	public function testCompareSimilarPublicClassMethod()
 	{
-		$beforeClass = new Class_('tmp', [
+		$beforeClass = new Trait_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod'),
 			],
 		]);
 
-		$afterClass = new Class_('tmp', [
+		$afterClass = new Trait_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod'),
 			],
@@ -33,15 +33,15 @@ class ClassMethodAnalyzerTest extends TestCase {
 		Assert::assertNoDifference($report);
 	}
 
-	public function testV006PublicClassMethodRemoved()
+	public function testV038PublicClassMethodRemoved()
 	{
-		$beforeClass = new Class_('tmp', [
+		$beforeClass = new Trait_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod'),
 			],
 		]);
 
-		$afterClass = new Class_('tmp');
+		$afterClass = new Trait_('tmp');
 
 		$analyzer = new ClassMethodAnalyzer();
 		$report = $analyzer->analyze($beforeClass, $afterClass);
@@ -51,11 +51,11 @@ class ClassMethodAnalyzerTest extends TestCase {
 		$this->assertSame('tmp::tmpMethod', $report['method'][Level::MAJOR][0]->getTarget());
 	}
 
-	public function testV015ClassMethodAdded()
+	public function testV047PublicClassMethodAdded()
 	{
-		$beforeClass = new Class_('tmp');
+		$beforeClass = new Trait_('tmp');
 
-		$afterClass = new Class_('tmp', [
+		$afterClass = new Trait_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod'),
 			],
@@ -69,9 +69,9 @@ class ClassMethodAnalyzerTest extends TestCase {
 		$this->assertSame('tmp::tmpMethod', $report['method'][Level::MINOR][0]->getTarget());
 	}
 
-	public function testSimilarClassMethodSignature()
+	public function testSimilarPublicClassMethodSignature()
 	{
-		$beforeClass = new Class_('tmp', [
+		$beforeClass = new Trait_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod', [
 					'params' => [
@@ -81,7 +81,7 @@ class ClassMethodAnalyzerTest extends TestCase {
 			],
 		]);
 
-		$afterClass = new Class_('tmp', [
+		$afterClass = new Trait_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod', [
 					'params' => [
@@ -97,9 +97,9 @@ class ClassMethodAnalyzerTest extends TestCase {
 		Assert::assertNoDifference($report, 'method');
 	}
 
-	public function testV010CompareSimilarClassMethodWithDifferentSignatureVariables()
+	public function testV042CompareSimilarPublicClassMethodWithDifferentSignatureVariables()
 	{
-		$beforeClass = new Class_('tmp', [
+		$beforeClass = new Trait_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod', [
 					'params' => [
@@ -109,7 +109,7 @@ class ClassMethodAnalyzerTest extends TestCase {
 			],
 		]);
 
-		$afterClass = new Class_('tmp', [
+		$afterClass = new Trait_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod', [
 					'params' => [
@@ -127,9 +127,9 @@ class ClassMethodAnalyzerTest extends TestCase {
 		$this->assertSame('tmp::tmpMethod', $report['method'][Level::PATCH][0]->getTarget());
 	}
 
-	public function testV010CompareSimilarClassMethodWithDifferentSignatureTypehint()
+	public function testV042CompareSimilarPublicClassMethodWithDifferentSignatureTypehint()
 	{
-		$beforeClass = new Class_('tmp', [
+		$beforeClass = new Trait_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod', [
 					'params' => [
@@ -139,7 +139,7 @@ class ClassMethodAnalyzerTest extends TestCase {
 			],
 		]);
 
-		$afterClass = new Class_('tmp', [
+		$afterClass = new Trait_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod', [
 					'params' => [
@@ -157,9 +157,9 @@ class ClassMethodAnalyzerTest extends TestCase {
 		$this->assertSame('tmp::tmpMethod', $report['method'][Level::MAJOR][0]->getTarget());
 	}
 
-	public function testV010CompareSimilarClassMethodWithDifferentSignatureLength()
+	public function testV042CompareSimilarPublicClassMethodWithDifferentSignatureLength()
 	{
-		$beforeClass = new Class_('tmp', [
+		$beforeClass = new Trait_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod', [
 					'params' => [
@@ -170,7 +170,7 @@ class ClassMethodAnalyzerTest extends TestCase {
 			],
 		]);
 
-		$afterClass = new Class_('tmp', [
+		$afterClass = new Trait_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod', [
 					'params' => [
@@ -188,9 +188,9 @@ class ClassMethodAnalyzerTest extends TestCase {
 		$this->assertSame('tmp::tmpMethod', $report['method'][Level::MAJOR][0]->getTarget());
 	}
 
-	public function testSimilarClassMethodImplementation()
+	public function testSimilarPublicClassMethodImplementation()
 	{
-		$beforeClass = new Class_('tmp', [
+		$beforeClass = new Trait_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod', [
 					'stmts' => [
@@ -200,7 +200,7 @@ class ClassMethodAnalyzerTest extends TestCase {
 			],
 		]);
 
-		$afterClass = new Class_('tmp', [
+		$afterClass = new Trait_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod', [
 					'stmts' => [
@@ -216,9 +216,9 @@ class ClassMethodAnalyzerTest extends TestCase {
 		Assert::assertNoDifference($report);
 	}
 
-	public function testV023ClassMethodImplementationChanged()
+	public function testV052PublicClassMethodImplementationChanged()
 	{
-		$beforeClass = new Class_('tmp', [
+		$beforeClass = new Trait_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod', [
 					'stmts' => [
@@ -228,7 +228,7 @@ class ClassMethodAnalyzerTest extends TestCase {
 			],
 		]);
 
-		$afterClass = new Class_('tmp', [
+		$afterClass = new Trait_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod', [
 					'stmts' => [

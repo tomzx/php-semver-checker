@@ -2,10 +2,21 @@
 
 namespace PHPSemVerChecker\Operation;
 
-use PhpParser\Node\Stmt\Class_;
+use PhpParser\Node\Stmt\Stmt;
 use PhpParser\Node\Stmt\ClassMethod;
 
-class ClassMethodImplementationChanged extends Operation {
+class ClassMethodImplementationChanged extends ClassMethodOperation {
+	/**
+	 * @var array
+	 */
+	protected $code = [
+		'class' => 'V023',
+		'trait' => 'V038',
+	];
+	/**
+	 * @var string
+	 */
+	protected $context;
 	/**
 	 * @var string
 	 */
@@ -15,9 +26,9 @@ class ClassMethodImplementationChanged extends Operation {
 	 */
 	protected $fileBefore;
 	/**
-	 * @var \PhpParser\Node\Stmt\Class_
+	 * @var \PhpParser\Node\Stmt
 	 */
-	protected $classBefore;
+	protected $contextBefore;
 	/**
 	 * @var \PhpParser\Node\Stmt\ClassMethod
 	 */
@@ -27,29 +38,31 @@ class ClassMethodImplementationChanged extends Operation {
 	 */
 	protected $fileAfter;
 	/**
-	 * @var \PhpParser\Node\Stmt\Class_
+	 * @var \PhpParser\Node\Stmt
 	 */
-	protected $classAfter;
+	protected $contextAfter;
 	/**
 	 * @var \PhpParser\Node\Stmt\ClassMethod
 	 */
 	protected $classMethodAfter;
 
 	/**
+	 * @param string                           $context
 	 * @param string                           $fileBefore
-	 * @param \PhpParser\Node\Stmt\Class_      $classBefore
+	 * @param \PhpParser\Node\Stmt             $contextBefore
 	 * @param \PhpParser\Node\Stmt\ClassMethod $classMethodBefore
 	 * @param string                           $fileAfter
-	 * @param \PhpParser\Node\Stmt\Class_      $classAfter
+	 * @param \PhpParser\Node\Stmt             $contextAfter
 	 * @param \PhpParser\Node\Stmt\ClassMethod $classMethodAfter
 	 */
-	public function __construct($fileBefore, Class_ $classBefore, ClassMethod $classMethodBefore, $fileAfter, Class_ $classAfter, ClassMethod $classMethodAfter)
+	public function __construct($context, $fileBefore, \PhpParser\Node\Stmt $contextBefore, ClassMethod $classMethodBefore, $fileAfter, \PhpParser\Node\Stmt $contextAfter, ClassMethod $classMethodAfter)
 	{
+		$this->context = $context;
 		$this->fileBefore = $fileBefore;
-		$this->classBefore = $classBefore;
+		$this->contextBefore = $contextBefore;
 		$this->classMethodBefore = $classMethodBefore;
 		$this->fileAfter = $fileAfter;
-		$this->classAfter = $classAfter;
+		$this->contextAfter = $contextAfter;
 		$this->classMethodAfter = $classMethodAfter;
 	}
 
@@ -66,9 +79,9 @@ class ClassMethodImplementationChanged extends Operation {
 	 */
 	public function getTarget()
 	{
-		$fqcn = $this->classAfter->name;
-		if ($this->classAfter->namespacedName) {
-			$fqcn = $this->classAfter->namespacedName->toString();
+		$fqcn = $this->contextAfter->name;
+		if ($this->contextAfter->namespacedName) {
+			$fqcn = $this->contextAfter->namespacedName->toString();
 		}
 		return $fqcn . '::' . $this->classMethodBefore->name;
 	}

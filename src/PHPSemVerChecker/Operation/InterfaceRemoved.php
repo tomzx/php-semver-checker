@@ -8,6 +8,10 @@ class InterfaceRemoved extends Operation {
 	/**
 	 * @var string
 	 */
+	protected $code = 'V033';
+	/**
+	 * @var string
+	 */
 	protected $reason = 'Interface was removed.';
 	/**
 	 * @var

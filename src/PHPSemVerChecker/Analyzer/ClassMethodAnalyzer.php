@@ -2,6 +2,7 @@
 
 namespace PHPSemVerChecker\Analyzer;
 
+use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassMethod;
 use PHPSemVerChecker\Comparator\Signature;
@@ -15,8 +16,7 @@ use PHPSemVerChecker\SemanticVersioning\Level;
 
 class ClassMethodAnalyzer
 {
-	protected $context = 'method';
-
+	protected $context;
 	protected $fileBefore;
 	protected $fileAfter;
 
@@ -24,18 +24,20 @@ class ClassMethodAnalyzer
 	 * @param string $fileBefore
 	 * @param string $fileAfter
 	 */
-	public function __construct($fileBefore = null, $fileAfter = null)
+	public function __construct($context, $fileBefore = null, $fileAfter = null)
 	{
+		$this->context = $context;
 		$this->fileBefore = $fileBefore;
 		$this->fileAfter = $fileAfter;
 	}
 
-	public function analyze(Class_ $classBefore, Class_ $classAfter)
+	public function analyze(Stmt $contextBefore, Stmt $contextAfter)
 	{
+		// TODO: Verify that the given contexts match the context given in the constructor <tom@tomrochette.com>
 		$report = new Report();
 
-		$methodsBefore = $classBefore->getMethods();
-		$methodsAfter = $classAfter->getMethods();
+		$methodsBefore = $contextBefore->getMethods();
+		$methodsAfter = $contextAfter->getMethods();
 
 		$methodsBeforeKeyed = [];
 		foreach ($methodsBefore as $method) {
@@ -66,7 +68,7 @@ class ClassMethodAnalyzer
 		// Removed methods can either be implemented in parent classes or not exist anymore
 		foreach ($methodsRemoved as $method) {
 			$methodBefore = $methodsBeforeKeyed[$method];
-			$data = new ClassMethodRemoved($this->fileBefore, $classBefore, $methodBefore);
+			$data = new ClassMethodRemoved($this->context, $this->fileBefore, $contextBefore, $methodBefore);
 			$report->addClassMethod($data, Level::MAJOR);
 		}
 
@@ -83,36 +85,29 @@ class ClassMethodAnalyzer
 				// Signature
 
 				if ( ! Signature::isSameTypehints($paramsBefore, $paramsAfter)) {
-					$data = new ClassMethodParameterChanged($this->fileBefore, $classBefore, $methodBefore, $this->fileAfter, $classAfter, $methodAfter);
+					$data = new ClassMethodParameterChanged($this->context, $this->fileBefore, $contextBefore, $methodBefore, $this->fileAfter, $contextAfter, $methodAfter);
 					$report->addClassMethod($data, Level::MAJOR);
-					continue;
 				}
 
 				if ( ! Signature::isSameVariables($paramsBefore, $paramsAfter)) {
-					$data = new ClassMethodParameterChanged($this->fileBefore, $classBefore, $methodBefore, $this->fileAfter, $classAfter, $methodAfter);
+					$data = new ClassMethodParameterChanged($this->context, $this->fileBefore, $contextBefore, $methodBefore, $this->fileAfter, $contextAfter, $methodAfter);
 					$report->addClassMethod($data, Level::PATCH);
-					continue;
 				}
 
 				// Different length (considering params with defaults)
 
 				// Difference in source code
 				if ($methodBefore->stmts != $methodAfter->stmts) {
-					$data = new ClassMethodImplementationChanged($this->fileBefore, $classBefore, $methodBefore, $this->fileAfter, $classAfter, $methodAfter);
+					$data = new ClassMethodImplementationChanged($this->context, $this->fileBefore, $contextBefore, $methodBefore, $this->fileAfter, $contextAfter, $methodAfter);
 					$report->addClassMethod($data, Level::PATCH);
-					continue;
 				}
-
-				// Unable to match an issue, but there is one...
-				$data = new Unknown($this->fileBefore, $this->fileAfter);
-				$report->addClassMethod($data, Level::MAJOR);
 			}
 		}
 
 		// Added methods implies MINOR BUMP
 		foreach ($methodsAdded as $method) {
 			$methodAfter = $methodsAfterKeyed[$method];
-			$data = new ClassMethodAdded($this->fileAfter, $classAfter, $methodAfter);
+			$data = new ClassMethodAdded($this->context, $this->fileAfter, $contextAfter, $methodAfter);
 			$report->addClassMethod($data, Level::MINOR);
 		}
 

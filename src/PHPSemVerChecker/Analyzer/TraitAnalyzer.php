@@ -30,7 +30,21 @@ class TraitAnalyzer
 			$report->addTrait($data, Level::MAJOR);
 		}
 
-		// TODO: Verify similar traits methods <tom@tomrochette.com>
+		foreach ($toVerify as $key) {
+			$fileBefore = $registryBefore->mapping['trait'][$key];
+			/** @var \PhpParser\Node\Stmt\Class_ $traitBefore */
+			$traitBefore = $registryBefore->data['trait'][$key];
+			$fileAfter = $registryAfter->mapping['trait'][$key];
+			/** @var \PhpParser\Node\Stmt\Class_ $traitBefore */
+			$traitAfter = $registryAfter->data['trait'][$key];
+
+			// Leave non-strict comparison here
+			if ($traitBefore != $traitAfter) {
+				$analyzer = new ClassMethodAnalyzer('trait', $fileBefore, $fileAfter);
+				$traitMethodReport = $analyzer->analyze($traitBefore, $traitAfter);
+				$report->merge($traitMethodReport);
+			}
+		}
 
 		foreach ($added as $key) {
 			$fileAfter = $registryAfter->mapping['trait'][$key];

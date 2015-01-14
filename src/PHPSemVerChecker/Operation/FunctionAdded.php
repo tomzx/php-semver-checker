@@ -8,6 +8,10 @@ class FunctionAdded extends Operation {
 	/**
 	 * @var string
 	 */
+	protected $code = 'V003';
+	/**
+	 * @var string
+	 */
 	protected $reason = 'Function has been added.';
 	/**
 	 * @var string

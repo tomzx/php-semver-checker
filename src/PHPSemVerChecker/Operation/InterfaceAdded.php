@@ -8,6 +8,10 @@ class InterfaceAdded extends Operation {
 	/**
 	 * @var string
 	 */
+	protected $code = 'V032';
+	/**
+	 * @var string
+	 */
 	protected $reason = 'Interface was added.';
 	/**
 	 * @var string

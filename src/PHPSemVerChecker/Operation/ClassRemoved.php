@@ -8,6 +8,10 @@ class ClassRemoved extends Operation {
 	/**
 	 * @var string
 	 */
+	protected $code = 'V005';
+	/**
+	 * @var string
+	 */
 	protected $reason = 'Class was removed.';
 	/**
 	 * @var

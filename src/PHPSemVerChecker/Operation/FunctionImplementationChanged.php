@@ -9,6 +9,10 @@ class FunctionImplementationChanged extends Operation {
 	/**
 	 * @var string
 	 */
+	protected $code = 'V004';
+	/**
+	 * @var string
+	 */
 	protected $reason = 'Function implementation changed.';
 	/**
 	 * @var \PhpParser\Node\Stmt\Function_

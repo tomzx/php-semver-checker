@@ -46,7 +46,6 @@ class FunctionAnalyzer
 			$fileAfter = $registryAfter->mapping['function'][$key];
 			$functionAfter = $registryAfter->data['function'][$key];
 
-			// TODO: Verify this comparison works properly <tom@tomrochette.com>
 			// Leave non-strict comparison here
 			if ($functionBefore != $functionAfter) {
 				$paramsBefore = $functionBefore->params;

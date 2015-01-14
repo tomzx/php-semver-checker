@@ -8,6 +8,10 @@ class FunctionRemoved extends Operation {
 	/**
 	 * @var string
 	 */
+	protected $code = 'V001';
+	/**
+	 * @var string
+	 */
 	protected $reason = 'Function has been removed.';
 	/**
 	 * @var string

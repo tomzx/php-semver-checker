@@ -30,7 +30,21 @@ class InterfaceAnalyzer
 			$report->addInterface($data, Level::MAJOR);
 		}
 
-		// TODO: Verify similar interface methods <tom@tomrochette.com>
+		foreach ($toVerify as $key) {
+			$fileBefore = $registryBefore->mapping['interface'][$key];
+			/** @var \PhpParser\Node\Stmt\Interface_ $interfaceBefore */
+			$interfaceBefore = $registryBefore->data['interface'][$key];
+			$fileAfter = $registryAfter->mapping['interface'][$key];
+			/** @var \PhpParser\Node\Stmt\Interface_ $interfaceBefore */
+			$interfaceAfter = $registryAfter->data['interface'][$key];
+
+			// Leave non-strict comparison here
+			if ($interfaceBefore != $interfaceAfter) {
+				$analyzer = new ClassMethodAnalyzer('interface', $fileBefore, $fileAfter);
+				$interfaceMethodReport = $analyzer->analyze($interfaceBefore, $interfaceAfter);
+				$report->merge($interfaceMethodReport);
+			}
+		}
 
 		foreach ($added as $key) {
 			$fileAfter = $registryAfter->mapping['interface'][$key];
