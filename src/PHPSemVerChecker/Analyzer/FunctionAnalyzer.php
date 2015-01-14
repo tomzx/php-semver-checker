@@ -6,6 +6,7 @@ use PHPSemVerChecker\Comparator\Signature;
 use PHPSemVerChecker\Operation\FunctionAdded;
 use PHPSemVerChecker\Operation\FunctionImplementationChanged;
 use PHPSemVerChecker\Operation\FunctionParameterChanged;
+use PHPSemVerChecker\Operation\FunctionParameterNameChanged;
 use PHPSemVerChecker\Operation\FunctionRemoved;
 use PHPSemVerChecker\Operation\Unknown;
 use PHPSemVerChecker\Registry\Registry;
@@ -36,7 +37,7 @@ class FunctionAnalyzer
 			$functionBefore = $registryBefore->data['function'][$key];
 
 			$data = new FunctionRemoved($fileBefore, $functionBefore);
-			$report->addFunction($data, Level::MAJOR);
+			$report->addFunction($data);
 		}
 
 		foreach ($toVerify as $key) {
@@ -54,13 +55,13 @@ class FunctionAnalyzer
 
 				if ( ! Signature::isSameTypehints($paramsBefore, $paramsAfter)) {
 					$data = new FunctionParameterChanged($fileBefore, $functionBefore, $fileAfter, $functionAfter);
-					$report->addFunction($data, Level::MAJOR);
+					$report->addFunction($data);
 					continue;
 				}
 
 				if ( ! Signature::isSameVariables($paramsBefore, $paramsAfter)) {
-					$data = new FunctionParameterChanged($fileBefore, $functionBefore, $fileAfter, $functionAfter);
-					$report->addFunction($data, Level::PATCH);
+					$data = new FunctionParameterNameChanged($fileBefore, $functionBefore, $fileAfter, $functionAfter);
+					$report->addFunction($data);
 					continue;
 				}
 
@@ -69,7 +70,7 @@ class FunctionAnalyzer
 				// Difference in source code
 				if ($functionBefore->stmts != $functionAfter->stmts) {
 					$data = new FunctionImplementationChanged($fileBefore, $functionBefore, $fileAfter, $functionAfter);
-					$report->addFunction($data, Level::PATCH);
+					$report->addFunction($data);
 					continue;
 				}
 
@@ -84,7 +85,7 @@ class FunctionAnalyzer
 			$functionAfter = $registryAfter->data['function'][$key];
 
 			$data = new FunctionAdded($fileAfter, $functionAfter);
-			$report->addFunction($data, Level::MINOR);
+			$report->addFunction($data);
 		}
 
 		return $report;

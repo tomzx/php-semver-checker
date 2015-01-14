@@ -15,63 +15,63 @@ use PHPSemVerChecker\Test\TestCase;
 class InterfaceMethodAnalyzerTest extends TestCase {
 	public function testCompareSimilarPublicClassMethod()
 	{
-		$beforeClass = new Interface_('tmp', [
+		$interfaceBefore = new Interface_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod'),
 			],
 		]);
 
-		$afterClass = new Interface_('tmp', [
+		$interfaceAfter = new Interface_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod'),
 			],
 		]);
 
-		$analyzer = new ClassMethodAnalyzer();
-		$report = $analyzer->analyze($beforeClass, $afterClass);
+		$analyzer = new ClassMethodAnalyzer('interface');
+		$report = $analyzer->analyze($interfaceBefore, $interfaceAfter);
 
 		Assert::assertNoDifference($report);
 	}
 
 	public function testV035PublicClassMethodRemoved()
 	{
-		$beforeClass = new Interface_('tmp', [
+		$interfaceBefore = new Interface_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod'),
 			],
 		]);
 
-		$afterClass = new Interface_('tmp');
+		$interfaceAfter = new Interface_('tmp');
 
-		$analyzer = new ClassMethodAnalyzer();
-		$report = $analyzer->analyze($beforeClass, $afterClass);
+		$analyzer = new ClassMethodAnalyzer('interface');
+		$report = $analyzer->analyze($interfaceBefore, $interfaceAfter);
 
-		Assert::assertDifference($report, 'method', Level::MAJOR);
-		$this->assertSame('Method has been removed.', $report['method'][Level::MAJOR][0]->getReason());
-		$this->assertSame('tmp::tmpMethod', $report['method'][Level::MAJOR][0]->getTarget());
+		Assert::assertDifference($report, 'interface', Level::MAJOR);
+		$this->assertSame('Method has been removed.', $report['interface'][Level::MAJOR][0]->getReason());
+		$this->assertSame('tmp::tmpMethod', $report['interface'][Level::MAJOR][0]->getTarget());
 	}
 
 	public function testV034PublicClassMethodAdded()
 	{
-		$beforeClass = new Interface_('tmp');
+		$interfaceBefore = new Interface_('tmp');
 
-		$afterClass = new Interface_('tmp', [
+		$interfaceAfter = new Interface_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod'),
 			],
 		]);
 
-		$analyzer = new ClassMethodAnalyzer();
-		$report = $analyzer->analyze($beforeClass, $afterClass);
+		$analyzer = new ClassMethodAnalyzer('interface');
+		$report = $analyzer->analyze($interfaceBefore, $interfaceAfter);
 
-		Assert::assertDifference($report, 'method', Level::MINOR);
-		$this->assertSame('Method has been added.', $report['method'][Level::MINOR][0]->getReason());
-		$this->assertSame('tmp::tmpMethod', $report['method'][Level::MINOR][0]->getTarget());
+		Assert::assertDifference($report, 'interface', Level::MAJOR);
+		$this->assertSame('Method has been added.', $report['interface'][Level::MAJOR][0]->getReason());
+		$this->assertSame('tmp::tmpMethod', $report['interface'][Level::MAJOR][0]->getTarget());
 	}
 
 	public function testSimilarPublicClassMethodSignature()
 	{
-		$beforeClass = new Interface_('tmp', [
+		$interfaceBefore = new Interface_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod', [
 					'params' => [
@@ -81,7 +81,7 @@ class InterfaceMethodAnalyzerTest extends TestCase {
 			],
 		]);
 
-		$afterClass = new Interface_('tmp', [
+		$interfaceAfter = new Interface_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod', [
 					'params' => [
@@ -91,15 +91,15 @@ class InterfaceMethodAnalyzerTest extends TestCase {
 			],
 		]);
 
-		$analyzer = new ClassMethodAnalyzer();
-		$report = $analyzer->analyze($beforeClass, $afterClass);
+		$analyzer = new ClassMethodAnalyzer('interface');
+		$report = $analyzer->analyze($interfaceBefore, $interfaceAfter);
 
-		Assert::assertNoDifference($report, 'method');
+		Assert::assertNoDifference($report, 'interface');
 	}
 
-	public function testV036CompareSimilarPublicClassMethodWithDifferentSignatureVariables()
+	public function testV063CompareSimilarPublicClassMethodWithDifferentSignatureVariables()
 	{
-		$beforeClass = new Interface_('tmp', [
+		$interfaceBefore = new Interface_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod', [
 					'params' => [
@@ -109,7 +109,7 @@ class InterfaceMethodAnalyzerTest extends TestCase {
 			],
 		]);
 
-		$afterClass = new Interface_('tmp', [
+		$interfaceAfter = new Interface_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod', [
 					'params' => [
@@ -119,17 +119,17 @@ class InterfaceMethodAnalyzerTest extends TestCase {
 			],
 		]);
 
-		$analyzer = new ClassMethodAnalyzer();
-		$report = $analyzer->analyze($beforeClass, $afterClass);
+		$analyzer = new ClassMethodAnalyzer('interface');
+		$report = $analyzer->analyze($interfaceBefore, $interfaceAfter);
 
-		Assert::assertDifference($report, 'method', Level::PATCH);
-		$this->assertSame('Method parameter changed.', $report['method'][Level::PATCH][0]->getReason());
-		$this->assertSame('tmp::tmpMethod', $report['method'][Level::PATCH][0]->getTarget());
+		Assert::assertDifference($report, 'interface', Level::PATCH);
+		$this->assertSame('Method parameter name changed.', $report['interface'][Level::PATCH][0]->getReason());
+		$this->assertSame('tmp::tmpMethod', $report['interface'][Level::PATCH][0]->getTarget());
 	}
 
 	public function testV036CompareSimilarPublicClassMethodWithDifferentSignatureTypehint()
 	{
-		$beforeClass = new Interface_('tmp', [
+		$interfaceBefore = new Interface_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod', [
 					'params' => [
@@ -139,7 +139,7 @@ class InterfaceMethodAnalyzerTest extends TestCase {
 			],
 		]);
 
-		$afterClass = new Interface_('tmp', [
+		$interfaceAfter = new Interface_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod', [
 					'params' => [
@@ -149,17 +149,17 @@ class InterfaceMethodAnalyzerTest extends TestCase {
 			],
 		]);
 
-		$analyzer = new ClassMethodAnalyzer();
-		$report = $analyzer->analyze($beforeClass, $afterClass);
+		$analyzer = new ClassMethodAnalyzer('interface');
+		$report = $analyzer->analyze($interfaceBefore, $interfaceAfter);
 
-		Assert::assertDifference($report, 'method', Level::MAJOR);
-		$this->assertSame('Method parameter changed.', $report['method'][Level::MAJOR][0]->getReason());
-		$this->assertSame('tmp::tmpMethod', $report['method'][Level::MAJOR][0]->getTarget());
+		Assert::assertDifference($report, 'interface', Level::MAJOR);
+		$this->assertSame('Method parameter changed.', $report['interface'][Level::MAJOR][0]->getReason());
+		$this->assertSame('tmp::tmpMethod', $report['interface'][Level::MAJOR][0]->getTarget());
 	}
 
 	public function testV036CompareSimilarPublicClassMethodWithDifferentSignatureLength()
 	{
-		$beforeClass = new Interface_('tmp', [
+		$interfaceBefore = new Interface_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod', [
 					'params' => [
@@ -170,7 +170,7 @@ class InterfaceMethodAnalyzerTest extends TestCase {
 			],
 		]);
 
-		$afterClass = new Interface_('tmp', [
+		$interfaceAfter = new Interface_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod', [
 					'params' => [
@@ -180,11 +180,11 @@ class InterfaceMethodAnalyzerTest extends TestCase {
 			],
 		]);
 
-		$analyzer = new ClassMethodAnalyzer();
-		$report = $analyzer->analyze($beforeClass, $afterClass);
+		$analyzer = new ClassMethodAnalyzer('interface');
+		$report = $analyzer->analyze($interfaceBefore, $interfaceAfter);
 
-		Assert::assertDifference($report, 'method', Level::MAJOR);
-		$this->assertSame('Method parameter changed.', $report['method'][Level::MAJOR][0]->getReason());
-		$this->assertSame('tmp::tmpMethod', $report['method'][Level::MAJOR][0]->getTarget());
+		Assert::assertDifference($report, 'interface', Level::MAJOR);
+		$this->assertSame('Method parameter changed.', $report['interface'][Level::MAJOR][0]->getReason());
+		$this->assertSame('tmp::tmpMethod', $report['interface'][Level::MAJOR][0]->getTarget());
 	}
 }

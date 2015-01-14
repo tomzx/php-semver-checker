@@ -8,6 +8,7 @@ V001 | MAJOR | Function removed
 V002 | MAJOR | Function parameter changed
 V003 | MINOR | Function added
 V004 | PATCH | Function implementation changed
+V067 | PATCH | Function parameter name changed 
 
 # Classes
 
@@ -40,6 +41,9 @@ V028 | PATCH | *Class private method added*
 V029 | PATCH | *Class private method removed*
 V030 | PATCH | *Final class protected method added*
 V031 | PATCH | *Class private method parameter changed*
+V060 | PATCH | Class public method parameter name changed
+V061 | PATCH | Class protected method parameter name changed 
+V062 | PATCH | Class private method parameter name changed 
 
 # Interface
 
@@ -50,6 +54,7 @@ V033 | MAJOR | Interface removed
 V034 | MAJOR | Interface method added
 V035 | MAJOR | Interface method removed
 V036 | MAJOR | Interface method parameter changed
+V063 | PATCH | Interface method parameter name changed
 
 # Trait
 
@@ -78,3 +83,8 @@ V056 | PATCH | *Trait private property removed*
 V057 | PATCH | *Trait private method added*
 V058 | PATCH | *Trait private method removed*
 V059 | PATCH | *Trait private method parameter changed*
+V064 | PATCH | Trait public method parameter name changed
+V065 | PATCH | Trait protected method parameter name changed 
+V066 | PATCH | Trait private method parameter name changed 
+
+Method visibility changed

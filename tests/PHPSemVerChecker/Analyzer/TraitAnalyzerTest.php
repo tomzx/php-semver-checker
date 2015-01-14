@@ -15,11 +15,11 @@ class TraitAnalyzerTest extends TestCase {
 		$before = new Registry();
 		$after = new Registry();
 
-		$beforeTrait = new Trait_('tmp');
-		$before->addTrait($beforeTrait);
+		$traitBefore = new Trait_('tmp');
+		$before->addTrait($traitBefore);
 
-		$afterTrait = new Trait_('tmp');
-		$after->addTrait($afterTrait);
+		$traitAfter = new Trait_('tmp');
+		$after->addTrait($traitAfter);
 
 		$analyzer = new TraitAnalyzer();
 		$report = $analyzer->analyze($before, $after);

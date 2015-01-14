@@ -3,12 +3,17 @@
 namespace PHPSemVerChecker\Operation;
 
 use PhpParser\Node\Stmt\Class_;
+use PHPSemVerChecker\SemanticVersioning\Level;
 
 class ClassAdded extends Operation {
 	/**
 	 * @var string
 	 */
 	protected $code = 'V014';
+	/**
+	 * @var int
+	 */
+	protected $level = Level::MINOR;
 	/**
 	 * @var string
 	 */

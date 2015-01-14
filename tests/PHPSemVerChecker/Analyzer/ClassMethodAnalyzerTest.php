@@ -15,63 +15,63 @@ use PHPSemVerChecker\Test\TestCase;
 class ClassMethodAnalyzerTest extends TestCase {
 	public function testCompareSimilarClassMethod()
 	{
-		$beforeClass = new Class_('tmp', [
+		$classBefore = new Class_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod'),
 			],
 		]);
 
-		$afterClass = new Class_('tmp', [
+		$classAfter = new Class_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod'),
 			],
 		]);
 
-		$analyzer = new ClassMethodAnalyzer();
-		$report = $analyzer->analyze($beforeClass, $afterClass);
+		$analyzer = new ClassMethodAnalyzer('class');
+		$report = $analyzer->analyze($classBefore, $classAfter);
 
 		Assert::assertNoDifference($report);
 	}
 
 	public function testV006PublicClassMethodRemoved()
 	{
-		$beforeClass = new Class_('tmp', [
+		$classBefore = new Class_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod'),
 			],
 		]);
 
-		$afterClass = new Class_('tmp');
+		$classAfter = new Class_('tmp');
 
-		$analyzer = new ClassMethodAnalyzer();
-		$report = $analyzer->analyze($beforeClass, $afterClass);
+		$analyzer = new ClassMethodAnalyzer('class');
+		$report = $analyzer->analyze($classBefore, $classAfter);
 
-		Assert::assertDifference($report, 'method', Level::MAJOR);
-		$this->assertSame('Method has been removed.', $report['method'][Level::MAJOR][0]->getReason());
-		$this->assertSame('tmp::tmpMethod', $report['method'][Level::MAJOR][0]->getTarget());
+		Assert::assertDifference($report, 'class', Level::MAJOR);
+		$this->assertSame('Method has been removed.', $report['class'][Level::MAJOR][0]->getReason());
+		$this->assertSame('tmp::tmpMethod', $report['class'][Level::MAJOR][0]->getTarget());
 	}
 
 	public function testV015ClassMethodAdded()
 	{
-		$beforeClass = new Class_('tmp');
+		$classBefore = new Class_('tmp');
 
-		$afterClass = new Class_('tmp', [
+		$classAfter = new Class_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod'),
 			],
 		]);
 
-		$analyzer = new ClassMethodAnalyzer();
-		$report = $analyzer->analyze($beforeClass, $afterClass);
+		$analyzer = new ClassMethodAnalyzer('class');
+		$report = $analyzer->analyze($classBefore, $classAfter);
 
-		Assert::assertDifference($report, 'method', Level::MINOR);
-		$this->assertSame('Method has been added.', $report['method'][Level::MINOR][0]->getReason());
-		$this->assertSame('tmp::tmpMethod', $report['method'][Level::MINOR][0]->getTarget());
+		Assert::assertDifference($report, 'class', Level::MINOR);
+		$this->assertSame('Method has been added.', $report['class'][Level::MINOR][0]->getReason());
+		$this->assertSame('tmp::tmpMethod', $report['class'][Level::MINOR][0]->getTarget());
 	}
 
 	public function testSimilarClassMethodSignature()
 	{
-		$beforeClass = new Class_('tmp', [
+		$classBefore = new Class_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod', [
 					'params' => [
@@ -81,7 +81,7 @@ class ClassMethodAnalyzerTest extends TestCase {
 			],
 		]);
 
-		$afterClass = new Class_('tmp', [
+		$classAfter = new Class_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod', [
 					'params' => [
@@ -91,15 +91,15 @@ class ClassMethodAnalyzerTest extends TestCase {
 			],
 		]);
 
-		$analyzer = new ClassMethodAnalyzer();
-		$report = $analyzer->analyze($beforeClass, $afterClass);
+		$analyzer = new ClassMethodAnalyzer('class');
+		$report = $analyzer->analyze($classBefore, $classAfter);
 
-		Assert::assertNoDifference($report, 'method');
+		Assert::assertNoDifference($report, 'class');
 	}
 
-	public function testV010CompareSimilarClassMethodWithDifferentSignatureVariables()
+	public function testV060CompareSimilarClassMethodWithDifferentSignatureVariables()
 	{
-		$beforeClass = new Class_('tmp', [
+		$classBefore = new Class_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod', [
 					'params' => [
@@ -109,7 +109,7 @@ class ClassMethodAnalyzerTest extends TestCase {
 			],
 		]);
 
-		$afterClass = new Class_('tmp', [
+		$classAfter = new Class_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod', [
 					'params' => [
@@ -119,17 +119,17 @@ class ClassMethodAnalyzerTest extends TestCase {
 			],
 		]);
 
-		$analyzer = new ClassMethodAnalyzer();
-		$report = $analyzer->analyze($beforeClass, $afterClass);
+		$analyzer = new ClassMethodAnalyzer('class');
+		$report = $analyzer->analyze($classBefore, $classAfter);
 
-		Assert::assertDifference($report, 'method', Level::PATCH);
-		$this->assertSame('Method parameter changed.', $report['method'][Level::PATCH][0]->getReason());
-		$this->assertSame('tmp::tmpMethod', $report['method'][Level::PATCH][0]->getTarget());
+		Assert::assertDifference($report, 'class', Level::PATCH);
+		$this->assertSame('Method parameter name changed.', $report['class'][Level::PATCH][0]->getReason());
+		$this->assertSame('tmp::tmpMethod', $report['class'][Level::PATCH][0]->getTarget());
 	}
 
 	public function testV010CompareSimilarClassMethodWithDifferentSignatureTypehint()
 	{
-		$beforeClass = new Class_('tmp', [
+		$classBefore = new Class_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod', [
 					'params' => [
@@ -139,7 +139,7 @@ class ClassMethodAnalyzerTest extends TestCase {
 			],
 		]);
 
-		$afterClass = new Class_('tmp', [
+		$classAfter = new Class_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod', [
 					'params' => [
@@ -149,17 +149,17 @@ class ClassMethodAnalyzerTest extends TestCase {
 			],
 		]);
 
-		$analyzer = new ClassMethodAnalyzer();
-		$report = $analyzer->analyze($beforeClass, $afterClass);
+		$analyzer = new ClassMethodAnalyzer('class');
+		$report = $analyzer->analyze($classBefore, $classAfter);
 
-		Assert::assertDifference($report, 'method', Level::MAJOR);
-		$this->assertSame('Method parameter changed.', $report['method'][Level::MAJOR][0]->getReason());
-		$this->assertSame('tmp::tmpMethod', $report['method'][Level::MAJOR][0]->getTarget());
+		Assert::assertDifference($report, 'class', Level::MAJOR);
+		$this->assertSame('Method parameter changed.', $report['class'][Level::MAJOR][0]->getReason());
+		$this->assertSame('tmp::tmpMethod', $report['class'][Level::MAJOR][0]->getTarget());
 	}
 
-	public function testV010CompareSimilarClassMethodWithDifferentSignatureLength()
+	public function testCompareSimilarClassMethodWithDifferentSignatureLength()
 	{
-		$beforeClass = new Class_('tmp', [
+		$classBefore = new Class_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod', [
 					'params' => [
@@ -170,7 +170,7 @@ class ClassMethodAnalyzerTest extends TestCase {
 			],
 		]);
 
-		$afterClass = new Class_('tmp', [
+		$classAfter = new Class_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod', [
 					'params' => [
@@ -180,17 +180,17 @@ class ClassMethodAnalyzerTest extends TestCase {
 			],
 		]);
 
-		$analyzer = new ClassMethodAnalyzer();
-		$report = $analyzer->analyze($beforeClass, $afterClass);
+		$analyzer = new ClassMethodAnalyzer('class');
+		$report = $analyzer->analyze($classBefore, $classAfter);
 
-		Assert::assertDifference($report, 'method', Level::MAJOR);
-		$this->assertSame('Method parameter changed.', $report['method'][Level::MAJOR][0]->getReason());
-		$this->assertSame('tmp::tmpMethod', $report['method'][Level::MAJOR][0]->getTarget());
+		Assert::assertDifference($report, 'class', Level::MAJOR);
+		$this->assertSame('Method parameter changed.', $report['class'][Level::MAJOR][0]->getReason());
+		$this->assertSame('tmp::tmpMethod', $report['class'][Level::MAJOR][0]->getTarget());
 	}
 
 	public function testSimilarClassMethodImplementation()
 	{
-		$beforeClass = new Class_('tmp', [
+		$classBefore = new Class_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod', [
 					'stmts' => [
@@ -200,7 +200,7 @@ class ClassMethodAnalyzerTest extends TestCase {
 			],
 		]);
 
-		$afterClass = new Class_('tmp', [
+		$classAfter = new Class_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod', [
 					'stmts' => [
@@ -210,15 +210,15 @@ class ClassMethodAnalyzerTest extends TestCase {
 			],
 		]);
 
-		$analyzer = new ClassMethodAnalyzer();
-		$report = $analyzer->analyze($beforeClass, $afterClass);
+		$analyzer = new ClassMethodAnalyzer('class');
+		$report = $analyzer->analyze($classBefore, $classAfter);
 
 		Assert::assertNoDifference($report);
 	}
 
 	public function testV023ClassMethodImplementationChanged()
 	{
-		$beforeClass = new Class_('tmp', [
+		$classBefore = new Class_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod', [
 					'stmts' => [
@@ -228,7 +228,7 @@ class ClassMethodAnalyzerTest extends TestCase {
 			],
 		]);
 
-		$afterClass = new Class_('tmp', [
+		$classAfter = new Class_('tmp', [
 			'stmts' => [
 				new ClassMethod('tmpMethod', [
 					'stmts' => [
@@ -238,11 +238,11 @@ class ClassMethodAnalyzerTest extends TestCase {
 			],
 		]);
 
-		$analyzer = new ClassMethodAnalyzer();
-		$report = $analyzer->analyze($beforeClass, $afterClass);
+		$analyzer = new ClassMethodAnalyzer('class');
+		$report = $analyzer->analyze($classBefore, $classAfter);
 
-		Assert::assertDifference($report, 'method', Level::PATCH);
-		$this->assertSame('Method implementation changed.', $report['method'][Level::PATCH][0]->getReason());
-		$this->assertSame('tmp::tmpMethod', $report['method'][Level::PATCH][0]->getTarget());
+		Assert::assertDifference($report, 'class', Level::PATCH);
+		$this->assertSame('Method implementation changed.', $report['class'][Level::PATCH][0]->getReason());
+		$this->assertSame('tmp::tmpMethod', $report['class'][Level::PATCH][0]->getTarget());
 	}
 }

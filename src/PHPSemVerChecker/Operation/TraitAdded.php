@@ -3,12 +3,17 @@
 namespace PHPSemVerChecker\Operation;
 
 use PhpParser\Node\Stmt\Trait_;
+use PHPSemVerChecker\SemanticVersioning\Level;
 
 class TraitAdded extends Operation {
 	/**
 	 * @var string
 	 */
 	protected $code = 'V046';
+	/**
+	 * @var int
+	 */
+	protected $level = Level::MINOR;
 	/**
 	 * @var string
 	 */

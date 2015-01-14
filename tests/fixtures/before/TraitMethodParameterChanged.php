@@ -2,7 +2,7 @@
 
 namespace fixtures;
 
-trait TraitMethodParameterMismatch
+trait TraitMethodParameterChanged
 {
 	public function newMethod()
 	{

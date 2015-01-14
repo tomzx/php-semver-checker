@@ -15,234 +15,202 @@ use PHPSemVerChecker\Test\TestCase;
 class TraitMethodAnalyzerTest extends TestCase {
 	public function testCompareSimilarPublicClassMethod()
 	{
-		$beforeClass = new Trait_('tmp', [
-			'stmts' => [
-				new ClassMethod('tmpMethod'),
-			],
+		$traitBefore = new Trait_('tmp', [
+			new ClassMethod('tmpMethod'),
 		]);
 
-		$afterClass = new Trait_('tmp', [
-			'stmts' => [
-				new ClassMethod('tmpMethod'),
-			],
+		$traitAfter = new Trait_('tmp', [
+			new ClassMethod('tmpMethod'),
 		]);
 
-		$analyzer = new ClassMethodAnalyzer();
-		$report = $analyzer->analyze($beforeClass, $afterClass);
+		$analyzer = new ClassMethodAnalyzer('trait');
+		$report = $analyzer->analyze($traitBefore, $traitAfter);
 
 		Assert::assertNoDifference($report);
 	}
 
 	public function testV038PublicClassMethodRemoved()
 	{
-		$beforeClass = new Trait_('tmp', [
-			'stmts' => [
-				new ClassMethod('tmpMethod'),
-			],
+		$traitBefore = new Trait_('tmp', [
+			new ClassMethod('tmpMethod'),
 		]);
 
-		$afterClass = new Trait_('tmp');
+		$traitAfter = new Trait_('tmp');
 
-		$analyzer = new ClassMethodAnalyzer();
-		$report = $analyzer->analyze($beforeClass, $afterClass);
+		$analyzer = new ClassMethodAnalyzer('trait');
+		$report = $analyzer->analyze($traitBefore, $traitAfter);
 
-		Assert::assertDifference($report, 'method', Level::MAJOR);
-		$this->assertSame('Method has been removed.', $report['method'][Level::MAJOR][0]->getReason());
-		$this->assertSame('tmp::tmpMethod', $report['method'][Level::MAJOR][0]->getTarget());
+		Assert::assertDifference($report, 'trait', Level::MAJOR);
+		$this->assertSame('Method has been removed.', $report['trait'][Level::MAJOR][0]->getReason());
+		$this->assertSame('tmp::tmpMethod', $report['trait'][Level::MAJOR][0]->getTarget());
 	}
 
 	public function testV047PublicClassMethodAdded()
 	{
-		$beforeClass = new Trait_('tmp');
+		$traitBefore = new Trait_('tmp');
 
-		$afterClass = new Trait_('tmp', [
-			'stmts' => [
-				new ClassMethod('tmpMethod'),
-			],
+		$traitAfter = new Trait_('tmp', [
+			new ClassMethod('tmpMethod'),
 		]);
 
-		$analyzer = new ClassMethodAnalyzer();
-		$report = $analyzer->analyze($beforeClass, $afterClass);
+		$analyzer = new ClassMethodAnalyzer('trait');
+		$report = $analyzer->analyze($traitBefore, $traitAfter);
 
-		Assert::assertDifference($report, 'method', Level::MINOR);
-		$this->assertSame('Method has been added.', $report['method'][Level::MINOR][0]->getReason());
-		$this->assertSame('tmp::tmpMethod', $report['method'][Level::MINOR][0]->getTarget());
+		Assert::assertDifference($report, 'trait', Level::MINOR);
+		$this->assertSame('Method has been added.', $report['trait'][Level::MINOR][0]->getReason());
+		$this->assertSame('tmp::tmpMethod', $report['trait'][Level::MINOR][0]->getTarget());
 	}
 
 	public function testSimilarPublicClassMethodSignature()
 	{
-		$beforeClass = new Trait_('tmp', [
-			'stmts' => [
-				new ClassMethod('tmpMethod', [
-					'params' => [
-						new Param('a', null),
-					],
-				]),
-			],
+		$traitBefore = new Trait_('tmp', [
+			new ClassMethod('tmpMethod', [
+				'params' => [
+					new Param('a', null),
+				],
+			]),
 		]);
 
-		$afterClass = new Trait_('tmp', [
-			'stmts' => [
-				new ClassMethod('tmpMethod', [
-					'params' => [
-						new Param('a', null),
-					],
-				]),
-			],
+		$traitAfter = new Trait_('tmp', [
+			new ClassMethod('tmpMethod', [
+				'params' => [
+					new Param('a', null),
+				],
+			]),
 		]);
 
-		$analyzer = new ClassMethodAnalyzer();
-		$report = $analyzer->analyze($beforeClass, $afterClass);
+		$analyzer = new ClassMethodAnalyzer('trait');
+		$report = $analyzer->analyze($traitBefore, $traitAfter);
 
-		Assert::assertNoDifference($report, 'method');
+		Assert::assertNoDifference($report, 'trait');
 	}
 
-	public function testV042CompareSimilarPublicClassMethodWithDifferentSignatureVariables()
+	public function testV064CompareSimilarPublicClassMethodWithDifferentSignatureVariables()
 	{
-		$beforeClass = new Trait_('tmp', [
-			'stmts' => [
-				new ClassMethod('tmpMethod', [
-					'params' => [
-						new Param('a', null),
-					],
-				]),
-			],
+		$traitBefore = new Trait_('tmp', [
+			new ClassMethod('tmpMethod', [
+				'params' => [
+					new Param('a', null),
+				],
+			]),
 		]);
 
-		$afterClass = new Trait_('tmp', [
-			'stmts' => [
-				new ClassMethod('tmpMethod', [
-					'params' => [
-						new Param('b', null),
-					],
-				]),
-			],
+		$traitAfter = new Trait_('tmp', [
+			new ClassMethod('tmpMethod', [
+				'params' => [
+					new Param('b', null),
+				],
+			]),
 		]);
 
-		$analyzer = new ClassMethodAnalyzer();
-		$report = $analyzer->analyze($beforeClass, $afterClass);
+		$analyzer = new ClassMethodAnalyzer('trait');
+		$report = $analyzer->analyze($traitBefore, $traitAfter);
 
-		Assert::assertDifference($report, 'method', Level::PATCH);
-		$this->assertSame('Method parameter changed.', $report['method'][Level::PATCH][0]->getReason());
-		$this->assertSame('tmp::tmpMethod', $report['method'][Level::PATCH][0]->getTarget());
+		Assert::assertDifference($report, 'trait', Level::PATCH);
+		$this->assertSame('Method parameter name changed.', $report['trait'][Level::PATCH][0]->getReason());
+		$this->assertSame('tmp::tmpMethod', $report['trait'][Level::PATCH][0]->getTarget());
 	}
 
 	public function testV042CompareSimilarPublicClassMethodWithDifferentSignatureTypehint()
 	{
-		$beforeClass = new Trait_('tmp', [
-			'stmts' => [
-				new ClassMethod('tmpMethod', [
-					'params' => [
-						new Param('a', null, 'A'),
-					],
-				]),
-			],
+		$traitBefore = new Trait_('tmp', [
+			new ClassMethod('tmpMethod', [
+				'params' => [
+					new Param('a', null, 'A'),
+				],
+			]),
 		]);
 
-		$afterClass = new Trait_('tmp', [
-			'stmts' => [
-				new ClassMethod('tmpMethod', [
-					'params' => [
-						new Param('b', null, 'B'),
-					],
-				]),
-			],
+		$traitAfter = new Trait_('tmp', [
+			new ClassMethod('tmpMethod', [
+				'params' => [
+					new Param('b', null, 'B'),
+				],
+			]),
 		]);
 
-		$analyzer = new ClassMethodAnalyzer();
-		$report = $analyzer->analyze($beforeClass, $afterClass);
+		$analyzer = new ClassMethodAnalyzer('trait');
+		$report = $analyzer->analyze($traitBefore, $traitAfter);
 
-		Assert::assertDifference($report, 'method', Level::MAJOR);
-		$this->assertSame('Method parameter changed.', $report['method'][Level::MAJOR][0]->getReason());
-		$this->assertSame('tmp::tmpMethod', $report['method'][Level::MAJOR][0]->getTarget());
+		Assert::assertDifference($report, 'trait', Level::MAJOR);
+		$this->assertSame('Method parameter changed.', $report['trait'][Level::MAJOR][0]->getReason());
+		$this->assertSame('tmp::tmpMethod', $report['trait'][Level::MAJOR][0]->getTarget());
 	}
 
 	public function testV042CompareSimilarPublicClassMethodWithDifferentSignatureLength()
 	{
-		$beforeClass = new Trait_('tmp', [
-			'stmts' => [
-				new ClassMethod('tmpMethod', [
-					'params' => [
-						new Param('a', null, 'A'),
-						new Param('b', null, 'B'),
-					],
-				]),
-			],
+		$traitBefore = new Trait_('tmp', [
+			new ClassMethod('tmpMethod', [
+				'params' => [
+					new Param('a', null, 'A'),
+					new Param('b', null, 'B'),
+				],
+			]),
 		]);
 
-		$afterClass = new Trait_('tmp', [
-			'stmts' => [
-				new ClassMethod('tmpMethod', [
-					'params' => [
-						new Param('b', null, 'B'),
-					],
-				]),
-			],
+		$traitAfter = new Trait_('tmp', [
+			new ClassMethod('tmpMethod', [
+				'params' => [
+					new Param('b', null, 'B'),
+				],
+			]),
 		]);
 
-		$analyzer = new ClassMethodAnalyzer();
-		$report = $analyzer->analyze($beforeClass, $afterClass);
+		$analyzer = new ClassMethodAnalyzer('trait');
+		$report = $analyzer->analyze($traitBefore, $traitAfter);
 
-		Assert::assertDifference($report, 'method', Level::MAJOR);
-		$this->assertSame('Method parameter changed.', $report['method'][Level::MAJOR][0]->getReason());
-		$this->assertSame('tmp::tmpMethod', $report['method'][Level::MAJOR][0]->getTarget());
+		Assert::assertDifference($report, 'trait', Level::MAJOR);
+		$this->assertSame('Method parameter changed.', $report['trait'][Level::MAJOR][0]->getReason());
+		$this->assertSame('tmp::tmpMethod', $report['trait'][Level::MAJOR][0]->getTarget());
 	}
 
 	public function testSimilarPublicClassMethodImplementation()
 	{
-		$beforeClass = new Trait_('tmp', [
-			'stmts' => [
+		$traitBefore = new Trait_('tmp', [
+			new ClassMethod('tmpMethod', [
+				'stmts' => [
+					new MethodCall(new Variable('test'), 'someMethod'),
+				],
+			]),
+		]);
+
+		$traitAfter = new Trait_('tmp', [
 				new ClassMethod('tmpMethod', [
 					'stmts' => [
 						new MethodCall(new Variable('test'), 'someMethod'),
 					],
 				]),
-			],
 		]);
 
-		$afterClass = new Trait_('tmp', [
-			'stmts' => [
-				new ClassMethod('tmpMethod', [
-					'stmts' => [
-						new MethodCall(new Variable('test'), 'someMethod'),
-					],
-				]),
-			],
-		]);
-
-		$analyzer = new ClassMethodAnalyzer();
-		$report = $analyzer->analyze($beforeClass, $afterClass);
+		$analyzer = new ClassMethodAnalyzer('trait');
+		$report = $analyzer->analyze($traitBefore, $traitAfter);
 
 		Assert::assertNoDifference($report);
 	}
 
 	public function testV052PublicClassMethodImplementationChanged()
 	{
-		$beforeClass = new Trait_('tmp', [
-			'stmts' => [
-				new ClassMethod('tmpMethod', [
+		$traitBefore = new Trait_('tmp', [
+			new ClassMethod('tmpMethod', [
 					'stmts' => [
 						new MethodCall(new Variable('test'), 'someMethod'),
 					],
 				]),
-			],
 		]);
 
-		$afterClass = new Trait_('tmp', [
-			'stmts' => [
+		$traitAfter = new Trait_('tmp', [
 				new ClassMethod('tmpMethod', [
 					'stmts' => [
 						new MethodCall(new Variable('test'), 'someOtherMethod'),
 					],
 				]),
-			],
 		]);
 
-		$analyzer = new ClassMethodAnalyzer();
-		$report = $analyzer->analyze($beforeClass, $afterClass);
+		$analyzer = new ClassMethodAnalyzer('trait');
+		$report = $analyzer->analyze($traitBefore, $traitAfter);
 
-		Assert::assertDifference($report, 'method', Level::PATCH);
-		$this->assertSame('Method implementation changed.', $report['method'][Level::PATCH][0]->getReason());
-		$this->assertSame('tmp::tmpMethod', $report['method'][Level::PATCH][0]->getTarget());
+		Assert::assertDifference($report, 'trait', Level::PATCH);
+		$this->assertSame('Method implementation changed.', $report['trait'][Level::PATCH][0]->getReason());
+		$this->assertSame('tmp::tmpMethod', $report['trait'][Level::PATCH][0]->getTarget());
 	}
 }

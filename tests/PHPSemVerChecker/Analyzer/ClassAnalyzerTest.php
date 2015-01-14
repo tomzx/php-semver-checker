@@ -15,11 +15,11 @@ class ClassAnalyzerTest extends TestCase {
 		$before = new Registry();
 		$after = new Registry();
 
-		$beforeClass = new Class_('tmp');
-		$before->addClass($beforeClass);
+		$classBefore = new Class_('tmp');
+		$before->addClass($classBefore);
 
-		$afterClass = new Class_('tmp');
-		$after->addClass($afterClass);
+		$classAfter = new Class_('tmp');
+		$after->addClass($classAfter);
 
 		$analyzer = new ClassAnalyzer();
 		$report = $analyzer->analyze($before, $after);

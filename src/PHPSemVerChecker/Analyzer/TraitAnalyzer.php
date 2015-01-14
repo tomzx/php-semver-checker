@@ -27,7 +27,7 @@ class TraitAnalyzer
 			$traitBefore = $registryBefore->data['trait'][$key];
 
 			$data = new TraitRemoved($fileBefore, $traitBefore);
-			$report->addTrait($data, Level::MAJOR);
+			$report->addTrait($data);
 		}
 
 		foreach ($toVerify as $key) {
@@ -51,7 +51,7 @@ class TraitAnalyzer
 			$traitAfter = $registryAfter->data['trait'][$key];
 
 			$data = new TraitAdded($fileAfter, $traitAfter);
-			$report->addTrait($data, Level::MINOR);
+			$report->addTrait($data);
 		}
 
 		return $report;

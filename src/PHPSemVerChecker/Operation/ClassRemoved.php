@@ -3,12 +3,17 @@
 namespace PHPSemVerChecker\Operation;
 
 use PhpParser\Node\Stmt\Class_;
+use PHPSemVerChecker\SemanticVersioning\Level;
 
 class ClassRemoved extends Operation {
 	/**
 	 * @var string
 	 */
 	protected $code = 'V005';
+	/**
+	 * @var int
+	 */
+	protected $level = Level::MAJOR;
 	/**
 	 * @var string
 	 */

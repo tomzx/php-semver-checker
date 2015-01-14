@@ -4,12 +4,17 @@ namespace PHPSemVerChecker\Operation;
 
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Function_;
+use PHPSemVerChecker\SemanticVersioning\Level;
 
 class FunctionImplementationChanged extends Operation {
 	/**
 	 * @var string
 	 */
 	protected $code = 'V004';
+	/**
+	 * @var int
+	 */
+	protected $level = Level::PATCH;
 	/**
 	 * @var string
 	 */

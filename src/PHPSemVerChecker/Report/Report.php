@@ -23,69 +23,54 @@ class Report implements ArrayAccess, IteratorAggregate
 			'class'     => $levels,
 			'function'  => $levels,
 			'interface' => $levels,
-			'method'    => $levels,
 			'trait'     => $levels,
 		];
 	}
 
 	/**
 	 * @param \PHPSemVerChecker\Operation\Operation $classOperation
-	 * @param int                                   $level
 	 * @return \PHPSemVerChecker\Report\Report
 	 */
-	public function addClass(Operation $classOperation, $level)
+	public function addClass(Operation $classOperation)
 	{
-		return $this->add('class', $classOperation, $level);
-	}
-
-	/**
-	 * @param \PHPSemVerChecker\Operation\Operation $classMethodOperation
-	 * @param int                                   $level
-	 * @return \PHPSemVerChecker\Report\Report
-	 */
-	public function addClassMethod(Operation $classMethodOperation, $level)
-	{
-		return $this->add('method', $classMethodOperation, $level);
+		return $this->add('class', $classOperation);
 	}
 
 	/**
 	 * @param \PHPSemVerChecker\Operation\Operation $functionOperation
-	 * @param int                                   $level
 	 * @return \PHPSemVerChecker\Report\Report
 	 */
-	public function addFunction(Operation $functionOperation, $level)
+	public function addFunction(Operation $functionOperation)
 	{
-		return $this->add('function', $functionOperation, $level);
+		return $this->add('function', $functionOperation);
 	}
 
 	/**
 	 * @param \PHPSemVerChecker\Operation\Operation $interfaceOperation
-	 * @param int                                   $level
 	 * @return \PHPSemVerChecker\Report\Report
 	 */
-	public function addInterface(Operation $interfaceOperation, $level)
+	public function addInterface(Operation $interfaceOperation)
 	{
-		return $this->add('interface', $interfaceOperation, $level);
+		return $this->add('interface', $interfaceOperation);
 	}
 
 	/**
 	 * @param \PHPSemVerChecker\Operation\Operation $traitOperation
-	 * @param  int                                  $level
 	 * @return \PHPSemVerChecker\Report\Report
 	 */
-	public function addTrait(Operation $traitOperation, $level)
+	public function addTrait(Operation $traitOperation)
 	{
-		return $this->add('trait', $traitOperation, $level);
+		return $this->add('trait', $traitOperation);
 	}
 
 	/**
 	 * @param string                                $context
 	 * @param \PHPSemVerChecker\Operation\Operation $operation
-	 * @param int                                   $level
 	 * @return $this
 	 */
-	public function add($context, Operation $operation, $level)
+	public function add($context, Operation $operation)
 	{
+		$level = $operation->getLevel();
 		$this->differences[$context][$level][] = $operation;
 
 		return $this;

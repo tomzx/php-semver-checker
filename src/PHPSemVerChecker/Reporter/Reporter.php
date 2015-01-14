@@ -50,7 +50,6 @@ class Reporter
 			'class',
 			'function',
 			'interface',
-			'method',
 			'trait',
 		];
 

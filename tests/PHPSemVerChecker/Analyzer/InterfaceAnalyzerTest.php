@@ -15,11 +15,11 @@ class InterfaceAnalyzerTest extends TestCase {
 		$before = new Registry();
 		$after = new Registry();
 
-		$beforeInterface = new Interface_('tmp');
-		$before->addInterface($beforeInterface);
+		$interfaceBefore = new Interface_('tmp');
+		$before->addInterface($interfaceBefore);
 
-		$afterInterface = new Interface_('tmp');
-		$after->addInterface($afterInterface);
+		$interfaceAfter = new Interface_('tmp');
+		$after->addInterface($interfaceAfter);
 
 		$analyzer = new InterfaceAnalyzer();
 		$report = $analyzer->analyze($before, $after);

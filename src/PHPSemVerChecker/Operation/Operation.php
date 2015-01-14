@@ -8,6 +8,10 @@ abstract class Operation {
 	 */
 	protected $code;
 	/**
+	 * @var int
+	 */
+	protected $level;
+	/**
 	 * @var string
 	 */
 	protected $reason;
@@ -31,6 +35,18 @@ abstract class Operation {
 	public function setCode($code)
 	{
 		$this->code = $code;
+
+		return $this;
+	}
+
+	public function getLevel()
+	{
+		return $this->level;
+	}
+
+	public function setLevel($level)
+	{
+		$this->level = $level;
 
 		return $this;
 	}

@@ -6,27 +6,39 @@ use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\ClassMethod;
 use PHPSemVerChecker\SemanticVersioning\Level;
 
-class ClassMethodAdded extends ClassMethodOperation {
+class ClassMethodParameterNameChanged extends ClassMethodOperation {
 	/**
 	 * @var array
 	 */
 	protected $code = [
-		'class' => ['V015', 'V016', 'V028'],
-		'interface' => ['V034'],
-		'trait' => ['V047', 'V048', 'V057'],
+		'class' => ['V060', 'V061', 'V062'],
+		'interface' => ['V063'],
+		'trait' => ['V064', 'V065', 'V066'],
 	];
 	/**
 	 * @var int
 	 */
 	protected $level = [
-		'class' => [Level::MINOR, Level::MINOR, Level::MINOR],
-		'interface' => [Level::MAJOR],
-		'trait' => [Level::MINOR, Level::MINOR, Level::MINOR],
+		'class' => [Level::PATCH, Level::PATCH, Level::PATCH],
+		'interface' => [Level::PATCH],
+		'trait' => [Level::PATCH, Level::PATCH, Level::PATCH],
 	];
 	/**
 	 * @var string
 	 */
-	protected $reason = 'Method has been added.';
+	protected $reason = 'Method parameter name changed.';
+	/**
+	 * @var string
+	 */
+	protected $fileBefore;
+	/**
+	 * @var \PhpParser\Node\Stmt
+	 */
+	protected $contextBefore;
+	/**
+	 * @var \PhpParser\Node\Stmt\ClassMethod
+	 */
+	protected $classMethodBefore;
 	/**
 	 * @var string
 	 */
@@ -42,14 +54,26 @@ class ClassMethodAdded extends ClassMethodOperation {
 
 	/**
 	 * @param string                           $context
+	 * @param string                           $fileBefore
+	 * @param \PhpParser\Node\Stmt             $contextBefore
+	 * @param \PhpParser\Node\Stmt\ClassMethod $classMethodBefore
 	 * @param string                           $fileAfter
 	 * @param \PhpParser\Node\Stmt             $contextAfter
 	 * @param \PhpParser\Node\Stmt\ClassMethod $classMethodAfter
 	 */
-	public function __construct($context, $fileAfter, Stmt $contextAfter, ClassMethod $classMethodAfter)
+	public function __construct($context,
+								$fileBefore,
+								Stmt $contextBefore,
+								ClassMethod $classMethodBefore,
+								$fileAfter,
+								Stmt $contextAfter,
+								ClassMethod $classMethodAfter)
 	{
 		$this->context = $context;
 		$this->visibility = $this->getVisibility($classMethodAfter);
+		$this->fileBefore = $fileBefore;
+		$this->contextBefore = $contextBefore;
+		$this->classMethodBefore = $classMethodBefore;
 		$this->fileAfter = $fileAfter;
 		$this->contextAfter = $contextAfter;
 		$this->classMethodAfter = $classMethodAfter;
@@ -80,6 +104,6 @@ class ClassMethodAdded extends ClassMethodOperation {
 		if ($this->contextAfter->namespacedName) {
 			$fqcn = $this->contextAfter->namespacedName->toString();
 		}
-		return $fqcn . '::' . $this->classMethodAfter->name;
+		return $fqcn . '::' . $this->classMethodBefore->name;
 	}
 }

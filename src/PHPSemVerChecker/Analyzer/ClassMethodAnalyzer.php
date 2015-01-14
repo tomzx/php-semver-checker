@@ -9,8 +9,8 @@ use PHPSemVerChecker\Comparator\Signature;
 use PHPSemVerChecker\Operation\ClassMethodAdded;
 use PHPSemVerChecker\Operation\ClassMethodImplementationChanged;
 use PHPSemVerChecker\Operation\ClassMethodParameterChanged;
+use PHPSemVerChecker\Operation\ClassMethodParameterNameChanged;
 use PHPSemVerChecker\Operation\ClassMethodRemoved;
-use PHPSemVerChecker\Operation\Unknown;
 use PHPSemVerChecker\Report\Report;
 use PHPSemVerChecker\SemanticVersioning\Level;
 
@@ -49,14 +49,6 @@ class ClassMethodAnalyzer
 			$methodsAfterKeyed[$method->name] = $method;
 		}
 
-		$methodsBeforeKeyed = array_filter($methodsBeforeKeyed, function (ClassMethod $method) {
-			return $method->isPublic();
-		});
-
-		$methodsAfterKeyed = array_filter($methodsAfterKeyed, function (ClassMethod $method) {
-			return $method->isPublic();
-		});
-
 		$methodNamesBefore = array_keys($methodsBeforeKeyed);
 		$methodNamesAfter = array_keys($methodsAfterKeyed);
 		$methodsAdded = array_diff($methodNamesAfter, $methodNamesBefore);
@@ -69,7 +61,7 @@ class ClassMethodAnalyzer
 		foreach ($methodsRemoved as $method) {
 			$methodBefore = $methodsBeforeKeyed[$method];
 			$data = new ClassMethodRemoved($this->context, $this->fileBefore, $contextBefore, $methodBefore);
-			$report->addClassMethod($data, Level::MAJOR);
+			$report->add($this->context, $data);
 		}
 
 		foreach ($methodsToVerify as $method) {
@@ -82,16 +74,18 @@ class ClassMethodAnalyzer
 			if ($methodBefore != $methodAfter) {
 				$paramsBefore = $methodBefore->params;
 				$paramsAfter = $methodAfter->params;
-				// Signature
 
+				// Signature
+				$signatureChanged = false;
 				if ( ! Signature::isSameTypehints($paramsBefore, $paramsAfter)) {
 					$data = new ClassMethodParameterChanged($this->context, $this->fileBefore, $contextBefore, $methodBefore, $this->fileAfter, $contextAfter, $methodAfter);
-					$report->addClassMethod($data, Level::MAJOR);
+					$report->add($this->context, $data);
+					$signatureChanged = true;
 				}
 
-				if ( ! Signature::isSameVariables($paramsBefore, $paramsAfter)) {
-					$data = new ClassMethodParameterChanged($this->context, $this->fileBefore, $contextBefore, $methodBefore, $this->fileAfter, $contextAfter, $methodAfter);
-					$report->addClassMethod($data, Level::PATCH);
+				if ( ! $signatureChanged && ! Signature::isSameVariables($paramsBefore, $paramsAfter)) {
+					$data = new ClassMethodParameterNameChanged($this->context, $this->fileBefore, $contextBefore, $methodBefore, $this->fileAfter, $contextAfter, $methodAfter);
+					$report->add($this->context, $data);
 				}
 
 				// Different length (considering params with defaults)
@@ -99,7 +93,7 @@ class ClassMethodAnalyzer
 				// Difference in source code
 				if ($methodBefore->stmts != $methodAfter->stmts) {
 					$data = new ClassMethodImplementationChanged($this->context, $this->fileBefore, $contextBefore, $methodBefore, $this->fileAfter, $contextAfter, $methodAfter);
-					$report->addClassMethod($data, Level::PATCH);
+					$report->add($this->context, $data);
 				}
 			}
 		}
@@ -108,7 +102,7 @@ class ClassMethodAnalyzer
 		foreach ($methodsAdded as $method) {
 			$methodAfter = $methodsAfterKeyed[$method];
 			$data = new ClassMethodAdded($this->context, $this->fileAfter, $contextAfter, $methodAfter);
-			$report->addClassMethod($data, Level::MINOR);
+			$report->add($this->context, $data);
 		}
 
 		return $report;

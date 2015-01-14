@@ -27,7 +27,7 @@ class InterfaceAnalyzer
 			$interfaceBefore = $registryBefore->data['interface'][$key];
 
 			$data = new InterfaceRemoved($fileBefore, $interfaceBefore);
-			$report->addInterface($data, Level::MAJOR);
+			$report->addInterface($data);
 		}
 
 		foreach ($toVerify as $key) {
@@ -51,7 +51,7 @@ class InterfaceAnalyzer
 			$interfaceAfter = $registryAfter->data['interface'][$key];
 
 			$data = new InterfaceAdded($fileAfter, $interfaceAfter);
-			$report->addInterface($data, Level::MAJOR);
+			$report->addInterface($data);
 		}
 
 		return $report;

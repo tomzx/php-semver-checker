@@ -101,7 +101,7 @@ class FunctionAnalyzerTest extends TestCase {
 		$report = $analyzer->analyze($before, $after);
 
 		Assert::assertDifference($report, 'function', Level::PATCH);
-		$this->assertSame('Function parameter changed.', $report['function'][Level::PATCH][0]->getReason());
+		$this->assertSame('Function parameter name changed.', $report['function'][Level::PATCH][0]->getReason());
 		$this->assertSame('tmp', $report['function'][Level::PATCH][0]->getTarget());
 	}
 

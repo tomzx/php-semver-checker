@@ -27,7 +27,7 @@ class ClassAnalyzer
 			$classBefore = $registryBefore->data['class'][$key];
 
 			$data = new ClassRemoved($fileBefore, $classBefore);
-			$report->addClass($data, Level::MAJOR);
+			$report->addClass($data);
 		}
 
 		foreach ($toVerify as $key) {
@@ -51,7 +51,7 @@ class ClassAnalyzer
 			$classAfter = $registryAfter->data['class'][$key];
 
 			$data = new ClassAdded($fileAfter, $classAfter);
-			$report->addClass($data, Level::MINOR);
+			$report->addClass($data);
 		}
 
 		return $report;

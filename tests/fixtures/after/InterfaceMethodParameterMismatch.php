@@ -2,7 +2,7 @@
 
 namespace fixtures;
 
-interface InterfaceMethodParameterMismatch
+interface InterfaceMethodParameterChanged
 {
 	public function newMethod($someParameter);
 }

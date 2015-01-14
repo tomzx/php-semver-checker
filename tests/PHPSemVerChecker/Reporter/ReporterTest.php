@@ -7,11 +7,13 @@ use Mockery as m;
 use PHPSemVerChecker\Reporter\Reporter;
 use PHPSemVerChecker\SemanticVersioning\Level;
 use PHPSemVerChecker\Test\TestCase;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 
 class ReporterTest extends TestCase {
 	public function testOutput()
 	{
+		$input = new ArrayInput([]);
 		$output = new NullOutput();
 		$report = m::mock('PHPSemVerChecker\Report\Report');
 
@@ -34,7 +36,7 @@ class ReporterTest extends TestCase {
 			->shouldReceive('hasDifferences')->andReturn(true)
 			->shouldReceive('getLevelForContext')->andReturn(Level::MAJOR);
 
-		$reporter = new Reporter($report);
+		$reporter = new Reporter($report, $input);
 		$reporter->output($output);
 	}
 }

@@ -2,21 +2,25 @@
 
 namespace PHPSemVerChecker\Operation;
 
-use PhpParser\Node\Stmt\Stmt;
+use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\ClassMethod;
+use PHPSemVerChecker\SemanticVersioning\Level;
 
 class ClassMethodImplementationChanged extends ClassMethodOperation {
 	/**
 	 * @var array
 	 */
 	protected $code = [
-		'class' => 'V023',
-		'trait' => 'V038',
+		'class' => ['V023', 'V024', 'V025'],
+		'trait' => ['V052', 'V053', 'V054'],
 	];
 	/**
-	 * @var string
+	 * @var int
 	 */
-	protected $context;
+	protected $level = [
+		'class' => [Level::PATCH, Level::PATCH, Level::PATCH],
+		'trait' => [Level::PATCH, Level::PATCH, Level::PATCH],
+	];
 	/**
 	 * @var string
 	 */
@@ -26,7 +30,7 @@ class ClassMethodImplementationChanged extends ClassMethodOperation {
 	 */
 	protected $fileBefore;
 	/**
-	 * @var \PhpParser\Node\Stmt
+	 * @var Stmt
 	 */
 	protected $contextBefore;
 	/**
@@ -38,7 +42,7 @@ class ClassMethodImplementationChanged extends ClassMethodOperation {
 	 */
 	protected $fileAfter;
 	/**
-	 * @var \PhpParser\Node\Stmt
+	 * @var Stmt
 	 */
 	protected $contextAfter;
 	/**
@@ -55,9 +59,16 @@ class ClassMethodImplementationChanged extends ClassMethodOperation {
 	 * @param \PhpParser\Node\Stmt             $contextAfter
 	 * @param \PhpParser\Node\Stmt\ClassMethod $classMethodAfter
 	 */
-	public function __construct($context, $fileBefore, \PhpParser\Node\Stmt $contextBefore, ClassMethod $classMethodBefore, $fileAfter, \PhpParser\Node\Stmt $contextAfter, ClassMethod $classMethodAfter)
+	public function __construct($context,
+								$fileBefore,
+								Stmt $contextBefore,
+								ClassMethod $classMethodBefore,
+								$fileAfter,
+								Stmt $contextAfter,
+								ClassMethod $classMethodAfter)
 	{
 		$this->context = $context;
+		$this->visibility = $this->getVisibility($classMethodAfter);
 		$this->fileBefore = $fileBefore;
 		$this->contextBefore = $contextBefore;
 		$this->classMethodBefore = $classMethodBefore;

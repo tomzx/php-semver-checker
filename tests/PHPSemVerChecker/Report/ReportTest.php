@@ -14,18 +14,10 @@ class ReportTest extends TestCase {
 
 		$operation = m::mock('PHPSemVerChecker\Operation\Operation');
 
-		$report->addClass($operation, Level::MAJOR);
+		$operation->shouldReceive('getLevel')->once()->andReturn(Level::MAJOR);
+
+		$report->addClass($operation);
 		$this->assertSame($operation, $report['class'][Level::MAJOR][0]);
-	}
-
-	public function testAddClassMethod()
-	{
-		$report = new Report();
-
-		$operation = m::mock('PHPSemVerChecker\Operation\Operation');
-
-		$report->addClassMethod($operation, Level::MAJOR);
-		$this->assertSame($operation, $report['method'][Level::MAJOR][0]);
 	}
 
 	public function testAddFunction()
@@ -34,7 +26,9 @@ class ReportTest extends TestCase {
 
 		$operation = m::mock('PHPSemVerChecker\Operation\Operation');
 
-		$report->addFunction($operation, Level::MAJOR);
+		$operation->shouldReceive('getLevel')->once()->andReturn(Level::MAJOR);
+
+		$report->addFunction($operation);
 		$this->assertSame($operation, $report['function'][Level::MAJOR][0]);
 	}
 
@@ -44,7 +38,9 @@ class ReportTest extends TestCase {
 
 		$operation = m::mock('PHPSemVerChecker\Operation\Operation');
 
-		$report->addInterface($operation, Level::MAJOR);
+		$operation->shouldReceive('getLevel')->once()->andReturn(Level::MAJOR);
+
+		$report->addInterface($operation);
 		$this->assertSame($operation, $report['interface'][Level::MAJOR][0]);
 	}
 
@@ -54,7 +50,9 @@ class ReportTest extends TestCase {
 
 		$operation = m::mock('PHPSemVerChecker\Operation\Operation');
 
-		$report->addTrait($operation, Level::MAJOR);
+		$operation->shouldReceive('getLevel')->once()->andReturn(Level::MAJOR);
+
+		$report->addTrait($operation);
 		$this->assertSame($operation, $report['trait'][Level::MAJOR][0]);
 	}
 
@@ -66,9 +64,12 @@ class ReportTest extends TestCase {
 		$operationA = m::mock('PHPSemVerChecker\Operation\Operation');
 		$operationB = m::mock('PHPSemVerChecker\Operation\Operation');
 
-		$reportA->addClass($operationA, Level::MAJOR);
-		$reportB->addFunction($operationB, Level::MAJOR);
-		$this->assertEmpty($reportA['method'][Level::MAJOR]);
+		$operationA->shouldReceive('getLevel')->once()->andReturn(Level::MAJOR);
+		$operationB->shouldReceive('getLevel')->once()->andReturn(Level::MAJOR);
+
+		$reportA->addClass($operationA);
+		$reportB->addFunction($operationB);
+		$this->assertEmpty($reportA['function'][Level::MAJOR]);
 
 		$reportA->merge($reportB);
 		$this->assertSame($operationB, $reportA['function'][Level::MAJOR][0]);
@@ -87,7 +88,9 @@ class ReportTest extends TestCase {
 		$report = new Report();
 		$operation = m::mock('PHPSemVerChecker\Operation\Operation');
 
-		$report->addClass($operation, Level::MAJOR);
+		$operation->shouldReceive('getLevel')->once()->andReturn(Level::MAJOR);
+
+		$report->addClass($operation);
 
 		$this->assertTrue($report->hasDifferences());
 	}
@@ -104,7 +107,9 @@ class ReportTest extends TestCase {
 		$report = new Report();
 		$operation = m::mock('PHPSemVerChecker\Operation\Operation');
 
-		$report->addClass($operation, Level::MAJOR);
+		$operation->shouldReceive('getLevel')->once()->andReturn(Level::MAJOR);
+
+		$report->addClass($operation);
 
 		$this->assertSame(Level::MAJOR, $report->getLevelForContext());
 	}
