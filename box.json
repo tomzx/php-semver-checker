@@ -1,13 +1,17 @@
 {
+    "alias": "php-semver-checker.phar",
+    "compactors": ["Herrera\\Box\\Compactor\\Php"],
+    "compression": "GZ",
     "directories": ["src"],
     "files": ["license.txt"],
     "finder": [
         {
             "name": "*.php",
-            "exclude": ["tests", "Tests", "phpunit", "mockery"],
+            "exclude": ["test", "tests", "Tests", "phpunit", "mockery"],
             "in": "vendor"
         }
     ],
+    "git-version": "package_version",
     "main": "bin/php-semver-checker",
     "output": "php-semver-checker.phar",
     "stub": true

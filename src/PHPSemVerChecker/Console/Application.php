@@ -7,7 +7,7 @@ use Symfony\Component\Console\Application as SymfonyApplication;
 
 class Application extends SymfonyApplication {
 
-	private static $VERSION = '0.2';
+	const VERSION = '@package_version@';
 
 	private static $logo = '    ____  ______   _______
    / __ \/ ___/ | / / ___/
@@ -18,7 +18,7 @@ class Application extends SymfonyApplication {
 
 	public function __construct()
 	{
-		parent::__construct('PHP Semantic Versioning Checker by Tom Rochette', static::$VERSION);
+		parent::__construct('PHP Semantic Versioning Checker by Tom Rochette', self::VERSION);
 	}
 
 	public function getHelp()
