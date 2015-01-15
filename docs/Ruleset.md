@@ -17,26 +17,26 @@ Code | Level | Rule
 V005 | MAJOR | Class removed
 V006 | MAJOR | Class public method removed
 V007 | MAJOR | Class protected method removed
-V008 | MAJOR | *Class public property removed*
-V009 | MAJOR | *Class protected property removed*
+V008 | MAJOR | Class public property removed
+V009 | MAJOR | Class protected property removed
 V010 | MAJOR | Class public method parameter changed
 V011 | MAJOR | Class protected method parameter changed
 V012 | MAJOR | *New public constructor (does not match supertype)*
 V013 | MAJOR | *New protected constructor (does not match supertype)*
 V015 | MAJOR | Class public method added
 V016 | MAJOR | Class protected method added
+V019 | MAJOR | Class public property added
+V020 | MAJOR | Class protected property added
 V014 | MINOR | Class added
 V017 | MINOR | *Final class public method added*
 V018 | MINOR | *Final class protected method added*
-V019 | MINOR | *Class public property added*
-V020 | MINOR | *Class protected property added*
 V021 | MINOR | *Final class protected method parameter changed*
 V022 | PATCH | *Final class protected method removed*
 V023 | PATCH | [Final] Class public class method implementation changed
 V024 | PATCH | [Final] Class protected class method implementation changed
 V025 | PATCH | [Final] Class private class method implementation changed
-V026 | PATCH | *Class private property added*
-V027 | PATCH | *Class private property removed*
+V026 | PATCH | Class private property added
+V027 | PATCH | Class private property removed
 V028 | PATCH | Class private method added
 V029 | PATCH | Class private method removed
 V030 | PATCH | *Final class protected method added*
@@ -63,18 +63,18 @@ Code | Level | Rule
 V037 | MAJOR | Trait removed
 V038 | MAJOR | Trait public method removed
 V039 | MAJOR | Trait protected method removed
-V040 | MAJOR | *Trait public property removed*
-V041 | MAJOR | *Trait protected property removed*
+V040 | MAJOR | Trait public property removed
+V041 | MAJOR | Trait protected property removed
 V042 | MAJOR | Trait public method parameter changed
 V043 | MAJOR | Trait protected method parameter changed
 V044 | MAJOR | *New public constructor (does not match supertype)*
 V045 | MAJOR | *New protected constructor (does not match supertype)*
 V047 | MAJOR | Trait public method added
 V048 | MAJOR | Trait protected method added
-V049 | MAJOR | *Trait public property added*
-V050 | MAJOR | *Trait protected property added*
-V055 | MAJOR | *Trait private property added*
-V056 | MAJOR | *Trait private property removed*
+V049 | MAJOR | Trait public property added
+V050 | MAJOR | Trait protected property added
+V055 | MAJOR | Trait private property added
+V056 | MAJOR | Trait private property removed
 V057 | MAJOR | Trait private method added
 V058 | MAJOR | Trait private method removed
 V046 | MINOR | Trait added

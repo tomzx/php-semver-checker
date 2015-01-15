@@ -40,9 +40,15 @@ class TraitAnalyzer
 
 			// Leave non-strict comparison here
 			if ($traitBefore != $traitAfter) {
-				$analyzer = new ClassMethodAnalyzer('trait', $fileBefore, $fileAfter);
-				$traitMethodReport = $analyzer->analyze($traitBefore, $traitAfter);
-				$report->merge($traitMethodReport);
+				$analyzers = [
+					new ClassMethodAnalyzer('trait', $fileBefore, $fileAfter),
+					new PropertyAnalyzer('trait', $fileBefore, $fileAfter),
+				];
+
+				foreach ($analyzers as $analyzer) {
+					$internalReport = $analyzer->analyze($traitBefore, $traitAfter);
+					$report->merge($internalReport);
+				}
 			}
 		}
 

@@ -40,9 +40,15 @@ class ClassAnalyzer
 
 			// Leave non-strict comparison here
 			if ($classBefore != $classAfter) {
-				$analyzer = new ClassMethodAnalyzer('class', $fileBefore, $fileAfter);
-				$classMethodReport = $analyzer->analyze($classBefore, $classAfter);
-				$report->merge($classMethodReport);
+				$analyzers = [
+					new ClassMethodAnalyzer('class', $fileBefore, $fileAfter),
+					new PropertyAnalyzer('class', $fileBefore, $fileAfter),
+				];
+
+				foreach ($analyzers as $analyzer) {
+					$internalReport = $analyzer->analyze($classBefore, $classAfter);
+					$report->merge($internalReport);
+				}
 			}
 		}
 
