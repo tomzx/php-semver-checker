@@ -63,6 +63,6 @@ class CompareCommand extends Command {
 
 		$duration = microtime(true) - $startTime;
 		$output->writeln('');
-		$output->writeln('Time: '.round($duration, 3).' seconds, Memory: '.round(memory_get_peak_usage() / 1024 / 1024, 3).' MB');
+		$output->writeln('Time: ' . round($duration, 3) . ' seconds, Memory: ' . round(memory_get_peak_usage() / 1024 / 1024, 3) . ' MB');
 	}
 }

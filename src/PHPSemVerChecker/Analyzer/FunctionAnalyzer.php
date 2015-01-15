@@ -13,8 +13,7 @@ use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 use PHPSemVerChecker\SemanticVersioning\Level;
 
-class FunctionAnalyzer
-{
+class FunctionAnalyzer {
 	protected $context = 'function';
 
 	/**
@@ -42,7 +41,6 @@ class FunctionAnalyzer
 
 		foreach ($toVerify as $key) {
 			$fileBefore = $registryBefore->mapping['function'][$key];
-			/** @var Function_ $functionBefore */
 			$functionBefore = $registryBefore->data['function'][$key];
 			$fileAfter = $registryAfter->mapping['function'][$key];
 			$functionAfter = $registryAfter->data['function'][$key];

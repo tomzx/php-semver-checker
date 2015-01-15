@@ -3,7 +3,6 @@
 namespace PHPSemVerChecker\Operation;
 
 use PhpParser\Node\Stmt;
-use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Property;
 use PHPSemVerChecker\Node\Statement\Property as PProperty;
 use PHPSemVerChecker\SemanticVersioning\Level;
@@ -41,10 +40,10 @@ class PropertyAdded extends PropertyOperation {
 	protected $propertyAfter;
 
 	/**
-	 * @param string                           $context
-	 * @param string                           $fileAfter
-	 * @param \PhpParser\Node\Stmt             $contextAfter
-	 * @param \PhpParser\Node\Stmt\ClassMethod $propertyAfter
+	 * @param string                        $context
+	 * @param string                        $fileAfter
+	 * @param \PhpParser\Node\Stmt          $contextAfter
+	 * @param \PhpParser\Node\Stmt\Property $propertyAfter
 	 */
 	public function __construct($context, $fileAfter, Stmt $contextAfter, Property $propertyAfter)
 	{

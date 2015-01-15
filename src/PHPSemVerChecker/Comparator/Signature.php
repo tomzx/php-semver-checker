@@ -2,8 +2,7 @@
 
 namespace PHPSemVerChecker\Comparator;
 
-class Signature
-{
+class Signature {
 	/**
 	 * @param array $paramsA
 	 * @param array $paramsB
@@ -42,7 +41,7 @@ class Signature
 
 		$iterations = min(count($paramsA), count($paramsB));
 		for ($i = 0; $i < $iterations; ++$i) {
-			if ( $paramsA[$i]->name != $paramsB[$i]->name) {
+			if ($paramsA[$i]->name != $paramsB[$i]->name) {
 				return false;
 			}
 		}

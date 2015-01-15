@@ -5,8 +5,7 @@ namespace PHPSemVerChecker\Analyzer;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 
-class Analyzer
-{
+class Analyzer {
 	/**
 	 * Compare with a destination registry (what the new source code is like).
 	 *

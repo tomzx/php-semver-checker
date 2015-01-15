@@ -2,7 +2,6 @@
 
 namespace PHPSemVerChecker\Operation;
 
-use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Function_;
 use PHPSemVerChecker\Node\Statement\Function_ as PFunction;
 use PHPSemVerChecker\SemanticVersioning\Level;

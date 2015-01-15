@@ -3,8 +3,6 @@
 namespace PHPSemVerChecker\Analyzer;
 
 use PhpParser\Node\Stmt;
-use PhpParser\Node\Stmt\Class_;
-use PhpParser\Node\Stmt\ClassMethod;
 use PHPSemVerChecker\Comparator\Signature;
 use PHPSemVerChecker\Operation\ClassMethodAdded;
 use PHPSemVerChecker\Operation\ClassMethodImplementationChanged;
@@ -12,15 +10,14 @@ use PHPSemVerChecker\Operation\ClassMethodParameterChanged;
 use PHPSemVerChecker\Operation\ClassMethodParameterNameChanged;
 use PHPSemVerChecker\Operation\ClassMethodRemoved;
 use PHPSemVerChecker\Report\Report;
-use PHPSemVerChecker\SemanticVersioning\Level;
 
-class ClassMethodAnalyzer
-{
+class ClassMethodAnalyzer {
 	protected $context;
 	protected $fileBefore;
 	protected $fileAfter;
 
 	/**
+	 * @param string $context
 	 * @param string $fileBefore
 	 * @param string $fileAfter
 	 */
@@ -33,7 +30,6 @@ class ClassMethodAnalyzer
 
 	public function analyze(Stmt $contextBefore, Stmt $contextAfter)
 	{
-		// TODO: Verify that the given contexts match the context given in the constructor <tom@tomrochette.com>
 		$report = new Report();
 
 		$methodsBefore = $contextBefore->getMethods();

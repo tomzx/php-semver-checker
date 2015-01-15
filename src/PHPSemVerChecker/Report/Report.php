@@ -8,8 +8,7 @@ use IteratorAggregate;
 use PHPSemVerChecker\Operation\Operation;
 use PHPSemVerChecker\SemanticVersioning\Level;
 
-class Report implements ArrayAccess, IteratorAggregate
-{
+class Report implements ArrayAccess, IteratorAggregate {
 	/**
 	 * @var array
 	 */
@@ -124,7 +123,7 @@ class Report implements ArrayAccess, IteratorAggregate
 	 */
 	public function getLevelForContext($context = null)
 	{
-		$queriedContexts =  $context ? (array)$context : array_keys($this->differences);
+		$queriedContexts = $context ? (array)$context : array_keys($this->differences);
 		$levels = Level::asList('desc');
 		foreach ($queriedContexts as $queriedContext) {
 			foreach ($levels as $level) {

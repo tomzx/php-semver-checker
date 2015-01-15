@@ -14,7 +14,7 @@ class PropertyRemoved extends PropertyOperation {
 	 */
 	protected $code = [
 		'class' => ['V008', 'V009', 'V027'],
-		'trait' => ['V040',  'V041',  'V056'],
+		'trait' => ['V040', 'V041', 'V056'],
 	];
 	/**
 	 * @var int

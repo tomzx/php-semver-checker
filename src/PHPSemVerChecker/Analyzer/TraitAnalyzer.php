@@ -6,10 +6,8 @@ use PHPSemVerChecker\Operation\TraitAdded;
 use PHPSemVerChecker\Operation\TraitRemoved;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
-use PHPSemVerChecker\SemanticVersioning\Level;
 
-class TraitAnalyzer
-{
+class TraitAnalyzer {
 	protected $context = 'trait';
 
 	public function analyze(Registry $registryBefore, Registry $registryAfter)

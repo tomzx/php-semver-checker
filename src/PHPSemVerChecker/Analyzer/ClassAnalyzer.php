@@ -6,10 +6,8 @@ use PHPSemVerChecker\Operation\ClassAdded;
 use PHPSemVerChecker\Operation\ClassRemoved;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
-use PHPSemVerChecker\SemanticVersioning\Level;
 
-class ClassAnalyzer
-{
+class ClassAnalyzer {
 	protected $context = 'class';
 
 	public function analyze(Registry $registryBefore, Registry $registryAfter)

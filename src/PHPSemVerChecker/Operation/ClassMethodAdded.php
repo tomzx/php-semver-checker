@@ -12,17 +12,17 @@ class ClassMethodAdded extends ClassMethodOperation {
 	 * @var array
 	 */
 	protected $code = [
-		'class' => ['V015', 'V016', 'V028'],
+		'class'     => ['V015', 'V016', 'V028'],
 		'interface' => ['V034'],
-		'trait' => ['V047', 'V048', 'V057'],
+		'trait'     => ['V047', 'V048', 'V057'],
 	];
 	/**
 	 * @var int
 	 */
 	protected $level = [
-		'class' => [Level::MAJOR, Level::MAJOR, Level::PATCH],
+		'class'     => [Level::MAJOR, Level::MAJOR, Level::PATCH],
 		'interface' => [Level::MAJOR],
-		'trait' => [Level::MAJOR, Level::MAJOR, Level::MAJOR],
+		'trait'     => [Level::MAJOR, Level::MAJOR, Level::MAJOR],
 	];
 	/**
 	 * @var string

@@ -6,10 +6,8 @@ use PHPSemVerChecker\Operation\InterfaceAdded;
 use PHPSemVerChecker\Operation\InterfaceRemoved;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
-use PHPSemVerChecker\SemanticVersioning\Level;
 
-class InterfaceAnalyzer
-{
+class InterfaceAnalyzer {
 	protected $context = 'interface';
 
 	public function analyze(Registry $registryBefore, Registry $registryAfter)

@@ -61,7 +61,7 @@ class Scanner {
 			$statements = $this->parser->parse($code);
 			$this->traverser->traverse($statements);
 		} catch (Error $e) {
-			throw new RuntimeException('Parse Error: '.$e->getMessage().' in '.$file);
+			throw new RuntimeException('Parse Error: ' . $e->getMessage() . ' in ' . $file);
 		}
 	}
 

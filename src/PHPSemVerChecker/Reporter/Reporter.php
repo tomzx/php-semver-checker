@@ -9,8 +9,7 @@ use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class Reporter
-{
+class Reporter {
 	/**
 	 * @var \PHPSemVerChecker\Report\Report
 	 */
@@ -65,7 +64,7 @@ class Reporter
 		}
 
 		$output->writeln(''); // line clear
-		$output->writeln(ucfirst($context).' ('.Level::toString($report->getLevelForContext($context)).')');
+		$output->writeln(ucfirst($context) . ' (' . Level::toString($report->getLevelForContext($context)) . ')');
 		$this->outputTable($output, $report, $context);
 	}
 
@@ -95,8 +94,8 @@ class Reporter
 			$location = $operation->getLocation();
 		} else {
 			$fullPath = realpath($operation->getLocation());
-			$location = str_replace($this->cwd.DIRECTORY_SEPARATOR, '', $fullPath);
+			$location = str_replace($this->cwd . DIRECTORY_SEPARATOR, '', $fullPath);
 		}
-		return $location.'#'.$operation->getLine();
+		return $location . '#' . $operation->getLine();
 	}
 }

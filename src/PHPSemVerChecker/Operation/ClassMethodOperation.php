@@ -5,8 +5,7 @@ namespace PHPSemVerChecker\Operation;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassMethod;
 
-abstract class ClassMethodOperation extends Operation
-{
+abstract class ClassMethodOperation extends Operation {
 	/**
 	 * @var string
 	 */
@@ -31,9 +30,9 @@ abstract class ClassMethodOperation extends Operation
 	protected function getVisibilityMapping()
 	{
 		return [
-			Class_::MODIFIER_PUBLIC => 0,
+			Class_::MODIFIER_PUBLIC    => 0,
 			Class_::MODIFIER_PROTECTED => 1,
-			Class_::MODIFIER_PRIVATE => 2,
+			Class_::MODIFIER_PRIVATE   => 2,
 		];
 	}
 

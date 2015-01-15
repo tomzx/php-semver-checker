@@ -2,8 +2,7 @@
 
 namespace PHPSemVerChecker\SemanticVersioning;
 
-class Level
-{
+class Level {
 	const NONE = 0; // TODO: Get rid of this *level* <tom@tomrochette.com>
 	const PATCH = 1;
 	const MINOR = 2;
@@ -35,7 +34,7 @@ class Level
 	public static function toString($level)
 	{
 		$mapping = [
-			self::NONE => 'NONE',
+			self::NONE  => 'NONE',
 			self::PATCH => 'PATCH',
 			self::MINOR => 'MINOR',
 			self::MAJOR => 'MAJOR',

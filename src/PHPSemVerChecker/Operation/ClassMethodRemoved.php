@@ -13,17 +13,17 @@ class ClassMethodRemoved extends ClassMethodOperation {
 	 * @var array
 	 */
 	protected $code = [
-		'class' => ['V006', 'V007', 'V029'],
+		'class'     => ['V006', 'V007', 'V029'],
 		'interface' => ['V035'],
-		'trait' => ['V038',  'V039',  'V058'],
+		'trait'     => ['V038', 'V039', 'V058'],
 	];
 	/**
 	 * @var int
 	 */
 	protected $level = [
-		'class' => [Level::MAJOR, Level::MAJOR, Level::PATCH],
+		'class'     => [Level::MAJOR, Level::MAJOR, Level::PATCH],
 		'interface' => [Level::MAJOR],
-		'trait' => [Level::MAJOR, Level::MAJOR, Level::MAJOR],
+		'trait'     => [Level::MAJOR, Level::MAJOR, Level::MAJOR],
 	];
 	/**
 	 * @var string

@@ -3,6 +3,7 @@
 namespace PHPSemVerChecker\Registry;
 
 use PhpParser\Node;
+use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\Function_;
 use PhpParser\Node\Stmt\Interface_;
@@ -31,19 +32,18 @@ class Registry {
 	public function __construct()
 	{
 		$contexts = [
-			'class'    => [],
-			'function' => [],
+			'class'     => [],
+			'function'  => [],
 			'interface' => [],
-			'trait' => [],
+			'trait'     => [],
 		];
 
 		$this->data = $contexts;
 		$this->mapping = $contexts;
 	}
 
-	// TODO: Try to reduce the amount of data moved around (we don't need statements inside methods/functions) <tom@tomrochette.com>
 	/**
-	 * @param \PhpParser\Node\Stmt\Class_ $item
+	 * @param \PhpParser\Node\Stmt\Class_ $class
 	 */
 	public function addClass(Class_ $class)
 	{
@@ -51,7 +51,7 @@ class Registry {
 	}
 
 	/**
-	 * @param \PhpParser\Node\Stmt\Function_ $item
+	 * @param \PhpParser\Node\Stmt\Function_ $function
 	 */
 	public function addFunction(Function_ $function)
 	{
@@ -75,10 +75,10 @@ class Registry {
 	}
 
 	/**
-	 * @param string               $context
-	 * @param \PhpParser\Node\Stmt $node
+	 * @param string $context
+	 * @param Stmt   $node
 	 */
-	protected function addNode($context, Node\Stmt $node)
+	protected function addNode($context, Stmt $node)
 	{
 		$fullyQualifiedName = $this->fullyQualifiedName($node);
 		$this->data[$context][$fullyQualifiedName] = $node;
@@ -86,10 +86,10 @@ class Registry {
 	}
 
 	/**
-	 * @param \PhpParser\Node\Stmt $node
+	 * @param Stmt $node
 	 * @return string
 	 */
-	protected function fullyQualifiedName(Node\Stmt $node)
+	protected function fullyQualifiedName(Stmt $node)
 	{
 		return $node->namespacedName ? $node->namespacedName->toString() : $node->name;
 	}

@@ -12,17 +12,17 @@ class ClassMethodParameterChanged extends ClassMethodOperation {
 	 * @var array
 	 */
 	protected $code = [
-		'class' => ['V010', 'V011', 'V031'],
+		'class'     => ['V010', 'V011', 'V031'],
 		'interface' => ['V036'],
-		'trait' => ['V042', 'V043', 'V059'],
+		'trait'     => ['V042', 'V043', 'V059'],
 	];
 	/**
 	 * @var int
 	 */
 	protected $level = [
-		'class' => [Level::MAJOR, Level::MAJOR, Level::PATCH],
+		'class'     => [Level::MAJOR, Level::MAJOR, Level::PATCH],
 		'interface' => [Level::MAJOR],
-		'trait' => [Level::MAJOR, Level::MAJOR, Level::PATCH],
+		'trait'     => [Level::MAJOR, Level::MAJOR, Level::PATCH],
 	];
 	/**
 	 * @var string
