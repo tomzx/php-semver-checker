@@ -3,6 +3,7 @@
 namespace PHPSemVerChecker\Operation;
 
 use PhpParser\Node\Stmt\Interface_;
+use PHPSemVerChecker\Node\Statement\Interface_ as PInterface;
 use PHPSemVerChecker\SemanticVersioning\Level;
 
 class InterfaceAdded extends Operation {
@@ -58,10 +59,6 @@ class InterfaceAdded extends Operation {
 	 */
 	public function getTarget()
 	{
-		$fqcn = $this->interfaceAfter->name;
-		if ($this->interfaceAfter->namespacedName) {
-			$fqcn = $this->interfaceAfter->namespacedName->toString();
-		}
-		return $fqcn;
+		return PInterface::getFullyQualifiedName($this->interfaceAfter);
 	}
 }

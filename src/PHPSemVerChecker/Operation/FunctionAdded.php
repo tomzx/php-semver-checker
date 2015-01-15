@@ -3,6 +3,7 @@
 namespace PHPSemVerChecker\Operation;
 
 use PhpParser\Node\Stmt\Function_;
+use PHPSemVerChecker\Node\Statement\Function_ as PFunction;
 use PHPSemVerChecker\SemanticVersioning\Level;
 
 class FunctionAdded extends Operation {
@@ -42,7 +43,6 @@ class FunctionAdded extends Operation {
 	 */
 	public function getLocation()
 	{
-
 		return $this->fileAfter;
 	}
 
@@ -59,10 +59,6 @@ class FunctionAdded extends Operation {
 	 */
 	public function getTarget()
 	{
-		$fqfn = $this->functionAfter->name;
-		if ($this->functionAfter->namespacedName) {
-			$fqfn = $this->functionAfter->namespacedName->toString() . '::' . $this->functionAfter->name;
-		}
-		return $fqfn;
+		return PFunction::getFullyQualifiedName($this->functionAfter);
 	}
 }

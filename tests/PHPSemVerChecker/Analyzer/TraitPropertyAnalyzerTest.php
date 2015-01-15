@@ -32,7 +32,7 @@ class TraitPropertyAnalyzerTest extends TestCase {
 		Assert::assertNoDifference($report);
 	}
 
-	public function testV006PublicPropertyRemoved()
+	public function testV040PublicPropertyRemoved()
 	{
 		$traitBefore = new Trait_('tmp', [
 			new Property(Class_::MODIFIER_PUBLIC, [
@@ -50,7 +50,7 @@ class TraitPropertyAnalyzerTest extends TestCase {
 		$this->assertSame('tmp::$tmpProperty', $report['trait'][Level::MAJOR][0]->getTarget());
 	}
 
-	public function testV015PropertyAdded()
+	public function testV049PropertyAdded()
 	{
 		$traitBefore = new Trait_('tmp');
 

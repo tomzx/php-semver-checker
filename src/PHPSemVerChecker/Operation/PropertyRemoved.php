@@ -5,6 +5,7 @@ namespace PHPSemVerChecker\Operation;
 use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\Property;
+use PHPSemVerChecker\Node\Statement\Property as PProperty;
 use PHPSemVerChecker\SemanticVersioning\Level;
 
 class PropertyRemoved extends PropertyOperation {
@@ -75,10 +76,6 @@ class PropertyRemoved extends PropertyOperation {
 	 */
 	public function getTarget()
 	{
-		$fqcn = $this->contextBefore->name;
-		if ($this->contextBefore->namespacedName) {
-			$fqcn = $this->contextBefore->namespacedName->toString();
-		}
-		return $fqcn . '::$' . $this->propertyBefore->props[0]->name;
+		return PProperty::getFullyQualifiedName($this->contextBefore, $this->propertyBefore);
 	}
 }

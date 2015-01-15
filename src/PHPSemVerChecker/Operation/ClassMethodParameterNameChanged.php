@@ -4,6 +4,7 @@ namespace PHPSemVerChecker\Operation;
 
 use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\ClassMethod;
+use PHPSemVerChecker\Node\Statement\ClassMethod as PClassMethod;
 use PHPSemVerChecker\SemanticVersioning\Level;
 
 class ClassMethodParameterNameChanged extends ClassMethodOperation {
@@ -100,10 +101,6 @@ class ClassMethodParameterNameChanged extends ClassMethodOperation {
 	 */
 	public function getTarget()
 	{
-		$fqcn = $this->contextAfter->name;
-		if ($this->contextAfter->namespacedName) {
-			$fqcn = $this->contextAfter->namespacedName->toString();
-		}
-		return $fqcn . '::' . $this->classMethodBefore->name;
+		return PClassMethod::getFullyQualifiedName($this->contextAfter, $this->classMethodAfter);
 	}
 }

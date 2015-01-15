@@ -3,6 +3,7 @@
 namespace PHPSemVerChecker\Operation;
 
 use PhpParser\Node\Stmt\Trait_;
+use PHPSemVerChecker\Node\Statement\Trait_ as PTrait;
 use PHPSemVerChecker\SemanticVersioning\Level;
 
 class TraitRemoved extends Operation {
@@ -58,10 +59,6 @@ class TraitRemoved extends Operation {
 	 */
 	public function getTarget()
 	{
-		$fqcn = $this->traitBefore->name;
-		if ($this->traitBefore->namespacedName) {
-			$fqcn = $this->traitBefore->namespacedName->toString();
-		}
-		return $fqcn;
+		return PTrait::getFullyQualifiedName($this->traitBefore);
 	}
 }

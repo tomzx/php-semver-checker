@@ -3,6 +3,7 @@
 namespace PHPSemVerChecker\Operation;
 
 use PhpParser\Node\Stmt\Class_;
+use PHPSemVerChecker\Node\Statement\Class_ as PClass;
 use PHPSemVerChecker\SemanticVersioning\Level;
 
 class ClassRemoved extends Operation {
@@ -55,10 +56,6 @@ class ClassRemoved extends Operation {
 	 */
 	public function getTarget()
 	{
-		$fqcn = $this->classBefore->name;
-		if ($this->classBefore->namespacedName) {
-			$fqcn = $this->classBefore->namespacedName->toString();
-		}
-		return $fqcn;
+		return PClass::getFullyQualifiedName($this->classBefore);
 	}
 }

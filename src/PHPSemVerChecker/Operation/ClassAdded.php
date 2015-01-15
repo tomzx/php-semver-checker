@@ -3,6 +3,7 @@
 namespace PHPSemVerChecker\Operation;
 
 use PhpParser\Node\Stmt\Class_;
+use PHPSemVerChecker\Node\Statement\Class_ as PClass;
 use PHPSemVerChecker\SemanticVersioning\Level;
 
 class ClassAdded extends Operation {
@@ -58,10 +59,6 @@ class ClassAdded extends Operation {
 	 */
 	public function getTarget()
 	{
-		$fqcn = $this->classAfter->name;
-		if ($this->classAfter->namespacedName) {
-			$fqcn = $this->classAfter->namespacedName->toString();
-		}
-		return $fqcn;
+		return PClass::getFullyQualifiedName($this->classAfter);
 	}
 }

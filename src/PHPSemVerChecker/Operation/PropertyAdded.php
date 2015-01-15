@@ -4,6 +4,8 @@ namespace PHPSemVerChecker\Operation;
 
 use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\ClassMethod;
+use PhpParser\Node\Stmt\Property;
+use PHPSemVerChecker\Node\Statement\Property as PProperty;
 use PHPSemVerChecker\SemanticVersioning\Level;
 
 class PropertyAdded extends PropertyOperation {
@@ -44,7 +46,7 @@ class PropertyAdded extends PropertyOperation {
 	 * @param \PhpParser\Node\Stmt             $contextAfter
 	 * @param \PhpParser\Node\Stmt\ClassMethod $propertyAfter
 	 */
-	public function __construct($context, $fileAfter, Stmt $contextAfter, Stmt\Property $propertyAfter)
+	public function __construct($context, $fileAfter, Stmt $contextAfter, Property $propertyAfter)
 	{
 		$this->context = $context;
 		$this->visibility = $this->getVisibility($propertyAfter);
@@ -74,10 +76,6 @@ class PropertyAdded extends PropertyOperation {
 	 */
 	public function getTarget()
 	{
-		$fqcn = $this->contextAfter->name;
-		if ($this->contextAfter->namespacedName) {
-			$fqcn = $this->contextAfter->namespacedName->toString();
-		}
-		return $fqcn . '::$' . $this->propertyAfter->props[0]->name;
+		return PProperty::getFullyQualifiedName($this->contextAfter, $this->propertyAfter);
 	}
 }

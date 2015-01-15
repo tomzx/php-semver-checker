@@ -3,6 +3,7 @@
 namespace PHPSemVerChecker\Operation;
 
 use PhpParser\Node\Stmt\Function_;
+use PHPSemVerChecker\Node\Statement\Function_ as PFunction;
 use PHPSemVerChecker\SemanticVersioning\Level;
 
 class FunctionRemoved extends Operation {
@@ -58,10 +59,6 @@ class FunctionRemoved extends Operation {
 	 */
 	public function getTarget()
 	{
-		$fqfn = $this->functionBefore->name;
-		if ($this->functionBefore->namespacedName) {
-			$fqfn = $this->functionBefore->namespacedName->toString() . '::' . $this->functionBefore->name;
-		}
-		return $fqfn;
+		return PFunction::getFullyQualifiedName($this->functionBefore);
 	}
 }

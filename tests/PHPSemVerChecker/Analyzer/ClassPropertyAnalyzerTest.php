@@ -35,7 +35,7 @@ class ClassPropertyAnalyzerTest extends TestCase {
 		Assert::assertNoDifference($report);
 	}
 
-	public function testV006PublicPropertyRemoved()
+	public function testV008PublicPropertyRemoved()
 	{
 		$classBefore = new Class_('tmp', [
 			'stmts' => [
@@ -55,7 +55,7 @@ class ClassPropertyAnalyzerTest extends TestCase {
 		$this->assertSame('tmp::$tmpProperty', $report['class'][Level::MAJOR][0]->getTarget());
 	}
 
-	public function testV015PropertyAdded()
+	public function testV019PropertyAdded()
 	{
 		$classBefore = new Class_('tmp');
 

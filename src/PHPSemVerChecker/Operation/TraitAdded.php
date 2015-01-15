@@ -3,6 +3,7 @@
 namespace PHPSemVerChecker\Operation;
 
 use PhpParser\Node\Stmt\Trait_;
+use PHPSemVerChecker\Node\Statement\Trait_ as PTrait;
 use PHPSemVerChecker\SemanticVersioning\Level;
 
 class TraitAdded extends Operation {
@@ -58,10 +59,6 @@ class TraitAdded extends Operation {
 	 */
 	public function getTarget()
 	{
-		$fqcn = $this->traitAfter->name;
-		if ($this->traitAfter->namespacedName) {
-			$fqcn = $this->traitAfter->namespacedName->toString();
-		}
-		return $fqcn;
+		return PTrait::getFullyQualifiedName($this->traitAfter);
 	}
 }
