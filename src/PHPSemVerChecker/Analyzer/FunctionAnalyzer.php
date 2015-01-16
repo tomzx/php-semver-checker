@@ -11,7 +11,6 @@ use PHPSemVerChecker\Operation\FunctionRemoved;
 use PHPSemVerChecker\Operation\Unknown;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
-use PHPSemVerChecker\SemanticVersioning\Level;
 
 class FunctionAnalyzer {
 	protected $context = 'function';
@@ -74,7 +73,7 @@ class FunctionAnalyzer {
 
 				// Unable to match an issue, but there is one...
 				$data = new Unknown($fileBefore, $fileAfter);
-				$report->addFunction($data, Level::MAJOR);
+				$report->addFunction($data);
 			}
 		}
 
