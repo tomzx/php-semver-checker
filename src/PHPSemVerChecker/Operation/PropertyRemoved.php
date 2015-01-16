@@ -32,7 +32,7 @@ class PropertyRemoved extends PropertyOperation {
 	 */
 	protected $fileBefore;
 	/**
-	 * @var Class_
+	 * @var \PhpParser\Node\Stmt
 	 */
 	protected $contextBefore;
 	/**

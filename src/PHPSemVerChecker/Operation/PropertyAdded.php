@@ -35,7 +35,7 @@ class PropertyAdded extends PropertyOperation {
 	 */
 	protected $contextAfter;
 	/**
-	 * @var \PhpParser\Node\Stmt\ClassMethod
+	 * @var \PhpParser\Node\Stmt\Property
 	 */
 	protected $propertyAfter;
 

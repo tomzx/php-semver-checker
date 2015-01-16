@@ -34,7 +34,7 @@ class ClassMethodRemoved extends ClassMethodOperation {
 	 */
 	protected $fileBefore;
 	/**
-	 * @var Class_
+	 * @var \PhpParser\Node\Stmt
 	 */
 	protected $contextBefore;
 	/**
