@@ -39,12 +39,17 @@ class CompareCommand extends Command {
 		$sourceAfter = $input->getArgument('source-after');
 		$sourceAfter = $fileIterator->getFilesAsArray($sourceAfter, '.php');
 
+		$output->writeln('');
+
 		$progress = new ProgressBar($output, count($sourceBefore) + count($sourceAfter));
+		$progress->setFormat("%message%\n%current%/%max% [%bar%] %percent:3s%% %elapsed:6s%/%estimated:-6s% %memory:6s%");
+		$progress->setMessage('Scanning before files');
 		foreach ($sourceBefore as $file) {
 			$scannerBefore->scan($file);
 			$progress->advance();
 		}
 
+		$progress->setMessage('Scanning after files');
 		foreach ($sourceAfter as $file) {
 			$scannerAfter->scan($file);
 			$progress->advance();
