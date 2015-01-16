@@ -4,6 +4,7 @@ namespace PHPSemVerChecker\Console\Command;
 
 use File_Iterator_Facade;
 use PHPSemVerChecker\Analyzer\Analyzer;
+use PHPSemVerChecker\Filter\SourceFilter;
 use PHPSemVerChecker\Reporter\Reporter;
 use PHPSemVerChecker\Scanner\Scanner;
 use Symfony\Component\Console\Command\Command;
@@ -43,6 +44,14 @@ class CompareCommand extends Command {
 
 		$progress = new ProgressBar($output, count($sourceBefore) + count($sourceAfter));
 		$progress->setFormat("%message%\n%current%/%max% [%bar%] %percent:3s%% %elapsed:6s%/%estimated:-6s% %memory:6s%");
+		$progress->setMessage('Pre-processing before/after files');
+		$progress->start();
+
+		$sourceFilter = new SourceFilter();
+		$identicalCount = $sourceFilter->filter($sourceBefore, $sourceAfter);
+
+		$progress->start(count($sourceBefore) + count($sourceAfter));
+
 		$progress->setMessage('Scanning before files');
 		foreach ($sourceBefore as $file) {
 			$scannerBefore->scan($file);
@@ -68,6 +77,7 @@ class CompareCommand extends Command {
 
 		$duration = microtime(true) - $startTime;
 		$output->writeln('');
+		$output->writeln('[Scanned files] Before: ' . count($sourceBefore) . ', After: ' . count($sourceAfter) . ', Identical: ' . $identicalCount);
 		$output->writeln('Time: ' . round($duration, 3) . ' seconds, Memory: ' . round(memory_get_peak_usage() / 1024 / 1024, 3) . ' MB');
 	}
 }
