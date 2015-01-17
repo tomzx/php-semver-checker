@@ -46,7 +46,7 @@ class TraitPropertyAnalyzerTest extends TestCase {
 		$report = $analyzer->analyze($traitBefore, $traitAfter);
 
 		Assert::assertDifference($report, 'trait', Level::MAJOR);
-		$this->assertSame('Property has been removed.', $report['trait'][Level::MAJOR][0]->getReason());
+		$this->assertSame('[public] Property has been removed.', $report['trait'][Level::MAJOR][0]->getReason());
 		$this->assertSame('tmp::$tmpProperty', $report['trait'][Level::MAJOR][0]->getTarget());
 	}
 
@@ -64,7 +64,7 @@ class TraitPropertyAnalyzerTest extends TestCase {
 		$report = $analyzer->analyze($traitBefore, $traitAfter);
 
 		Assert::assertDifference($report, 'trait', Level::MAJOR);
-		$this->assertSame('Property has been added.', $report['trait'][Level::MAJOR][0]->getReason());
+		$this->assertSame('[public] Property has been added.', $report['trait'][Level::MAJOR][0]->getReason());
 		$this->assertSame('tmp::$tmpProperty', $report['trait'][Level::MAJOR][0]->getTarget());
 	}
 }

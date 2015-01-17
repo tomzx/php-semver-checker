@@ -47,7 +47,7 @@ class ClassMethodAnalyzerTest extends TestCase {
 		$report = $analyzer->analyze($classBefore, $classAfter);
 
 		Assert::assertDifference($report, 'class', Level::MAJOR);
-		$this->assertSame('Method has been removed.', $report['class'][Level::MAJOR][0]->getReason());
+		$this->assertSame('[public] Method has been removed.', $report['class'][Level::MAJOR][0]->getReason());
 		$this->assertSame('tmp::tmpMethod', $report['class'][Level::MAJOR][0]->getTarget());
 	}
 
@@ -65,7 +65,7 @@ class ClassMethodAnalyzerTest extends TestCase {
 		$report = $analyzer->analyze($classBefore, $classAfter);
 
 		Assert::assertDifference($report, 'class', Level::MAJOR);
-		$this->assertSame('Method has been added.', $report['class'][Level::MAJOR][0]->getReason());
+		$this->assertSame('[public] Method has been added.', $report['class'][Level::MAJOR][0]->getReason());
 		$this->assertSame('tmp::tmpMethod', $report['class'][Level::MAJOR][0]->getTarget());
 	}
 
@@ -123,7 +123,7 @@ class ClassMethodAnalyzerTest extends TestCase {
 		$report = $analyzer->analyze($classBefore, $classAfter);
 
 		Assert::assertDifference($report, 'class', Level::PATCH);
-		$this->assertSame('Method parameter name changed.', $report['class'][Level::PATCH][0]->getReason());
+		$this->assertSame('[public] Method parameter name changed.', $report['class'][Level::PATCH][0]->getReason());
 		$this->assertSame('tmp::tmpMethod', $report['class'][Level::PATCH][0]->getTarget());
 	}
 
@@ -153,7 +153,7 @@ class ClassMethodAnalyzerTest extends TestCase {
 		$report = $analyzer->analyze($classBefore, $classAfter);
 
 		Assert::assertDifference($report, 'class', Level::MAJOR);
-		$this->assertSame('Method parameter changed.', $report['class'][Level::MAJOR][0]->getReason());
+		$this->assertSame('[public] Method parameter changed.', $report['class'][Level::MAJOR][0]->getReason());
 		$this->assertSame('tmp::tmpMethod', $report['class'][Level::MAJOR][0]->getTarget());
 	}
 
@@ -184,7 +184,7 @@ class ClassMethodAnalyzerTest extends TestCase {
 		$report = $analyzer->analyze($classBefore, $classAfter);
 
 		Assert::assertDifference($report, 'class', Level::MAJOR);
-		$this->assertSame('Method parameter changed.', $report['class'][Level::MAJOR][0]->getReason());
+		$this->assertSame('[public] Method parameter changed.', $report['class'][Level::MAJOR][0]->getReason());
 		$this->assertSame('tmp::tmpMethod', $report['class'][Level::MAJOR][0]->getTarget());
 	}
 
@@ -242,7 +242,7 @@ class ClassMethodAnalyzerTest extends TestCase {
 		$report = $analyzer->analyze($classBefore, $classAfter);
 
 		Assert::assertDifference($report, 'class', Level::PATCH);
-		$this->assertSame('Method implementation changed.', $report['class'][Level::PATCH][0]->getReason());
+		$this->assertSame('[public] Method implementation changed.', $report['class'][Level::PATCH][0]->getReason());
 		$this->assertSame('tmp::tmpMethod', $report['class'][Level::PATCH][0]->getTarget());
 	}
 }

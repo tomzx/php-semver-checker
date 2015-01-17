@@ -51,7 +51,7 @@ class ClassPropertyAnalyzerTest extends TestCase {
 		$report = $analyzer->analyze($classBefore, $classAfter);
 
 		Assert::assertDifference($report, 'class', Level::MAJOR);
-		$this->assertSame('Property has been removed.', $report['class'][Level::MAJOR][0]->getReason());
+		$this->assertSame('[public] Property has been removed.', $report['class'][Level::MAJOR][0]->getReason());
 		$this->assertSame('tmp::$tmpProperty', $report['class'][Level::MAJOR][0]->getTarget());
 	}
 
@@ -71,7 +71,7 @@ class ClassPropertyAnalyzerTest extends TestCase {
 		$report = $analyzer->analyze($classBefore, $classAfter);
 
 		Assert::assertDifference($report, 'class', Level::MAJOR);
-		$this->assertSame('Property has been added.', $report['class'][Level::MAJOR][0]->getReason());
+		$this->assertSame('[public] Property has been added.', $report['class'][Level::MAJOR][0]->getReason());
 		$this->assertSame('tmp::$tmpProperty', $report['class'][Level::MAJOR][0]->getTarget());
 	}
 }

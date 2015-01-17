@@ -47,7 +47,7 @@ class InterfaceMethodAnalyzerTest extends TestCase {
 		$report = $analyzer->analyze($interfaceBefore, $interfaceAfter);
 
 		Assert::assertDifference($report, 'interface', Level::MAJOR);
-		$this->assertSame('Method has been removed.', $report['interface'][Level::MAJOR][0]->getReason());
+		$this->assertSame('[public] Method has been removed.', $report['interface'][Level::MAJOR][0]->getReason());
 		$this->assertSame('tmp::tmpMethod', $report['interface'][Level::MAJOR][0]->getTarget());
 	}
 
@@ -65,7 +65,7 @@ class InterfaceMethodAnalyzerTest extends TestCase {
 		$report = $analyzer->analyze($interfaceBefore, $interfaceAfter);
 
 		Assert::assertDifference($report, 'interface', Level::MAJOR);
-		$this->assertSame('Method has been added.', $report['interface'][Level::MAJOR][0]->getReason());
+		$this->assertSame('[public] Method has been added.', $report['interface'][Level::MAJOR][0]->getReason());
 		$this->assertSame('tmp::tmpMethod', $report['interface'][Level::MAJOR][0]->getTarget());
 	}
 
@@ -123,7 +123,7 @@ class InterfaceMethodAnalyzerTest extends TestCase {
 		$report = $analyzer->analyze($interfaceBefore, $interfaceAfter);
 
 		Assert::assertDifference($report, 'interface', Level::PATCH);
-		$this->assertSame('Method parameter name changed.', $report['interface'][Level::PATCH][0]->getReason());
+		$this->assertSame('[public] Method parameter name changed.', $report['interface'][Level::PATCH][0]->getReason());
 		$this->assertSame('tmp::tmpMethod', $report['interface'][Level::PATCH][0]->getTarget());
 	}
 
@@ -153,7 +153,7 @@ class InterfaceMethodAnalyzerTest extends TestCase {
 		$report = $analyzer->analyze($interfaceBefore, $interfaceAfter);
 
 		Assert::assertDifference($report, 'interface', Level::MAJOR);
-		$this->assertSame('Method parameter changed.', $report['interface'][Level::MAJOR][0]->getReason());
+		$this->assertSame('[public] Method parameter changed.', $report['interface'][Level::MAJOR][0]->getReason());
 		$this->assertSame('tmp::tmpMethod', $report['interface'][Level::MAJOR][0]->getTarget());
 	}
 
@@ -184,7 +184,7 @@ class InterfaceMethodAnalyzerTest extends TestCase {
 		$report = $analyzer->analyze($interfaceBefore, $interfaceAfter);
 
 		Assert::assertDifference($report, 'interface', Level::MAJOR);
-		$this->assertSame('Method parameter changed.', $report['interface'][Level::MAJOR][0]->getReason());
+		$this->assertSame('[public] Method parameter changed.', $report['interface'][Level::MAJOR][0]->getReason());
 		$this->assertSame('tmp::tmpMethod', $report['interface'][Level::MAJOR][0]->getTarget());
 	}
 }
