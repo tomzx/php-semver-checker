@@ -2,9 +2,6 @@
 
 namespace PHPSemVerChecker\Operation;
 
-use PhpParser\Node\Stmt\Class_;
-use PhpParser\Node\Stmt\ClassMethod;
-
 abstract class ClassMethodOperation extends Operation {
 	/**
 	 * @var string
@@ -18,11 +15,6 @@ abstract class ClassMethodOperation extends Operation {
 	public function getCode()
 	{
 		return $this->code[$this->context][Visibility::get($this->visibility)];
-	}
-
-	public function getLevel()
-	{
-		return $this->level[$this->context][Visibility::get($this->visibility)];
 	}
 
 	public function getReason()

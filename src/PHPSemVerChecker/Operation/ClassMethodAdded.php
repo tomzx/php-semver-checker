@@ -5,7 +5,6 @@ namespace PHPSemVerChecker\Operation;
 use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\ClassMethod;
 use PHPSemVerChecker\Node\Statement\ClassMethod as PClassMethod;
-use PHPSemVerChecker\SemanticVersioning\Level;
 
 class ClassMethodAdded extends ClassMethodOperation {
 	/**
@@ -15,14 +14,6 @@ class ClassMethodAdded extends ClassMethodOperation {
 		'class'     => ['V015', 'V016', 'V028'],
 		'interface' => ['V034'],
 		'trait'     => ['V047', 'V048', 'V057'],
-	];
-	/**
-	 * @var int
-	 */
-	protected $level = [
-		'class'     => [Level::MAJOR, Level::MAJOR, Level::PATCH],
-		'interface' => [Level::MAJOR],
-		'trait'     => [Level::MAJOR, Level::MAJOR, Level::MAJOR],
 	];
 	/**
 	 * @var string

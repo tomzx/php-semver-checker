@@ -2,15 +2,13 @@
 
 namespace PHPSemVerChecker\Operation;
 
+use PHPSemVerChecker\Configuration\LevelMapping;
+
 abstract class Operation {
 	/**
 	 * @var string
 	 */
 	protected $code;
-	/**
-	 * @var int
-	 */
-	protected $level;
 	/**
 	 * @var string
 	 */
@@ -41,14 +39,7 @@ abstract class Operation {
 
 	public function getLevel()
 	{
-		return $this->level;
-	}
-
-	public function setLevel($level)
-	{
-		$this->level = $level;
-
-		return $this;
+		return LevelMapping::getLevelForCode($this->getCode());
 	}
 
 	/**

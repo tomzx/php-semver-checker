@@ -4,17 +4,12 @@ namespace PHPSemVerChecker\Operation;
 
 use PhpParser\Node\Stmt\Interface_;
 use PHPSemVerChecker\Node\Statement\Interface_ as PInterface;
-use PHPSemVerChecker\SemanticVersioning\Level;
 
 class InterfaceAdded extends Operation {
 	/**
 	 * @var string
 	 */
 	protected $code = 'V032';
-	/**
-	 * @var int
-	 */
-	protected $level = Level::MAJOR;
 	/**
 	 * @var string
 	 */

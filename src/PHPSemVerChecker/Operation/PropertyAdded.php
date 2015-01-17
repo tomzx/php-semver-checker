@@ -5,7 +5,6 @@ namespace PHPSemVerChecker\Operation;
 use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\Property;
 use PHPSemVerChecker\Node\Statement\Property as PProperty;
-use PHPSemVerChecker\SemanticVersioning\Level;
 
 class PropertyAdded extends PropertyOperation {
 	/**
@@ -14,13 +13,6 @@ class PropertyAdded extends PropertyOperation {
 	protected $code = [
 		'class' => ['V019', 'V020', 'V026'],
 		'trait' => ['V049', 'V050', 'V055'],
-	];
-	/**
-	 * @var int
-	 */
-	protected $level = [
-		'class' => [Level::MAJOR, Level::MAJOR, Level::PATCH],
-		'trait' => [Level::MAJOR, Level::MAJOR, Level::MAJOR],
 	];
 	/**
 	 * @var string

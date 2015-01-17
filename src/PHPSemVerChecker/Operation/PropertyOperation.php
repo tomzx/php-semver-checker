@@ -17,11 +17,6 @@ abstract class PropertyOperation extends Operation {
 		return $this->code[$this->context][Visibility::get($this->visibility)];
 	}
 
-	public function getLevel()
-	{
-		return $this->level[$this->context][Visibility::get($this->visibility)];
-	}
-
 	public function getReason()
 	{
 		return '[' . Visibility::toString($this->visibility) . '] ' . $this->reason;

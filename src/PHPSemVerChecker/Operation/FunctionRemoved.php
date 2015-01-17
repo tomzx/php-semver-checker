@@ -4,17 +4,12 @@ namespace PHPSemVerChecker\Operation;
 
 use PhpParser\Node\Stmt\Function_;
 use PHPSemVerChecker\Node\Statement\Function_ as PFunction;
-use PHPSemVerChecker\SemanticVersioning\Level;
 
 class FunctionRemoved extends Operation {
 	/**
 	 * @var string
 	 */
 	protected $code = 'V001';
-	/**
-	 * @var int
-	 */
-	protected $level = Level::MAJOR;
 	/**
 	 * @var string
 	 */

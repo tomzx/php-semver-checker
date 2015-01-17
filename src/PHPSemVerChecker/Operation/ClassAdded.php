@@ -12,10 +12,6 @@ class ClassAdded extends Operation {
 	 */
 	protected $code = 'V014';
 	/**
-	 * @var int
-	 */
-	protected $level = Level::MINOR;
-	/**
 	 * @var string
 	 */
 	protected $reason = 'Class was added.';

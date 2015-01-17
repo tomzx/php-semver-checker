@@ -3,10 +3,8 @@
 namespace PHPSemVerChecker\Operation;
 
 use PhpParser\Node\Stmt;
-use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\Property;
 use PHPSemVerChecker\Node\Statement\Property as PProperty;
-use PHPSemVerChecker\SemanticVersioning\Level;
 
 class PropertyRemoved extends PropertyOperation {
 	/**
@@ -15,13 +13,6 @@ class PropertyRemoved extends PropertyOperation {
 	protected $code = [
 		'class' => ['V008', 'V009', 'V027'],
 		'trait' => ['V040', 'V041', 'V056'],
-	];
-	/**
-	 * @var int
-	 */
-	protected $level = [
-		'class' => [Level::MAJOR, Level::MAJOR, Level::PATCH],
-		'trait' => [Level::MAJOR, Level::MAJOR, Level::MAJOR],
 	];
 	/**
 	 * @var string

@@ -4,17 +4,12 @@ namespace PHPSemVerChecker\Operation;
 
 use PhpParser\Node\Stmt\Trait_;
 use PHPSemVerChecker\Node\Statement\Trait_ as PTrait;
-use PHPSemVerChecker\SemanticVersioning\Level;
 
 class TraitRemoved extends Operation {
 	/**
 	 * @var string
 	 */
 	protected $code = 'V037';
-	/**
-	 * @var int
-	 */
-	protected $level = Level::MAJOR;
 	/**
 	 * @var string
 	 */
