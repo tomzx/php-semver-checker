@@ -17,33 +17,21 @@ abstract class ClassMethodOperation extends Operation {
 
 	public function getCode()
 	{
-		$visiblityMapping = $this->getVisibilityMapping();
-		return $this->code[$this->context][$visiblityMapping[$this->visibility]];
+		return $this->code[$this->context][Visibility::get($this->visibility)];
 	}
 
 	public function getLevel()
 	{
-		$visiblityMapping = $this->getVisibilityMapping();
-		return $this->level[$this->context][$visiblityMapping[$this->visibility]];
+		return $this->level[$this->context][Visibility::get($this->visibility)];
 	}
 
-	protected function getVisibilityMapping()
+	public function getReason()
 	{
-		return [
-			Class_::MODIFIER_PUBLIC    => 0,
-			Class_::MODIFIER_PROTECTED => 1,
-			Class_::MODIFIER_PRIVATE   => 2,
-		];
+		return '[' . Visibility::toString($this->visibility) . '] ' . $this->reason;
 	}
 
-	protected function getVisibility(ClassMethod $classMethod)
+	protected function getVisibility($context)
 	{
-		if ($classMethod->isPublic()) {
-			return Class_::MODIFIER_PUBLIC;
-		} elseif ($classMethod->isProtected()) {
-			return Class_::MODIFIER_PROTECTED;
-		} else {
-			return Class_::MODIFIER_PRIVATE;
-		}
+		return Visibility::getForContext($context);
 	}
 }
