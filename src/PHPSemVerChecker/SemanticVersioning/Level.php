@@ -42,4 +42,20 @@ class Level {
 
 		return $mapping[$level];
 	}
+
+	/**
+	 * @param string $level
+	 * @return int
+	 */
+	public static function fromString($level)
+	{
+		$mapping = [
+			'NONE'  => self::NONE,
+			'PATCH' => self::PATCH,
+			'MINOR' => self::MINOR,
+			'MAJOR' => self::MAJOR,
+		];
+
+		return $mapping[strtoupper($level)];
+	}
 }

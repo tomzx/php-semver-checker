@@ -4,6 +4,8 @@ namespace PHPSemVerChecker\Console\Command;
 
 use File_Iterator_Facade;
 use PHPSemVerChecker\Analyzer\Analyzer;
+use PHPSemVerChecker\Configuration\Configuration;
+use PHPSemVerChecker\Configuration\LevelMapping;
 use PHPSemVerChecker\Filter\SourceFilter;
 use PHPSemVerChecker\Reporter\Reporter;
 use PHPSemVerChecker\Scanner\Scanner;
@@ -24,12 +26,20 @@ class CompareCommand extends Command {
 				new InputArgument('source-before', InputArgument::REQUIRED, 'A directory to check'),
 				new InputArgument('source-after', InputArgument::REQUIRED, 'A directory to check against'),
 				new InputOption('full-path', null, InputOption::VALUE_NONE, 'Display the full path to the file instead of the relative path'),
+				new InputOption('config', 'c', InputOption::VALUE_REQUIRED, 'A configuration file to configure php-semver-checker')
 			]);
 	}
 
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
 		$startTime = microtime(true);
+
+		$config = $input->getOption('config');
+		$configuration = $config ? Configuration::fromFile($config) : new Configuration();
+
+		// Set overrides
+		LevelMapping::setOverrides($configuration->getLevelMapping());
+
 		$fileIterator = new File_Iterator_Facade;
 		$scannerBefore = new Scanner();
 		$scannerAfter = new Scanner();

@@ -80,4 +80,11 @@ class LevelMapping
 	{
 		return static::$mapping[$code];
 	}
+
+	public static function setOverrides(array $mapping)
+	{
+		foreach ($mapping as $code => $level) {
+			static::$mapping[$code] = $level;
+		}
+	}
 }
