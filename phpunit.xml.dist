@@ -11,6 +11,8 @@
 
 	<logging>
 		<log type="coverage-html" target="./log/report" charset="UTF-8" yui="true" highlight="true" lowUpperBound="50" highLowerBound="80" />
+		<log type="coverage-text" target="./log/coverage.txt"/>
+		<log type="coverage-clover" target="./log/coverage.xml"/>
 		<log type="testdox-html" target="./log/testdox.html" />
 	</logging>
 </phpunit>
