@@ -7,7 +7,7 @@ $result = preg_match_all('/(?<code>V\d+) \| (?<level>[^ ]+)/', $ruleset, $matche
 if ($result) {
 	array_shift($matches);
 } else {
-	die('Cannot find rules in Ruleset.md');
+	throw new RuntimeException('Cannot find rules in Ruleset.md');
 }
 
 $rules = array_combine($matches['code'], $matches['level']);
