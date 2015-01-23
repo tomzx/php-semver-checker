@@ -48,6 +48,7 @@ class JsonReporterTest extends TestCase {
 			$operation = $data['changes']['class'][0];
 
 			return $operation['level'] === Level::toString(Level::MAJOR) &&
+				$operation['line'] === 'test-line' &&
 				$operation['location'] === 'test-location' &&
 				$operation['target'] === 'test-target' &&
 				$operation['reason'] === 'test-reason' &&
@@ -55,6 +56,7 @@ class JsonReporterTest extends TestCase {
 		}));
 
 		$operation->shouldReceive('getLocation')->once()->andReturn('test-location')
+			->shouldReceive('getLine')->once()->andReturn('test-line')
 			->shouldReceive('getTarget')->once()->andReturn('test-target')
 			->shouldReceive('getReason')->once()->andReturn('test-reason')
 			->shouldReceive('getCode')->once()->andReturn('test-code');

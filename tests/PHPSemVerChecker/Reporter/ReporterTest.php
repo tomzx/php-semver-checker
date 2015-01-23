@@ -2,7 +2,6 @@
 
 namespace PHPSemVerChecker\Test\Reporter;
 
-use ArrayIterator;
 use Mockery as m;
 use PHPSemVerChecker\Reporter\Reporter;
 use PHPSemVerChecker\SemanticVersioning\Level;
@@ -13,9 +12,9 @@ use Symfony\Component\Console\Output\NullOutput;
 class ReporterTest extends TestCase {
 	public function testOutput()
 	{
-		$input = new ArrayInput([]);
 		$output = new NullOutput();
 		$report = m::mock('PHPSemVerChecker\Report\Report');
+		$operation = m::mock('PHPSemVerChecker\Operation\Operation');
 
 		$levels = [
 			Level::PATCH => [],
@@ -24,7 +23,13 @@ class ReporterTest extends TestCase {
 		];
 
 		$differences = [
-			'class'     => $levels,
+			'class'     => [
+				Level::PATCH => [],
+				Level::MINOR => [],
+				Level::MAJOR => [
+					$operation
+				],
+			],
 			'function'  => $levels,
 			'interface' => $levels,
 			'method'    => $levels,
@@ -32,12 +37,18 @@ class ReporterTest extends TestCase {
 		];
 
 		$report->shouldReceive('getSuggestedLevel')->andReturn(Level::MAJOR)
-			->shouldReceive('getIterator')->andReturn(new ArrayIterator($differences))
-			->shouldReceive('offsetGet')->andReturn($levels)
-			->shouldReceive('hasDifferences')->andReturn(true)
+			->shouldReceive('hasDifferences')->with('class')->andReturn(true)
+			->shouldReceive('offsetGet')->with('class')->andReturn($differences['class'])
+			->shouldReceive('hasDifferences')->andReturn(false)
 			->shouldReceive('getLevelForContext')->andReturn(Level::MAJOR);
 
-		$reporter = new Reporter($report, $input);
+		$operation->shouldReceive('getLocation')->once()->andReturn('test-location')
+			->shouldReceive('getLine')->once()->andReturn('test-line')
+			->shouldReceive('getTarget')->once()->andReturn('test-target')
+			->shouldReceive('getReason')->once()->andReturn('test-reason')
+			->shouldReceive('getCode')->once()->andReturn('test-code');
+
+		$reporter = new Reporter($report);
 		$reporter->output($output);
 	}
 }

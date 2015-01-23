@@ -79,6 +79,7 @@ class CompareCommand extends Command {
 		$report = $analyzer->analyze($registryBefore, $registryAfter);
 
 		$reporter = new Reporter($report, $input);
+		$reporter->setFullPath($input->getOption('full-path'));
 		$reporter->output($output);
 
 		$toJson = $input->getOption('to-json');

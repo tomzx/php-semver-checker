@@ -55,6 +55,7 @@ class JsonReporter
 					$output['changes'][$context][] = [
 						'level' => Level::toString($level),
 						'location' => $operation->getLocation(),
+						'line' => $operation->getLine(),
 						'target' => $operation->getTarget(),
 						'reason' => $operation->getReason(),
 						'code' => $operation->getCode(),

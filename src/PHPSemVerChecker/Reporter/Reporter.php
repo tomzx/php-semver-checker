@@ -6,7 +6,6 @@ use PHPSemVerChecker\Operation\Operation;
 use PHPSemVerChecker\Report\Report;
 use PHPSemVerChecker\SemanticVersioning\Level;
 use Symfony\Component\Console\Helper\Table;
-use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class Reporter {
@@ -15,19 +14,25 @@ class Reporter {
 	 */
 	protected $report;
 	/**
-	 * @var \Symfony\Component\Console\Input\InputInterface
-	 */
-	protected $input;
-	/**
 	 * @var string
 	 */
 	protected $cwd;
+	/**
+	 * @var bool
+	 */
+	protected $fullPath = false;
 
-	public function __construct(Report $report, InputInterface $input)
+	public function __construct(Report $report)
 	{
 		$this->report = $report;
-		$this->input = $input;
 		$this->cwd = getcwd();
+	}
+
+	public function setFullPath($fullPath)
+	{
+		$this->fullPath = $fullPath;
+
+		return $this;
 	}
 
 	public function output(OutputInterface $output)
@@ -81,7 +86,7 @@ class Reporter {
 
 	protected function getLocation(Operation $operation)
 	{
-		$isFullPath = $this->input->getOption('full-path');
+		$isFullPath = $this->fullPath;
 		if ($isFullPath) {
 			$location = $operation->getLocation();
 		} else {
