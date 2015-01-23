@@ -135,6 +135,22 @@ class Report implements ArrayAccess, IteratorAggregate {
 		return Level::NONE;
 	}
 
+	/**
+	 * @return int
+	 */
+	public function getSuggestedLevel()
+	{
+		foreach (Level::asList('desc') as $level) {
+			foreach ($this->differences as $context => $levels) {
+				if ( ! empty($levels[$level])) {
+					return $level;
+				}
+			}
+		}
+
+		return Level::NONE;
+	}
+
 	// TODO: Get rid of ArrayAccess (temporary to transition) <tom@tomrochette.com>
 	public function offsetExists($offset)
 	{

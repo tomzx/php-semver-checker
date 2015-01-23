@@ -32,15 +32,7 @@ class Reporter {
 
 	public function output(OutputInterface $output)
 	{
-		$suggestedChange = Level::NONE;
-		foreach (Level::asList('desc') as $level) {
-			foreach ($this->report as $context => $levels) {
-				if ( ! empty($levels[$level])) {
-					$suggestedChange = $level;
-					break 2;
-				}
-			}
-		}
+		$suggestedChange = $this->report->getSuggestedLevel();
 
 		$output->writeln(''); // line clear
 		$output->writeln('Suggested semantic versioning change: ' . Level::toString($suggestedChange));

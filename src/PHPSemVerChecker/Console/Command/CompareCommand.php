@@ -7,6 +7,7 @@ use PHPSemVerChecker\Analyzer\Analyzer;
 use PHPSemVerChecker\Configuration\Configuration;
 use PHPSemVerChecker\Configuration\LevelMapping;
 use PHPSemVerChecker\Filter\SourceFilter;
+use PHPSemVerChecker\Reporter\JsonReporter;
 use PHPSemVerChecker\Reporter\Reporter;
 use PHPSemVerChecker\Scanner\Scanner;
 use Symfony\Component\Console\Command\Command;
@@ -26,7 +27,8 @@ class CompareCommand extends Command {
 				new InputArgument('source-before', InputArgument::REQUIRED, 'A directory to check'),
 				new InputArgument('source-after', InputArgument::REQUIRED, 'A directory to check against'),
 				new InputOption('full-path', null, InputOption::VALUE_NONE, 'Display the full path to the file instead of the relative path'),
-				new InputOption('config', 'c', InputOption::VALUE_REQUIRED, 'A configuration file to configure php-semver-checker')
+				new InputOption('config', 'c', InputOption::VALUE_REQUIRED, 'A configuration file to configure php-semver-checker'),
+				new InputOption('to-json', null, InputOption::VALUE_REQUIRED, 'Output the result to a JSON file')
 			]);
 	}
 
@@ -78,6 +80,12 @@ class CompareCommand extends Command {
 
 		$reporter = new Reporter($report, $input);
 		$reporter->output($output);
+
+		$toJson = $input->getOption('to-json');
+		if ($toJson) {
+			$jsonReporter = new JsonReporter($report, $toJson);
+			$jsonReporter->output();
+		}
 
 		$duration = microtime(true) - $startTime;
 		$output->writeln('');

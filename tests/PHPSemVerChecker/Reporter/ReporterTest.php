@@ -31,7 +31,8 @@ class ReporterTest extends TestCase {
 			'trait'     => $levels,
 		];
 
-		$report->shouldReceive('getIterator')->andReturn(new ArrayIterator($differences))
+		$report->shouldReceive('getSuggestedLevel')->andReturn(Level::MAJOR)
+			->shouldReceive('getIterator')->andReturn(new ArrayIterator($differences))
 			->shouldReceive('offsetGet')->andReturn($levels)
 			->shouldReceive('hasDifferences')->andReturn(true)
 			->shouldReceive('getLevelForContext')->andReturn(Level::MAJOR);
