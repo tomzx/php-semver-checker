@@ -20,7 +20,7 @@ class Visibility
 	}
 
 	/**
-	 * @param $visibility
+	 * @param int $visibility
 	 * @return int
 	 */
 	public static function get($visibility)
@@ -44,6 +44,10 @@ class Visibility
 		}
 	}
 
+	/**
+	 * @param int $visibility
+	 * @return string
+	 */
 	public static function toString($visibility)
 	{
 		if ($visibility === Class_::MODIFIER_PUBLIC) {

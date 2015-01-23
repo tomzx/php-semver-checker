@@ -7,6 +7,7 @@ class SourceFilter
 	/**
 	 * @param array $filesBefore
 	 * @param array $filesAfter
+	 * @return int
 	 */
 	public function filter(array &$filesBefore, array &$filesAfter)
 	{

@@ -4,7 +4,6 @@ namespace PHPSemVerChecker\Operation;
 
 use PhpParser\Node\Stmt\Class_;
 use PHPSemVerChecker\Node\Statement\Class_ as PClass;
-use PHPSemVerChecker\SemanticVersioning\Level;
 
 class ClassAdded extends Operation {
 	/**

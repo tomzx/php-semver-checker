@@ -78,7 +78,7 @@ class CompareCommand extends Command {
 		$analyzer = new Analyzer();
 		$report = $analyzer->analyze($registryBefore, $registryAfter);
 
-		$reporter = new Reporter($report, $input);
+		$reporter = new Reporter($report);
 		$reporter->setFullPath($input->getOption('full-path'));
 		$reporter->output($output);
 
