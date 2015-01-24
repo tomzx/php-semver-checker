@@ -43,7 +43,7 @@ class ClassRemoved extends Operation {
 
 	public function getLine()
 	{
-		$this->classBefore->getLine();
+		return $this->classBefore->getLine();
 	}
 
 	/**
