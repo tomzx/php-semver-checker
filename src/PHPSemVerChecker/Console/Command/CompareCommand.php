@@ -2,11 +2,11 @@
 
 namespace PHPSemVerChecker\Console\Command;
 
-use File_Iterator_Facade;
 use PHPSemVerChecker\Analyzer\Analyzer;
 use PHPSemVerChecker\Configuration\Configuration;
 use PHPSemVerChecker\Configuration\LevelMapping;
 use PHPSemVerChecker\Filter\SourceFilter;
+use PHPSemVerChecker\Finder\Finder;
 use PHPSemVerChecker\Reporter\JsonReporter;
 use PHPSemVerChecker\Reporter\Reporter;
 use PHPSemVerChecker\Scanner\Scanner;
@@ -24,10 +24,14 @@ class CompareCommand extends Command {
 			->setName('compare')
 			->setDescription('Compare a set of files to determine what semantic versioning change needs to be done')
 			->setDefinition([
-				new InputArgument('source-before', InputArgument::REQUIRED, 'A directory to check'),
-				new InputArgument('source-after', InputArgument::REQUIRED, 'A directory to check against'),
+				new InputArgument('source-before', InputArgument::REQUIRED, 'A base directory to check (ex my-test)'),
+				new InputArgument('source-after', InputArgument::REQUIRED, 'A base directory to check against (ex my-test)'),
+				new InputOption('include-before', null,  InputOption::VALUE_OPTIONAL, 'List of paths to include <info>(comma separated)</info>'),
+				new InputOption('include-after', null, InputOption::VALUE_OPTIONAL, 'List of paths to include <info>(comma separated)</info>'),
+				new InputOption('exclude-before', null,  InputOption::VALUE_REQUIRED, 'List of paths to exclude <info>(comma separated)</info>'),
+				new InputOption('exclude-after', null, InputOption::VALUE_REQUIRED, 'List of paths to exclude <info>(comma separated)</info>'),
 				new InputOption('full-path', null, InputOption::VALUE_NONE, 'Display the full path to the file instead of the relative path'),
-				new InputOption('config', 'c', InputOption::VALUE_REQUIRED, 'A configuration file to configure php-semver-checker'),
+				new InputOption('config', null, InputOption::VALUE_REQUIRED, 'A configuration file to configure php-semver-checker'),
 				new InputOption('to-json', null, InputOption::VALUE_REQUIRED, 'Output the result to a JSON file')
 			]);
 	}
@@ -42,15 +46,20 @@ class CompareCommand extends Command {
 		// Set overrides
 		LevelMapping::setOverrides($configuration->getLevelMapping());
 
-		$fileIterator = new File_Iterator_Facade;
+		$finder = new Finder();
 		$scannerBefore = new Scanner();
 		$scannerAfter = new Scanner();
 
 		$sourceBefore = $input->getArgument('source-before');
-		$sourceBefore = $fileIterator->getFilesAsArray($sourceBefore, '.php');
+		$includeBefore = $input->getOption('include-before');
+		$excludeBefore = $input->getOption('exclude-before');
 
 		$sourceAfter = $input->getArgument('source-after');
-		$sourceAfter = $fileIterator->getFilesAsArray($sourceAfter, '.php');
+		$includeAfter = $input->getOption('include-after');
+		$excludeAfter = $input->getOption('exclude-after');
+
+		$sourceBefore = $finder->findFromString($sourceBefore, $includeBefore, $excludeBefore);
+		$sourceAfter = $finder->findFromString($sourceAfter, $includeAfter, $excludeAfter);
 
 		$sourceFilter = new SourceFilter();
 		$identicalCount = $sourceFilter->filter($sourceBefore, $sourceAfter);

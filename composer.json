@@ -31,7 +31,7 @@
 		"herrera-io/phar-update": "~2.0",
 		"nikic/php-parser": "dev-features/php-semver-checker",
 		"symfony/console": "2.7.*@dev",
-		"phpunit/php-file-iterator": "~1.3"
+		"tomzx/finder": "~0.1@dev"
 	},
 	"require-dev": {
 		"mockery/mockery": "~0.9",
