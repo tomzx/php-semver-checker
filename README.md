@@ -122,4 +122,4 @@ Time: 0.474 seconds, Memory: 4.597 MB
  
 ## License
 
-The code is licensed under the [MIT license](http://choosealicense.com/licenses/mit/). See license.txt.
+The code is licensed under the [MIT license](http://choosealicense.com/licenses/mit/). See LICENSE.
