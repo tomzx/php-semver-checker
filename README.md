@@ -17,8 +17,7 @@ After the inspection is completed, you are given a list of changes that have occ
 As this is still an alpha package, it is not suggested to include `php-semver-checker` directly in your composer.json. There are however a couple ways to use the tool:
 
 1. `php composer.phar create-project tomzx/php-semver-checker --stability=dev` will clone to a new php-semver-checker folder in your current working directory
-2. `php composer.phar global require tomzx/php-semver-checker --stability=dev` will clone it to your global composer location, so you can use it from anywhere.
-3. `git clone https://github.com/tomzx/php-semver-checker.git` and `php composer.phar install` in the newly cloned directory.
+2. `git clone https://github.com/tomzx/php-semver-checker.git` and `php composer.phar install` in the newly cloned directory.
 
 You may also download the [latest .phar build](https://github.com/tomzx/php-semver-checker/releases). Note that the .phar build is generally less bleeding edge than the previously mentioned methods.
 
