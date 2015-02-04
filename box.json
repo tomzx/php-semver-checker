@@ -3,7 +3,7 @@
     "compactors": ["Herrera\\Box\\Compactor\\Php"],
     "compression": "GZ",
     "directories": ["src"],
-    "files": ["license.txt"],
+    "files": ["LICENSE"],
     "finder": [
         {
             "name": "*.php",
