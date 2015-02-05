@@ -7,10 +7,9 @@ use PhpParser\Node\Stmt\Function_ as BaseFunction;
 class Function_ {
 	public static function getFullyQualifiedName(BaseFunction $function)
 	{
-		$fqfn = '';
 		if ($function->namespacedName) {
-			$fqfn = $function->namespacedName->toString() . '::';
+			return $function->namespacedName->toString();
 		}
-		return $fqfn . $function->name;
+		return $function->name;
 	}
 }
