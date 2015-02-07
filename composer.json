@@ -27,13 +27,15 @@
 	],
 	"require": {
 		"php": ">=5.4.0",
-		"symfony/console": "2.7.*@dev",
+
+		"herrera-io/phar-update": "~2.0",
 		"nikic/php-parser": "dev-features/php-semver-checker",
+		"symfony/console": "2.7.*@dev",
 		"phpunit/php-file-iterator": "~1.3"
 	},
 	"require-dev": {
-		"phpunit/phpunit": "~4",
-		"mockery/mockery": "~0.9"
+		"mockery/mockery": "~0.9",
+		"phpunit/phpunit": "~4"
 	},
 	"autoload": {
 		"psr-4": {
