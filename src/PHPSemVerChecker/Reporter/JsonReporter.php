@@ -33,7 +33,7 @@ class JsonReporter
 		$this->filesystem = $filesystem ?: new Filesystem();
 	}
 
-	public function output()
+	public function getOutput()
 	{
 		$output = [];
 		$output['level'] = Level::toString($this->report->getSuggestedLevel());
@@ -64,6 +64,11 @@ class JsonReporter
 			}
 		}
 
-		$this->filesystem->write($this->path, json_encode($output, JSON_PRETTY_PRINT));
+		return $output;
+	}
+
+	public function output()
+	{
+		$this->filesystem->write($this->path, json_encode($this->getOutput(), JSON_PRETTY_PRINT));
 	}
 }
