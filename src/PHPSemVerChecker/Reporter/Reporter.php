@@ -90,8 +90,7 @@ class Reporter {
 		if ($isFullPath) {
 			$location = $operation->getLocation();
 		} else {
-			$fullPath = realpath($operation->getLocation());
-			$location = str_replace($this->cwd . DIRECTORY_SEPARATOR, '', $fullPath);
+			$location = str_replace($this->cwd . DIRECTORY_SEPARATOR, '', $operation->getLocation());
 		}
 		return $location . '#' . $operation->getLine();
 	}

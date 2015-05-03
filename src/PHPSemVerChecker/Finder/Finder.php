@@ -28,7 +28,10 @@ class Finder
 			$finder->notPath($exclude);
 		}
 
-		$files = iterator_to_array($finder->getIterator());
+		$files = [];
+		foreach ($finder as $file) {
+			$files[] = $file->getRealpath();
+		}
 
 		return $files;
 	}
