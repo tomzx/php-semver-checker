@@ -92,6 +92,6 @@ class Reporter {
 		} else {
 			$location = str_replace($this->cwd . DIRECTORY_SEPARATOR, '', $operation->getLocation());
 		}
-		return $location . '#' . $operation->getLine();
+		return $location . ':' . $operation->getLine();
 	}
 }
