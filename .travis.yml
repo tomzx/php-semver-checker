@@ -22,4 +22,4 @@ after_script:
     - wget https://scrutinizer-ci.com/ocular.phar
     - php ocular.phar code-coverage:upload --format=php-clover log/coverage.xml
     - wget https://tomzx.github.io/php-semver-checker-git/php-semver-checker-git.phar
-    - php php-semver-checker-git.phar suggest src src --allow-detached -vvv --details
+    - php php-semver-checker-git.phar suggest --allow-detached -vvv --details --include-before=src --include-after=src
