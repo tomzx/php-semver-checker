@@ -49,7 +49,7 @@ V062 | PATCH | Class private method parameter name changed
 
 Code | Level | Rule
 -----|-------|-------
-V032 | MAJOR | Interface added
+V032 | MINOR | Interface added
 V033 | MAJOR | Interface removed
 V034 | MAJOR | Interface method added
 V035 | MAJOR | Interface method removed

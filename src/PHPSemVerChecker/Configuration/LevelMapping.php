@@ -38,7 +38,7 @@ class LevelMapping
 		'V029' => Level::PATCH,
 		'V030' => Level::PATCH,
 		'V031' => Level::PATCH,
-		'V032' => Level::MAJOR,
+		'V032' => Level::MINOR,
 		'V033' => Level::MAJOR,
 		'V034' => Level::MAJOR,
 		'V035' => Level::MAJOR,
