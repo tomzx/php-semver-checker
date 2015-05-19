@@ -27,7 +27,7 @@ class TraitAnalyzerTest extends TestCase {
 		Assert::assertNoDifference($report);
 	}
 
-	public function testVXXXTraitRemoved()
+	public function testV037TraitRemoved()
 	{
 		$before = new Registry();
 		$after = new Registry();
@@ -42,7 +42,7 @@ class TraitAnalyzerTest extends TestCase {
 		$this->assertSame('tmp', $report['trait'][Level::MAJOR][0]->getTarget());
 	}
 
-	public function testVXXXTraitAdded()
+	public function testV046TraitAdded()
 	{
 		$before = new Registry();
 		$after = new Registry();
