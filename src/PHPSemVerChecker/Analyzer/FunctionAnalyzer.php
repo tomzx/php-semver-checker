@@ -70,10 +70,6 @@ class FunctionAnalyzer {
 					$report->addFunction($data);
 					continue;
 				}
-
-				// Unable to match an issue, but there is one...
-				$data = new Unknown($fileBefore, $fileAfter);
-				$report->addFunction($data);
 			}
 		}
 
