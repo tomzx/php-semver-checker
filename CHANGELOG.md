@@ -4,6 +4,15 @@ This project follows [Semantic Versioning 2.0.0](http://semver.org/).
 
 ## <a name="unreleased"></a>Unreleased
 
+## <a name="v0.6.3"></a>v0.6.3 (2015-06-18)
+### Changed
+* Depend on symfony/console ~2.7 instead of 2.7.*@dev since it is now Symfony's LTS
+* Update V018 and V021 level from MINOR to PATCH
+* Update V059 level from PATCH to MAJOR
+
+### Fixed
+* [#62] PHP Notice for an Unknown operation
+
 ## <a name="v0.6.2"></a>v0.6.2 (2015-05-19)
 ### Changed
 * [#60] [V032] Adding an interface is now a MINOR increment (was a MAJOR increment)
@@ -37,7 +46,7 @@ This project follows [Semantic Versioning 2.0.0](http://semver.org/).
 
 ## <a name="v0.4.0"></a>v0.4.0 (2015-01-15)
 ### Added
-* Source filtering, which greatly improves scanning a large code repository.
+* Source filtering, which greatly improves scanning a large code repository
 
 ## <a name="v0.3.0"></a>v0.3.0 (2015-01-14)
 ### Added
@@ -52,8 +61,8 @@ This project follows [Semantic Versioning 2.0.0](http://semver.org/).
 * Support for building `phar`
 
 #### Rules
-* [#7] Adding private class/trait methods should generated a PATCH level.
-* Adding/Removing traits public/protected method should generate a MAJOR level.
+* [#7] Adding private class/trait methods should generated a PATCH level
+* Adding/Removing traits public/protected method should generate a MAJOR level
 * Adding public/protected class methods should generate a MAJOR level.
 * [#10] Adding methods to an interface should generate a MAJOR
 
