@@ -8,10 +8,10 @@ use PhpParser\Node\Stmt\Property as BaseProperty;
 class Property {
 	public static function getFullyQualifiedName(Stmt $context, BaseProperty $property)
 	{
-		$fqcn = $context->name;
-		if ($context->namespacedName) {
-			$fqcn = $context->namespacedName->toString();
+		$namespace = $context->name;
+		if (isset($context->namespacedName)) {
+			$namespace = $context->namespacedName->toString();
 		}
-		return $fqcn . '::$' . $property->props[0]->name;
+		return $namespace . '::$' . $property->props[0]->name;
 	}
 }

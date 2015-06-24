@@ -8,10 +8,10 @@ use PhpParser\Node\Stmt\ClassMethod as BaseClassMethod;
 class ClassMethod {
 	public static function getFullyQualifiedName(Stmt $context, BaseClassMethod $classMethod)
 	{
-		$fqcn = $context->name;
-		if ($context->namespacedName) {
-			$fqcn = $context->namespacedName->toString();
+		$namespace = $context->name;
+		if (isset($context->namespacedName)) {
+			$namespace = $context->namespacedName->toString();
 		}
-		return $fqcn . '::' . $classMethod->name;
+		return $namespace . '::' . $classMethod->name;
 	}
 }

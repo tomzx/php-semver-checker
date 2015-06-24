@@ -7,7 +7,7 @@ use PhpParser\Node\Stmt\Class_ as BaseClass;
 class Class_ {
 	public static function getFullyQualifiedName(BaseClass $class)
 	{
-		if ($class->namespacedName) {
+		if (isset($class->namespacedName)) {
 			return $class->namespacedName->toString();
 		}
 		return $class->name;
