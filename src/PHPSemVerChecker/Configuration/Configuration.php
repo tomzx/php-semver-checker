@@ -35,7 +35,7 @@ class Configuration
 	}
 
 	/**
-	 * @param array $config
+	 * @param array $mapping
 	 */
 	protected function extractMapping(array $mapping)
 	{
