@@ -2,6 +2,7 @@
 
 namespace PHPSemVerChecker\Configuration;
 
+use Noodlehaus\Config;
 use PHPSemVerChecker\SemanticVersioning\Level;
 
 class Configuration
@@ -12,29 +13,32 @@ class Configuration
 	protected $mapping = [];
 
 	/**
-	 * @param string $file
+	 * @param string|array $file
 	 * @return \PHPSemVerChecker\Configuration\Configuration
 	 */
 	public static function fromFile($file)
 	{
 		$configuration = new Configuration();
-		$config = json_decode(file_get_contents($file), true);
+		$config = new Config($file);
 
-		$configuration->extractMapping($config);
+		$configuration->extractMapping($config->get('level.mapping', []));
 
 		return $configuration;
 	}
 
 	/**
+	 * @return \PHPSemVerChecker\Configuration\Configuration
+	 */
+	public static function defaults()
+	{
+		return self::fromFile(['?php-semver-checker.yml.dist', '?php-semver-checker.yml']);
+	}
+
+	/**
 	 * @param array $config
 	 */
-	protected function extractMapping(array $config)
+	protected function extractMapping(array $mapping)
 	{
-		if ( ! array_key_exists('level', $config) || ! array_key_exists('mapping', $config['level'])) {
-			return;
-		}
-
-		$mapping = $config['level']['mapping'];
 		foreach ($mapping as &$level) {
 			$level = Level::fromString($level);
 		}

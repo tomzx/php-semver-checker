@@ -41,7 +41,7 @@ class CompareCommand extends Command {
 		$startTime = microtime(true);
 
 		$config = $input->getOption('config');
-		$configuration = $config ? Configuration::fromFile($config) : new Configuration();
+		$configuration = $config ? Configuration::fromFile($config) : Configuration::defaults();
 
 		// Set overrides
 		LevelMapping::setOverrides($configuration->getLevelMapping());
