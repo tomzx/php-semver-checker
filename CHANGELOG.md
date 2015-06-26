@@ -4,6 +4,13 @@ This project follows [Semantic Versioning 2.0.0](http://semver.org/).
 
 ## <a name="unreleased"></a>Unreleased
 
+## <a name="v0.7.0"></a>v0.7.0 (2015-06-25)
+### Added
+* Support for configuration in php, ini, xml, json and yaml through hassankhan/config
+
+### Changed
+* Update nikic/php-parser dependency to use ~1.3
+
 ## <a name="v0.6.3"></a>v0.6.3 (2015-06-18)
 ### Changed
 * Depend on symfony/console ~2.7 instead of 2.7.*@dev since it is now Symfony's LTS
