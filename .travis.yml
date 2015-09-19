@@ -11,6 +11,8 @@ matrix:
     allow_failures:
         - php: 7.0
 
+sudo: false
+
 before_script:
     - composer self-update
     - composer update
