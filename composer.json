@@ -32,6 +32,9 @@
 		"mockery/mockery": "~0.9",
 		"phpunit/phpunit": "~4"
 	},
+	"bin": [
+		"bin/php-semver-checker"
+	],
 	"autoload": {
 		"psr-4": {
 			"PHPSemVerChecker\\": "src/PHPSemVerChecker"
