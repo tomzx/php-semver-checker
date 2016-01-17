@@ -53,13 +53,13 @@ class CompareCommand extends Command {
 		$scannerBefore = new Scanner();
 		$scannerAfter = new Scanner();
 
-		$sourceBefore = $input->getArgument('source-before');
-		$includeBefore = $input->getOption('include-before');
-		$excludeBefore = $input->getOption('exclude-before');
+		$sourceBefore = $configuration->get('source-before');
+		$includeBefore = $configuration->get('include-before');
+		$excludeBefore = $configuration->get('exclude-before');
 
-		$sourceAfter = $input->getArgument('source-after');
-		$includeAfter = $input->getOption('include-after');
-		$excludeAfter = $input->getOption('exclude-after');
+		$sourceAfter = $configuration->get('source-after');
+		$includeAfter = $configuration->get('include-after');
+		$excludeAfter = $configuration->get('exclude-after');
 
 		$sourceBefore = $finder->findFromString($sourceBefore, $includeBefore, $excludeBefore);
 		$sourceAfter = $finder->findFromString($sourceAfter, $includeAfter, $excludeAfter);
@@ -68,8 +68,8 @@ class CompareCommand extends Command {
 		$identicalCount = $sourceFilter->filter($sourceBefore, $sourceAfter);
 
 		$progress = new ProgressScanner($output);
-		$progress->addJob($input->getArgument('source-before'), $sourceBefore, $scannerBefore);
-		$progress->addJob($input->getArgument('source-after'), $sourceAfter, $scannerAfter);
+		$progress->addJob($configuration->get('source-before'), $sourceBefore, $scannerBefore);
+		$progress->addJob($configuration->get('source-after'), $sourceAfter, $scannerAfter);
 		$progress->runJobs();
 
 		$registryBefore = $scannerBefore->getRegistry();
@@ -79,10 +79,10 @@ class CompareCommand extends Command {
 		$report = $analyzer->analyze($registryBefore, $registryAfter);
 
 		$reporter = new Reporter($report);
-		$reporter->setFullPath($input->getOption('full-path'));
+		$reporter->setFullPath($configuration->get('full-path'));
 		$reporter->output($output);
 
-		$toJson = $input->getOption('to-json');
+		$toJson = $configuration->get('to-json');
 		if ($toJson) {
 			$jsonReporter = new JsonReporter($report, $toJson);
 			$jsonReporter->output();
