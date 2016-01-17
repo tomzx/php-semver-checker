@@ -9,9 +9,9 @@ use PHPSemVerChecker\Filter\SourceFilter;
 use PHPSemVerChecker\Finder\Finder;
 use PHPSemVerChecker\Reporter\JsonReporter;
 use PHPSemVerChecker\Reporter\Reporter;
+use PHPSemVerChecker\Scanner\ProgressScanner;
 use PHPSemVerChecker\Scanner\Scanner;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -64,22 +64,10 @@ class CompareCommand extends Command {
 		$sourceFilter = new SourceFilter();
 		$identicalCount = $sourceFilter->filter($sourceBefore, $sourceAfter);
 
-		$progress = new ProgressBar($output, count($sourceBefore) + count($sourceAfter));
-		$progress->setFormat("%message%\n%current%/%max% [%bar%] %percent:3s%% %elapsed:6s%/%estimated:-6s% %memory:6s%");
-		$output->writeln('');
-		$progress->setMessage('Scanning before files');
-		foreach ($sourceBefore as $file) {
-			$scannerBefore->scan($file);
-			$progress->advance();
-		}
-
-		$progress->setMessage('Scanning after files');
-		foreach ($sourceAfter as $file) {
-			$scannerAfter->scan($file);
-			$progress->advance();
-		}
-
-		$progress->clear();
+		$progress = new ProgressScanner($output);
+		$progress->addJob($input->getArgument('source-before'), $sourceBefore, $scannerBefore);
+		$progress->addJob($input->getArgument('source-after'), $sourceAfter, $scannerAfter);
+		$progress->runJobs();
 
 		$registryBefore = $scannerBefore->getRegistry();
 		$registryAfter = $scannerAfter->getRegistry();
