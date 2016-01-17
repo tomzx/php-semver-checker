@@ -19,6 +19,11 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class CompareCommand extends Command {
+	/**
+	 * @var Configuration
+	 */
+	protected $config;
+
 	protected function configure()
 	{
 		$this
@@ -42,24 +47,24 @@ class CompareCommand extends Command {
 		$startTime = microtime(true);
 
 		$configPath = $input->getOption('config');
-		$configuration = $configPath ? Configuration::fromFile($configPath) : Configuration::defaults();
+		$this->config = $configPath ? Configuration::fromFile($configPath) : Configuration::defaults();
 		$im = new InputMerger();
-		$im->merge($input, $configuration);
+		$im->merge($input, $this->config);
 
 		// Set overrides
-		LevelMapping::setOverrides($configuration->getLevelMapping());
+		LevelMapping::setOverrides($this->config->getLevelMapping());
 
 		$finder = new Finder();
 		$scannerBefore = new Scanner();
 		$scannerAfter = new Scanner();
 
-		$sourceBefore = $configuration->get('source-before');
-		$includeBefore = $configuration->get('include-before');
-		$excludeBefore = $configuration->get('exclude-before');
+		$sourceBefore = $this->config->get('source-before');
+		$includeBefore = $this->config->get('include-before');
+		$excludeBefore = $this->config->get('exclude-before');
 
-		$sourceAfter = $configuration->get('source-after');
-		$includeAfter = $configuration->get('include-after');
-		$excludeAfter = $configuration->get('exclude-after');
+		$sourceAfter = $this->config->get('source-after');
+		$includeAfter = $this->config->get('include-after');
+		$excludeAfter = $this->config->get('exclude-after');
 
 		$sourceBefore = $finder->findFromString($sourceBefore, $includeBefore, $excludeBefore);
 		$sourceAfter = $finder->findFromString($sourceAfter, $includeAfter, $excludeAfter);
@@ -68,8 +73,8 @@ class CompareCommand extends Command {
 		$identicalCount = $sourceFilter->filter($sourceBefore, $sourceAfter);
 
 		$progress = new ProgressScanner($output);
-		$progress->addJob($configuration->get('source-before'), $sourceBefore, $scannerBefore);
-		$progress->addJob($configuration->get('source-after'), $sourceAfter, $scannerAfter);
+		$progress->addJob($this->config->get('source-before'), $sourceBefore, $scannerBefore);
+		$progress->addJob($this->config->get('source-after'), $sourceAfter, $scannerAfter);
 		$progress->runJobs();
 
 		$registryBefore = $scannerBefore->getRegistry();
@@ -79,10 +84,10 @@ class CompareCommand extends Command {
 		$report = $analyzer->analyze($registryBefore, $registryAfter);
 
 		$reporter = new Reporter($report);
-		$reporter->setFullPath($configuration->get('full-path'));
+		$reporter->setFullPath($this->config->get('full-path'));
 		$reporter->output($output);
 
-		$toJson = $configuration->get('to-json');
+		$toJson = $this->config->get('to-json');
 		if ($toJson) {
 			$jsonReporter = new JsonReporter($report, $toJson);
 			$jsonReporter->output();
