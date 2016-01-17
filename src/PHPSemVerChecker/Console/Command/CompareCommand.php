@@ -42,10 +42,9 @@ class CompareCommand extends Command {
 			]);
 	}
 
-	protected function execute(InputInterface $input, OutputInterface $output)
+	protected function initialize(InputInterface $input, OutputInterface $output)
 	{
-		$startTime = microtime(true);
-
+		parent::initialize($input, $output);
 		$configPath = $input->getOption('config');
 		$this->config = $configPath ? Configuration::fromFile($configPath) : Configuration::defaults();
 		$im = new InputMerger();
@@ -53,6 +52,12 @@ class CompareCommand extends Command {
 
 		// Set overrides
 		LevelMapping::setOverrides($this->config->getLevelMapping());
+	}
+
+
+	protected function execute(InputInterface $input, OutputInterface $output)
+	{
+		$startTime = microtime(true);
 
 		$finder = new Finder();
 		$scannerBefore = new Scanner();
