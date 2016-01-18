@@ -12,6 +12,12 @@ You may configure various options within `php-semver-checker` to make them more 
 }
 ```
 
+## Configuration file
+
+By default, `php-semver-checker` will search for a file called `php-semver-checker.yml` within the current directory. If one is found, it'll read its configuration from that file.
+
+If no  `php-semver-checker.yml` file exists but a `php-semver-checker.yml.dist` file exists (for distribution purpose), configuration will be read from that file.
+
 ## Configuration sections
 
 The following describes every section of the configuration in more details in order to allow you to customize `php-semver-checker` to your liking.
