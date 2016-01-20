@@ -1,0 +1,10 @@
+{
+  "include-before": "src",
+  "include-after": "src",
+  "level": {
+    "mapping": {
+      "V001": "PATCH",
+      "V006": "MAJOR"
+    }
+  }
+}
