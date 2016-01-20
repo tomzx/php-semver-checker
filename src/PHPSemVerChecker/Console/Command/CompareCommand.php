@@ -5,6 +5,7 @@ namespace PHPSemVerChecker\Console\Command;
 use PHPSemVerChecker\Analyzer\Analyzer;
 use PHPSemVerChecker\Configuration\Configuration;
 use PHPSemVerChecker\Configuration\LevelMapping;
+use PHPSemVerChecker\Console\InputMerger;
 use PHPSemVerChecker\Filter\SourceFilter;
 use PHPSemVerChecker\Finder\Finder;
 use PHPSemVerChecker\Reporter\JsonReporter;
@@ -40,8 +41,10 @@ class CompareCommand extends Command {
 	{
 		$startTime = microtime(true);
 
-		$config = $input->getOption('config');
-		$configuration = $config ? Configuration::fromFile($config) : Configuration::defaults();
+		$configPath = $input->getOption('config');
+		$configuration = $configPath ? Configuration::fromFile($configPath) : Configuration::defaults();
+		$im = new InputMerger();
+		$im->merge($input, $configuration);
 
 		// Set overrides
 		LevelMapping::setOverrides($configuration->getLevelMapping());
