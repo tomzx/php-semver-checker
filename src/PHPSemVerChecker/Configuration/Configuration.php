@@ -11,6 +11,19 @@ class Configuration
 	 * @var array
 	 */
 	protected $mapping = [];
+	/**
+	 * @var \Noodlehaus\Config
+	 */
+	protected $config;
+
+	/**
+	 * @param string|array $path
+	 */
+	public function __construct($path)
+	{
+		$this->config = new Config($path);
+		$this->extractMapping($this->get('level.mapping', []));
+	}
 
 	/**
 	 * @param string|array $file
@@ -18,12 +31,7 @@ class Configuration
 	 */
 	public static function fromFile($file)
 	{
-		$configuration = new Configuration();
-		$config = new Config($file);
-
-		$configuration->extractMapping($config->get('level.mapping', []));
-
-		return $configuration;
+		return new Configuration($file);
 	}
 
 	/**
@@ -51,5 +59,40 @@ class Configuration
 	public function getLevelMapping()
 	{
 		return $this->mapping;
+	}
+
+	/**
+	 * @see \Noodlehaus\Config::get
+	 * @param string $key
+	 * @param mixed|null $default
+	 * @return array|mixed|null
+	 */
+	public function get($key, $default = null)
+	{
+		return $this->config->get($key, $default);
+	}
+
+	/**
+	 * @see \Noodlehaus\Config::set
+	 * @param string $key
+	 * @param mixed $value
+	 */
+	public function set($key, $value)
+	{
+		$this->config->set($key, $value);
+	}
+
+	/**
+	 * Merge this configuration with an associative array.
+	 *
+	 * Note that dot notation is used for keys.
+	 *
+	 * @param array $data
+	 */
+	public function merge($data)
+	{
+		foreach ($data as $key => $value) {
+			$this->set($key, $value);
+		}
 	}
 }
