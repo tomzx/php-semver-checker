@@ -20,7 +20,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class CompareCommand extends Command {
 	/**
-	 * @var Configuration
+	 * @var \PHPSemVerChecker\Configuration\Configuration
 	 */
 	protected $config;
 
@@ -42,19 +42,26 @@ class CompareCommand extends Command {
 			]);
 	}
 
+	/**
+	 * @param \Symfony\Component\Console\Input\InputInterface   $input
+	 * @param \Symfony\Component\Console\Output\OutputInterface $output
+	 */
 	protected function initialize(InputInterface $input, OutputInterface $output)
 	{
 		parent::initialize($input, $output);
 		$configPath = $input->getOption('config');
 		$this->config = $configPath ? Configuration::fromFile($configPath) : Configuration::defaults();
-		$im = new InputMerger();
-		$im->merge($input, $this->config);
+		$inputMerger = new InputMerger();
+		$inputMerger->merge($input, $this->config);
 
 		// Set overrides
 		LevelMapping::setOverrides($this->config->getLevelMapping());
 	}
 
-
+	/**
+	 * @param \Symfony\Component\Console\Input\InputInterface   $input
+	 * @param \Symfony\Component\Console\Output\OutputInterface $output
+	 */
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
 		$startTime = microtime(true);
