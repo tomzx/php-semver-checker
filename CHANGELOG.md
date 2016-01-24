@@ -4,6 +4,12 @@ This project follows [Semantic Versioning 2.0.0](http://semver.org/).
 
 ## <a name="unreleased"></a>Unreleased
 
+## <a name="v0.8.0"></a>v0.8.0 (2016-01-23)
+### Added
+* `php-semver-checker` can now be called from `vendor/bin/php-semver-checker`
+*  Add ProgressScanner to manage progress of scan jobs (thanks to @nochso)
+* [#67] Support CLI parameters in the configuration file (thanks to @nochso)
+
 ## <a name="v0.7.0"></a>v0.7.0 (2015-06-25)
 ### Added
 * Support for configuration in php, ini, xml, json and yaml through hassankhan/config
