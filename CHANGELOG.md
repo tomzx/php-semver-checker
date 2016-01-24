@@ -4,6 +4,11 @@ This project follows [Semantic Versioning 2.0.0](http://semver.org/).
 
 ## <a name="unreleased"></a>Unreleased
 
+## <a name="v0.8.1"></a>v0.8.1 (2016-01-23)
+[Full Changelog](https://github.com/tomzx/php-semver-checker/compare/v0.8.0...v0.8.1)
+### Fixed
+* [#75] InputMerger not merging options with defaults properly
+
 ## <a name="v0.8.0"></a>v0.8.0 (2016-01-23)
 [Full Changelog](https://github.com/tomzx/php-semver-checker/compare/v0.7.0...v0.8.0)
 ### Added
