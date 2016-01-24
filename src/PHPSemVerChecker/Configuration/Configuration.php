@@ -37,9 +37,9 @@ class Configuration
 	/**
 	 * @return \PHPSemVerChecker\Configuration\Configuration
 	 */
-	public static function defaults()
+	public static function defaults($name)
 	{
-		return self::fromFile(['?php-semver-checker.yml.dist', '?php-semver-checker.yml']);
+		return self::fromFile(['?'.$name.'.yml.dist', '?'.$name.'.yml']);
 	}
 
 	/**

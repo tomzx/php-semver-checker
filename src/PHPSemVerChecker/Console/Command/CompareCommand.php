@@ -5,25 +5,18 @@ namespace PHPSemVerChecker\Console\Command;
 use PHPSemVerChecker\Analyzer\Analyzer;
 use PHPSemVerChecker\Configuration\Configuration;
 use PHPSemVerChecker\Configuration\LevelMapping;
-use PHPSemVerChecker\Console\InputMerger;
 use PHPSemVerChecker\Filter\SourceFilter;
 use PHPSemVerChecker\Finder\Finder;
 use PHPSemVerChecker\Reporter\JsonReporter;
 use PHPSemVerChecker\Reporter\Reporter;
 use PHPSemVerChecker\Scanner\ProgressScanner;
 use PHPSemVerChecker\Scanner\Scanner;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class CompareCommand extends Command {
-	/**
-	 * @var \PHPSemVerChecker\Configuration\Configuration
-	 */
-	protected $config;
-
+class CompareCommand extends BaseCommand {
 	protected function configure()
 	{
 		$this
@@ -32,30 +25,14 @@ class CompareCommand extends Command {
 			->setDefinition([
 				new InputArgument('source-before', InputArgument::REQUIRED, 'A base directory to check (ex my-test)'),
 				new InputArgument('source-after', InputArgument::REQUIRED, 'A base directory to check against (ex my-test)'),
-				new InputOption('include-before', null,  InputOption::VALUE_OPTIONAL, 'List of paths to include <info>(comma separated)</info>'),
+				new InputOption('include-before', null, InputOption::VALUE_OPTIONAL, 'List of paths to include <info>(comma separated)</info>'),
 				new InputOption('include-after', null, InputOption::VALUE_OPTIONAL, 'List of paths to include <info>(comma separated)</info>'),
-				new InputOption('exclude-before', null,  InputOption::VALUE_REQUIRED, 'List of paths to exclude <info>(comma separated)</info>'),
+				new InputOption('exclude-before', null, InputOption::VALUE_REQUIRED, 'List of paths to exclude <info>(comma separated)</info>'),
 				new InputOption('exclude-after', null, InputOption::VALUE_REQUIRED, 'List of paths to exclude <info>(comma separated)</info>'),
 				new InputOption('full-path', null, InputOption::VALUE_NONE, 'Display the full path to the file instead of the relative path'),
 				new InputOption('config', null, InputOption::VALUE_REQUIRED, 'A configuration file to configure php-semver-checker'),
 				new InputOption('to-json', null, InputOption::VALUE_REQUIRED, 'Output the result to a JSON file')
 			]);
-	}
-
-	/**
-	 * @param \Symfony\Component\Console\Input\InputInterface   $input
-	 * @param \Symfony\Component\Console\Output\OutputInterface $output
-	 */
-	protected function initialize(InputInterface $input, OutputInterface $output)
-	{
-		parent::initialize($input, $output);
-		$configPath = $input->getOption('config');
-		$this->config = $configPath ? Configuration::fromFile($configPath) : Configuration::defaults();
-		$inputMerger = new InputMerger();
-		$inputMerger->merge($input, $this->config);
-
-		// Set overrides
-		LevelMapping::setOverrides($this->config->getLevelMapping());
 	}
 
 	/**
