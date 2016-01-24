@@ -5,6 +5,7 @@ namespace PHPSemVerChecker\Test\Console;
 use PHPSemVerChecker\Configuration\Configuration;
 use PHPSemVerChecker\Console\Command\CompareCommand;
 use PHPSemVerChecker\Console\InputMerger;
+use PHPSemVerChecker\Console\InspectableArgvInput;
 use Symfony\Component\Console\Input\StringInput;
 
 class InputMergerTest extends \PHPUnit_Framework_TestCase
@@ -15,9 +16,10 @@ class InputMergerTest extends \PHPUnit_Framework_TestCase
 		// Prepare options and arguments
 		$config->set('include-before', 'in-before config');
 		$config->set('source-after', 'src-after config');
+		$config->set('full-path', true);
 
 		// Specify options and arguments for input
-		$input = new StringInput('--include-before "in-before cli" "src-before cli"');
+		$input = new InspectableArgvInput([null, '--include-before', 'in-before cli', 'src-before cli']);
 		$command = new CompareCommand();
 		$input->bind($command->getDefinition());
 		$this->assertEquals('in-before cli', $input->getOption('include-before'), 'Test setup: Could not prepare input arguments');
@@ -29,5 +31,6 @@ class InputMergerTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals('src-before cli', $input->getArgument('source-before'), 'Input arguments must not be overwritten by empty configuration');
 		$this->assertEquals('src-after config', $config->get('source-after'), 'Configuration must not be overwritten by empty CLI argument');
 		$this->assertEquals('src-after config', $input->getArgument('source-after'), 'Missing input arguments must take on existing configuration');
+		$this->assertEquals(true, $config->get('full-path'), 'CLI option should use Configuration value and not CLI default');
 	}
 }

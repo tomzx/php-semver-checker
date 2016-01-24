@@ -19,23 +19,20 @@ class InputMerger
 	 */
 	public function merge(InputInterface $input, Configuration $config)
 	{
-		$missingArguments = $this->getKeysOfNullValues($input->getArguments());
-		foreach ($missingArguments as $key) {
-			$input->setArgument($key, $config->get($key));
+		foreach ($input->getArguments() as $argument => $value) {
+			if ($input->hasArgumentSet($argument)) {
+				$config->set($argument, $value);
+			} else {
+				$input->setArgument($argument, $config->get($argument));
+			}
 		}
-		$missingOptions = $this->getKeysOfNullValues($input->getOptions());
-		foreach ($missingOptions as $key) {
-			$input->setOption($key, $config->get($key));
-		}
-		$config->merge(array_merge($input->getArguments(), $input->getOptions()));
-	}
 
-	/**
-	 * @param array $array
-	 * @return array
-	 */
-	private function getKeysOfNullValues(array $array)
-	{
-		return array_keys(array_filter($array, 'is_null'));
+		foreach ($input->getOptions() as $option => $value) {
+			if ($input->hasOptionSet($option)) {
+				$config->set($option, $value);
+			} else {
+				$input->setOption($option, $config->get($option));
+			}
+		}
 	}
 }

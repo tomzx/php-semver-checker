@@ -25,4 +25,4 @@ if (!$found) {
 ini_set('xdebug.max_nesting_level', 5000);
 
 $app = new PHPSemVerChecker\Console\Application();
-$app->run();
+$app->run(new PHPSemVerChecker\Console\InspectableArgvInput());
