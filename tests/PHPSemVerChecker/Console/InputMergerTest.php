@@ -33,4 +33,20 @@ class InputMergerTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals('src-after config', $input->getArgument('source-after'), 'Missing input arguments must take on existing configuration');
 		$this->assertEquals(true, $config->get('full-path'), 'CLI option should use Configuration value and not CLI default');
 	}
+
+	/**
+	 * @expectedException \Symfony\Component\Console\Exception\RuntimeException
+	 */
+	public function testEmptyInputShouldThrowException()
+	{
+		// Default/empty configuration
+		$config = new Configuration([]);
+		// No input arguments
+		$input = new InspectableArgvInput([null]);
+		$command = new CompareCommand();
+		$input->bind($command->getDefinition());
+		$im = new InputMerger();
+		$im->merge($input, $config);
+		$input->validate();
+	}
 }
