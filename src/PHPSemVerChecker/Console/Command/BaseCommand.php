@@ -26,7 +26,7 @@ class BaseCommand extends Command
 		$configPath = $input->getOption('config');
 		$this->config = $configPath ? Configuration::fromFile($configPath) : Configuration::defaults('php-semver-checker');
 		$inputMerger = new InputMerger();
-		$inputMerger->merge($input, $this->config);
+		$inputMerger->merge($input, $this->getDefinition(), $this->config);
 
 		// Set overrides
 		LevelMapping::setOverrides($this->config->getLevelMapping());

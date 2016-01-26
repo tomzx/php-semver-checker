@@ -25,7 +25,7 @@ class InputMergerTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals('in-before cli', $input->getOption('include-before'), 'Test setup: Could not prepare input arguments');
 
 		$im = new InputMerger();
-		$im->merge($input, $config);
+		$im->merge($input, $command->getDefinition(), $config);
 		$this->assertEquals('in-before cli', $config->get('include-before'), 'Configuration must be overwritten by CLI option');
 		$this->assertEquals('src-before cli', $config->get('source-before'), 'Configuration must be overwritten by CLI argument');
 		$this->assertEquals('src-before cli', $input->getArgument('source-before'), 'Input arguments must not be overwritten by empty configuration');
@@ -46,7 +46,7 @@ class InputMergerTest extends \PHPUnit_Framework_TestCase
 		$command = new CompareCommand();
 		$input->bind($command->getDefinition());
 		$im = new InputMerger();
-		$im->merge($input, $config);
+		$im->merge($input, $command->getDefinition(), $config);
 		$input->validate();
 	}
 }
