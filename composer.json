@@ -24,7 +24,7 @@
 
 		"hassankhan/config": "~0.9",
 		"herrera-io/phar-update": "~2.0",
-		"nikic/php-parser": "~1.3",
+		"nikic/php-parser": "~2.0",
 		"symfony/console": "~2.7|~3.0",
 		"symfony/yaml": "~2.7|~3.0",
 		"tomzx/finder": "~0.1"

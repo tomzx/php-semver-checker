@@ -3,10 +3,9 @@
 namespace PHPSemVerChecker\Scanner;
 
 use PhpParser\Error;
-use PhpParser\Lexer\Emulative;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\NameResolver;
-use PhpParser\Parser;
+use PhpParser\ParserFactory;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Visitor\ClassVisitor;
 use PHPSemVerChecker\Visitor\FunctionVisitor;
@@ -14,7 +13,8 @@ use PHPSemVerChecker\Visitor\InterfaceVisitor;
 use PHPSemVerChecker\Visitor\TraitVisitor;
 use RuntimeException;
 
-class Scanner {
+class Scanner
+{
 	/**
 	 * @var \PHPSemVerChecker\Registry\Registry
 	 */
@@ -31,7 +31,7 @@ class Scanner {
 	public function __construct()
 	{
 		$this->registry = new Registry();
-		$this->parser = new Parser(new Emulative());
+		$this->parser = (new ParserFactory())->create(ParserFactory::PREFER_PHP7);
 		$this->traverser = new NodeTraverser();
 
 		$visitors = [
