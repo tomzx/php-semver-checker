@@ -4,6 +4,14 @@ This project follows [Semantic Versioning 2.0.0](http://semver.org/).
 
 ## <a name="unreleased"></a>Unreleased
 
+## <a name="v0.9.0"></a>v0.9.0 (2016-01-27)
+[Full Changelog](https://github.com/tomzx/php-semver-checker/compare/v0.8.1...v0.9.0)
+### Changed
+* Update dependency tomzx/finder from ~0.1@dev to ~0.1.
+* Update dependencies symfony/console and symfony/yaml to support ~3.0.
+* Update dependency hassankhan/config from ~0.8 to ~0.9 to support symfony/yaml ~3.0.
+* [#79] Update nikic/php-parser from ~1.3 to ~2.0 to support PHP 7
+
 ## <a name="v0.8.1"></a>v0.8.1 (2016-01-23)
 [Full Changelog](https://github.com/tomzx/php-semver-checker/compare/v0.8.0...v0.8.1)
 ### Fixed
