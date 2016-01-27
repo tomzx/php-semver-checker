@@ -9,9 +9,8 @@ php:
 
 sudo: false
 
-before_script:
-    - composer self-update
-    - composer update
+install:
+    - composer install --no-interaction --prefer-source
 
 script:
     - php vendor/bin/phpunit
