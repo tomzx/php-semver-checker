@@ -1,0 +1,4 @@
+allow-detached: true
+details: true
+include-before: src
+include-after: src
