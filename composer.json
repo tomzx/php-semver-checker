@@ -26,7 +26,7 @@
 		}
 	],
 	"require": {
-		"php": ">=5.4.0",
+		"php": ">=5.5.0",
 
 		"hassankhan/config": "~0.10",
 		"herrera-io/phar-update": "~2.0",
