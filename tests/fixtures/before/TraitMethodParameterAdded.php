@@ -2,7 +2,7 @@
 
 namespace fixtures;
 
-trait TraitMethodParameterChanged
+trait TraitMethodParameterAdded
 {
 	public function publicMethod()
 	{

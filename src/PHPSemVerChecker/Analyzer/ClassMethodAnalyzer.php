@@ -3,11 +3,19 @@
 namespace PHPSemVerChecker\Analyzer;
 
 use PhpParser\Node\Stmt;
+use PHPSemVerChecker\Comparator\Implementation;
 use PHPSemVerChecker\Comparator\Signature;
 use PHPSemVerChecker\Operation\ClassMethodAdded;
 use PHPSemVerChecker\Operation\ClassMethodImplementationChanged;
-use PHPSemVerChecker\Operation\ClassMethodParameterChanged;
+use PHPSemVerChecker\Operation\ClassMethodOperationUnary;
+use PHPSemVerChecker\Operation\ClassMethodParameterAdded;
+use PHPSemVerChecker\Operation\ClassMethodParameterDefaultAdded;
+use PHPSemVerChecker\Operation\ClassMethodParameterDefaultRemoved;
+use PHPSemVerChecker\Operation\ClassMethodParameterDefaultValueChanged;
 use PHPSemVerChecker\Operation\ClassMethodParameterNameChanged;
+use PHPSemVerChecker\Operation\ClassMethodParameterRemoved;
+use PHPSemVerChecker\Operation\ClassMethodParameterTypingAdded;
+use PHPSemVerChecker\Operation\ClassMethodParameterTypingRemoved;
 use PHPSemVerChecker\Operation\ClassMethodRemoved;
 use PHPSemVerChecker\Report\Report;
 
@@ -71,23 +79,34 @@ class ClassMethodAnalyzer {
 				$paramsBefore = $methodBefore->params;
 				$paramsAfter = $methodAfter->params;
 
-				// Signature
-				$signatureChanged = false;
-				if ( ! Signature::isSameTypehints($paramsBefore, $paramsAfter)) {
-					$data = new ClassMethodParameterChanged($this->context, $this->fileBefore, $contextBefore, $methodBefore, $this->fileAfter, $contextAfter, $methodAfter);
-					$report->add($this->context, $data);
-					$signatureChanged = true;
-				}
+				$signatureResult = Signature::analyze($paramsBefore, $paramsAfter);
 
-				if ( ! $signatureChanged && ! Signature::isSameVariables($paramsBefore, $paramsAfter)) {
-					$data = new ClassMethodParameterNameChanged($this->context, $this->fileBefore, $contextBefore, $methodBefore, $this->fileAfter, $contextAfter, $methodAfter);
+				$changes = [
+					'parameter_added' => ClassMethodParameterAdded::class,
+					'parameter_removed' => ClassMethodParameterRemoved::class,
+					'parameter_renamed' => ClassMethodParameterNameChanged::class,
+					'parameter_typing_added' => ClassMethodParameterTypingAdded::class,
+					'parameter_typing_removed' => ClassMethodParameterTypingRemoved::class,
+					'parameter_default_added' => ClassMethodParameterDefaultAdded::class,
+					'parameter_default_removed' => ClassMethodParameterDefaultRemoved::class,
+					'parameter_default_value_changed' => ClassMethodParameterDefaultValueChanged::class,
+				];
+
+				foreach ($changes as $changeType => $class) {
+					if ( ! $signatureResult[$changeType]) {
+						continue;
+					}
+					if (is_a($class, ClassMethodOperationUnary::class, true)) {
+						$data = new $class($this->context, $this->fileAfter, $contextAfter, $methodAfter);
+					} else {
+						$data = new $class($this->context, $this->fileBefore, $contextBefore, $methodBefore, $this->fileAfter, $contextAfter, $methodAfter);
+					}
 					$report->add($this->context, $data);
 				}
-
-				// Different length (considering params with defaults)
 
 				// Difference in source code
-				if ($methodBefore->stmts != $methodAfter->stmts) {
+				// Cast to array because interfaces do not have stmts (= null)
+				if ( ! Implementation::isSame((array)$methodBefore->stmts, (array)$methodAfter->stmts)) {
 					$data = new ClassMethodImplementationChanged($this->context, $this->fileBefore, $contextBefore, $methodBefore, $this->fileAfter, $contextAfter, $methodAfter);
 					$report->add($this->context, $data);
 				}

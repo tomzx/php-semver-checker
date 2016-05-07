@@ -2,7 +2,7 @@
 
 namespace fixtures;
 
-class ClassMethodParameterChanged
+class ClassMethodParameterAdded
 {
 	public function publicMethod()
 	{

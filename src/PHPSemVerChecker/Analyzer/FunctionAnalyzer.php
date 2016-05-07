@@ -2,11 +2,20 @@
 
 namespace PHPSemVerChecker\Analyzer;
 
+use PHPSemVerChecker\Comparator\Implementation;
 use PHPSemVerChecker\Comparator\Signature;
 use PHPSemVerChecker\Operation\FunctionAdded;
 use PHPSemVerChecker\Operation\FunctionImplementationChanged;
+use PHPSemVerChecker\Operation\FunctionOperationUnary;
+use PHPSemVerChecker\Operation\FunctionParameterAdded;
 use PHPSemVerChecker\Operation\FunctionParameterChanged;
+use PHPSemVerChecker\Operation\FunctionParameterDefaultAdded;
+use PHPSemVerChecker\Operation\FunctionParameterDefaultRemoved;
+use PHPSemVerChecker\Operation\FunctionParameterDefaultValueChanged;
 use PHPSemVerChecker\Operation\FunctionParameterNameChanged;
+use PHPSemVerChecker\Operation\FunctionParameterRemoved;
+use PHPSemVerChecker\Operation\FunctionParameterTypingAdded;
+use PHPSemVerChecker\Operation\FunctionParameterTypingRemoved;
 use PHPSemVerChecker\Operation\FunctionRemoved;
 use PHPSemVerChecker\Operation\Unknown;
 use PHPSemVerChecker\Registry\Registry;
@@ -48,27 +57,36 @@ class FunctionAnalyzer {
 			if ($functionBefore != $functionAfter) {
 				$paramsBefore = $functionBefore->params;
 				$paramsAfter = $functionAfter->params;
-				// Signature
 
-				if ( ! Signature::isSameTypehints($paramsBefore, $paramsAfter)) {
-					$data = new FunctionParameterChanged($fileBefore, $functionBefore, $fileAfter, $functionAfter);
+				$signatureResult = Signature::analyze($paramsBefore, $paramsAfter);
+
+				$changes = [
+					'parameter_added' => FunctionParameterAdded::class,
+					'parameter_removed' => FunctionParameterRemoved::class,
+					'parameter_renamed' => FunctionParameterNameChanged::class,
+					'parameter_typing_added' => FunctionParameterTypingAdded::class,
+					'parameter_typing_removed' => FunctionParameterTypingRemoved::class,
+					'parameter_default_added' => FunctionParameterDefaultAdded::class,
+					'parameter_default_removed' => FunctionParameterDefaultRemoved::class,
+					'parameter_default_value_changed' => FunctionParameterDefaultValueChanged::class,
+				];
+
+				foreach ($changes as $changeType => $class) {
+					if ( ! $signatureResult[$changeType]) {
+						continue;
+					}
+					if (is_a($class, FunctionOperationUnary::class, true)) {
+						$data = new $class($fileAfter, $functionAfter);
+					} else {
+						$data = new $class($fileBefore, $functionBefore, $fileAfter, $functionAfter);
+					}
 					$report->addFunction($data);
-					continue;
 				}
-
-				if ( ! Signature::isSameVariables($paramsBefore, $paramsAfter)) {
-					$data = new FunctionParameterNameChanged($fileBefore, $functionBefore, $fileAfter, $functionAfter);
-					$report->addFunction($data);
-					continue;
-				}
-
-				// Different length (considering params with defaults)
 
 				// Difference in source code
-				if ($functionBefore->stmts != $functionAfter->stmts) {
+				if ( ! Implementation::isSame($functionBefore->stmts, $functionAfter->stmts)) {
 					$data = new FunctionImplementationChanged($fileBefore, $functionBefore, $fileAfter, $functionAfter);
 					$report->addFunction($data);
-					continue;
 				}
 			}
 		}

@@ -6,25 +6,21 @@ use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\ClassMethod;
 use PHPSemVerChecker\Node\Statement\ClassMethod as PClassMethod;
 
-class ClassMethodParameterChanged extends ClassMethodOperation {
-	/**
-	 * @var array
-	 */
-	protected $code = [
-		'class'     => ['V010', 'V011', 'V031'],
-		'interface' => ['V036'],
-		'trait'     => ['V042', 'V043', 'V059'],
-	];
+abstract class ClassMethodOperationDelta extends Operation {
 	/**
 	 * @var string
 	 */
-	protected $reason = 'Method parameter changed.';
+	protected $context;
+	/**
+	 * @var int
+	 */
+	protected $visibility;
 	/**
 	 * @var string
 	 */
 	protected $fileBefore;
 	/**
-	 * @var \PhpParser\Node\Stmt
+	 * @var Stmt
 	 */
 	protected $contextBefore;
 	/**
@@ -36,7 +32,7 @@ class ClassMethodParameterChanged extends ClassMethodOperation {
 	 */
 	protected $fileAfter;
 	/**
-	 * @var \PhpParser\Node\Stmt
+	 * @var Stmt
 	 */
 	protected $contextAfter;
 	/**
@@ -93,5 +89,29 @@ class ClassMethodParameterChanged extends ClassMethodOperation {
 	public function getTarget()
 	{
 		return PClassMethod::getFullyQualifiedName($this->contextAfter, $this->classMethodAfter);
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getCode()
+	{
+		return $this->code[$this->context][Visibility::get($this->visibility)];
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getReason()
+	{
+		return '[' . Visibility::toString($this->visibility) . '] ' . $this->reason;
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function getVisibility($context)
+	{
+		return Visibility::getForContext($context);
 	}
 }

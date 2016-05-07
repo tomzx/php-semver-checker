@@ -2,7 +2,7 @@
 
 $ruleset = file_get_contents(__DIR__.'/../docs/Ruleset.md');
 
-$result = preg_match_all('/(?<code>V\d+) \| (?<level>[^ ]+)/', $ruleset, $matches);
+$result = preg_match_all('/(?<code>V\d+) \| (?<level>(PATCH|MINOR|MAJOR))/', $ruleset, $matches);
 
 if ($result) {
 	array_shift($matches);

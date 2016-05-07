@@ -5,13 +5,14 @@ namespace PHPSemVerChecker\Operation;
 use PhpParser\Node\Stmt\Function_;
 use PHPSemVerChecker\Node\Statement\Function_ as PFunction;
 
-class FunctionImplementationChanged extends FunctionOperationDelta {
+class FunctionParameterRemoved extends FunctionOperationUnary
+{
 	/**
 	 * @var string
 	 */
-	protected $code = 'V004';
+	protected $code = 'V068';
 	/**
 	 * @var string
 	 */
-	protected $reason = 'Function implementation changed.';
+	protected $reason = 'Function parameter removed.';
 }

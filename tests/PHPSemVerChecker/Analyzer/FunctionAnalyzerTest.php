@@ -4,6 +4,7 @@ namespace PHPSemVerChecker\Test\Analyzer;
 
 use PhpParser\Node\Expr\FuncCall;
 use PhpParser\Node\Param;
+use PhpParser\Node\Scalar\String_;
 use PhpParser\Node\Stmt\Function_;
 use PHPSemVerChecker\Analyzer\FunctionAnalyzer;
 use PHPSemVerChecker\Registry\Registry;
@@ -27,7 +28,7 @@ class FunctionAnalyzerTest extends TestCase {
 		Assert::assertNoDifference($report);
 	}
 
-	public function testV001FunctionRemoved()
+	public function testFunctionRemoved()
 	{
 		$before = new Registry();
 		$after = new Registry();
@@ -37,12 +38,14 @@ class FunctionAnalyzerTest extends TestCase {
 		$analyzer = new FunctionAnalyzer();
 		$report = $analyzer->analyze($before, $after);
 
-		Assert::assertDifference($report, 'function', Level::MAJOR);
-		$this->assertSame('Function has been removed.', $report['function'][Level::MAJOR][0]->getReason());
-		$this->assertSame('tmp', $report['function'][Level::MAJOR][0]->getTarget());
+		$expectedLevel = Level::MAJOR;
+		Assert::assertDifference($report, 'function', $expectedLevel);
+		$this->assertSame('V001', $report['function'][$expectedLevel][0]->getCode());
+		$this->assertSame('Function has been removed.', $report['function'][$expectedLevel][0]->getReason());
+		$this->assertSame('tmp', $report['function'][$expectedLevel][0]->getTarget());
 	}
 
-	public function testV003FunctionAdded()
+	public function testFunctionAdded()
 	{
 		$before = new Registry();
 		$after = new Registry();
@@ -52,9 +55,11 @@ class FunctionAnalyzerTest extends TestCase {
 		$analyzer = new FunctionAnalyzer();
 		$report = $analyzer->analyze($before, $after);
 
-		Assert::assertDifference($report, 'function', Level::MINOR);
-		$this->assertSame('Function has been added.', $report['function'][Level::MINOR][0]->getReason());
-		$this->assertSame('tmp', $report['function'][Level::MINOR][0]->getTarget());
+		$expectedLevel = Level::MINOR;
+		Assert::assertDifference($report, 'function', $expectedLevel);
+		$this->assertSame('V003', $report['function'][$expectedLevel][0]->getCode());
+		$this->assertSame('Function has been added.', $report['function'][$expectedLevel][0]->getReason());
+		$this->assertSame('tmp', $report['function'][$expectedLevel][0]->getTarget());
 	}
 
 	public function testSimilarFunctionSignature()
@@ -80,7 +85,7 @@ class FunctionAnalyzerTest extends TestCase {
 		Assert::assertNoDifference($report);
 	}
 
-	public function testV002SimilarFunctionWithDifferentSignatureVariables()
+	public function testSimilarFunctionWithDifferentParameterName()
 	{
 		$before = new Registry();
 		$after = new Registry();
@@ -100,12 +105,14 @@ class FunctionAnalyzerTest extends TestCase {
 		$analyzer = new FunctionAnalyzer();
 		$report = $analyzer->analyze($before, $after);
 
-		Assert::assertDifference($report, 'function', Level::PATCH);
-		$this->assertSame('Function parameter name changed.', $report['function'][Level::PATCH][0]->getReason());
-		$this->assertSame('tmp', $report['function'][Level::PATCH][0]->getTarget());
+		$expectedLevel = Level::PATCH;
+		Assert::assertDifference($report, 'function', $expectedLevel);
+		$this->assertSame('V067', $report['function'][$expectedLevel][0]->getCode());
+		$this->assertSame('Function parameter name changed.', $report['function'][$expectedLevel][0]->getReason());
+		$this->assertSame('tmp', $report['function'][$expectedLevel][0]->getTarget());
 	}
 
-	public function testV002SimilarFunctionWithDifferentSignatureTypehint()
+	public function testSimilarFunctionWithParameterAdded()
 	{
 		$before = new Registry();
 		$after = new Registry();
@@ -118,19 +125,22 @@ class FunctionAnalyzerTest extends TestCase {
 
 		$after->addFunction(new Function_('tmp', [
 			'params' => [
-				new Param('a', null, 'B'),
+				new Param('a', null, 'A'),
+				new Param('b', null, 'B'),
 			],
 		]));
 
 		$analyzer = new FunctionAnalyzer();
 		$report = $analyzer->analyze($before, $after);
 
-		Assert::assertDifference($report, 'function', Level::MAJOR);
-		$this->assertSame('Function parameter changed.', $report['function'][Level::MAJOR][0]->getReason());
-		$this->assertSame('tmp', $report['function'][Level::MAJOR][0]->getTarget());
+		$expectedLevel = Level::MAJOR;
+		Assert::assertDifference($report, 'function', $expectedLevel);
+		$this->assertSame('V002', $report['function'][$expectedLevel][0]->getCode());
+		$this->assertSame('Function parameter added.', $report['function'][$expectedLevel][0]->getReason());
+		$this->assertSame('tmp', $report['function'][$expectedLevel][0]->getTarget());
 	}
 
-	public function testV002SimilarFunctionWithDifferentSignatureLength()
+	public function testSimilarFunctionWithParameterRemoved()
 	{
 		$before = new Registry();
 		$after = new Registry();
@@ -144,6 +154,119 @@ class FunctionAnalyzerTest extends TestCase {
 
 		$after->addFunction(new Function_('tmp', [
 			'params' => [
+				new Param('a', null, 'A'),
+			],
+		]));
+
+		$analyzer = new FunctionAnalyzer();
+		$report = $analyzer->analyze($before, $after);
+
+		$expectedLevel = Level::MAJOR;
+		Assert::assertDifference($report, 'function', $expectedLevel);
+		$this->assertSame('V068', $report['function'][$expectedLevel][0]->getCode());
+		$this->assertSame('Function parameter removed.', $report['function'][$expectedLevel][0]->getReason());
+		$this->assertSame('tmp', $report['function'][$expectedLevel][0]->getTarget());
+	}
+
+
+	public function testSimilarFunctionWithParameterTypehintAdded()
+	{
+		$before = new Registry();
+		$after = new Registry();
+
+		$before->addFunction(new Function_('tmp', [
+			'params' => [
+				new Param('a', null),
+			],
+		]));
+
+		$after->addFunction(new Function_('tmp', [
+			'params' => [
+				new Param('a', null, 'A'),
+			],
+		]));
+
+		$analyzer = new FunctionAnalyzer();
+		$report = $analyzer->analyze($before, $after);
+
+		$expectedLevel = Level::MAJOR;
+		Assert::assertDifference($report, 'function', $expectedLevel);
+		$this->assertSame('V069', $report['function'][$expectedLevel][0]->getCode());
+		$this->assertSame('Function parameter typing added.', $report['function'][$expectedLevel][0]->getReason());
+		$this->assertSame('tmp', $report['function'][$expectedLevel][0]->getTarget());
+	}
+
+	public function testSimilarFunctionWithParameterTypehintRemoved()
+	{
+		$before = new Registry();
+		$after = new Registry();
+
+		$before->addFunction(new Function_('tmp', [
+			'params' => [
+				new Param('a', null, 'A'),
+			],
+		]));
+
+		$after->addFunction(new Function_('tmp', [
+			'params' => [
+				new Param('a', null),
+			],
+		]));
+
+		$analyzer = new FunctionAnalyzer();
+		$report = $analyzer->analyze($before, $after);
+
+		$expectedLevel = Level::MINOR;
+		Assert::assertDifference($report, 'function', $expectedLevel);
+		$this->assertSame('V070', $report['function'][$expectedLevel][0]->getCode());
+		$this->assertSame('Function parameter typing removed.', $report['function'][$expectedLevel][0]->getReason());
+		$this->assertSame('tmp', $report['function'][$expectedLevel][0]->getTarget());
+	}
+
+	public function testSimilarFunctionWithDefaultParameterAdded()
+	{
+		$before = new Registry();
+		$after = new Registry();
+
+		$before->addFunction(new Function_('tmp', [
+			'params' => [
+				new Param('a', null, 'A'),
+				new Param('b', null, 'B'),
+			],
+		]));
+
+		$after->addFunction(new Function_('tmp', [
+			'params' => [
+				new Param('a', null, 'A'),
+				new Param('b', new String_('someDefaultValue'), 'B'),
+			],
+		]));
+
+		$analyzer = new FunctionAnalyzer();
+		$report = $analyzer->analyze($before, $after);
+
+		$expectedLevel = Level::MINOR;
+		Assert::assertDifference($report, 'function', $expectedLevel);
+		$this->assertSame('V071', $report['function'][$expectedLevel][0]->getCode());
+		$this->assertSame('Function parameter default added.', $report['function'][$expectedLevel][0]->getReason());
+		$this->assertSame('tmp', $report['function'][$expectedLevel][0]->getTarget());
+	}
+
+	public function testSimilarFunctionWithDefaultParameterRemoved()
+	{
+		$before = new Registry();
+		$after = new Registry();
+
+		$before->addFunction(new Function_('tmp', [
+			'params' => [
+				new Param('a', null, 'A'),
+				new Param('b', new String_('someDefaultValue'), 'B'),
+			],
+		]));
+
+		$after->addFunction(new Function_('tmp', [
+			'params' => [
+				new Param('a', null, 'A'),
 				new Param('a', null, 'B'),
 			],
 		]));
@@ -151,10 +274,72 @@ class FunctionAnalyzerTest extends TestCase {
 		$analyzer = new FunctionAnalyzer();
 		$report = $analyzer->analyze($before, $after);
 
-		Assert::assertDifference($report, 'function', Level::MAJOR);
-		$this->assertSame('Function parameter changed.', $report['function'][Level::MAJOR][0]->getReason());
-		$this->assertSame('tmp', $report['function'][Level::MAJOR][0]->getTarget());
+		$expectedLevel = Level::MAJOR;
+		Assert::assertDifference($report, 'function', $expectedLevel);
+		$this->assertSame('V072', $report['function'][$expectedLevel][0]->getCode());
+		$this->assertSame('Function parameter default removed.', $report['function'][$expectedLevel][0]->getReason());
+		$this->assertSame('tmp', $report['function'][$expectedLevel][0]->getTarget());
 	}
+
+	public function testSimilarFunctionWithDefaultParameterValueChanged()
+	{
+		$before = new Registry();
+		$after = new Registry();
+
+		$before->addFunction(new Function_('tmp', [
+			'params' => [
+				new Param('a', null, 'A'),
+				new Param('b', new String_('someDefaultValue'), 'B'),
+			],
+		]));
+
+		$after->addFunction(new Function_('tmp', [
+			'params' => [
+				new Param('a', null, 'A'),
+				new Param('a', new String_('someNewDefaultValue'), 'B'),
+			],
+		]));
+
+		$analyzer = new FunctionAnalyzer();
+		$report = $analyzer->analyze($before, $after);
+
+		$expectedLevel = Level::MINOR;
+		Assert::assertDifference($report, 'function', $expectedLevel);
+		$this->assertSame('V073', $report['function'][$expectedLevel][0]->getCode());
+		$this->assertSame('Function parameter default value changed.', $report['function'][$expectedLevel][0]->getReason());
+		$this->assertSame('tmp', $report['function'][$expectedLevel][0]->getTarget());
+	}
+
+	public function testSimilarFunctionWithParameterAddedWithDefault()
+	{
+		$before = new Registry();
+		$after = new Registry();
+
+		$before->addFunction(new Function_('tmp', [
+			'params' => [
+				new Param('a', null, 'A'),
+			],
+		]));
+
+		$after->addFunction(new Function_('tmp', [
+			'params' => [
+				new Param('a', null, 'A'),
+				new Param('a', new String_('someDefaultValue'), 'B'),
+			],
+		]));
+
+		$analyzer = new FunctionAnalyzer();
+		$report = $analyzer->analyze($before, $after);
+
+		// TODO(tom@tomrochette.com): At some point, we may want to consider new parameter with default as less impactful
+		// than new parameter without default
+		$expectedLevel = Level::MAJOR;
+		Assert::assertDifference($report, 'function', $expectedLevel);
+		$this->assertSame('V002', $report['function'][$expectedLevel][0]->getCode());
+		$this->assertSame('Function parameter added.', $report['function'][$expectedLevel][0]->getReason());
+		$this->assertSame('tmp', $report['function'][$expectedLevel][0]->getTarget());
+	}
+
 
 	public function testSimilarFunctionImplementation()
 	{
@@ -179,7 +364,7 @@ class FunctionAnalyzerTest extends TestCase {
 		Assert::assertNoDifference($report);
 	}
 
-	public function testV004FunctionImplementationChanged()
+	public function testFunctionImplementationChanged()
 	{
 		$before = new Registry();
 		$after = new Registry();
@@ -199,8 +384,10 @@ class FunctionAnalyzerTest extends TestCase {
 		$analyzer = new FunctionAnalyzer();
 		$report = $analyzer->analyze($before, $after);
 
-		Assert::assertDifference($report, 'function', Level::PATCH);
-		$this->assertSame('Function implementation changed.', $report['function'][Level::PATCH][0]->getReason());
-		$this->assertSame('tmp', $report['function'][Level::PATCH][0]->getTarget());
+		$expectedLevel = Level::PATCH;
+		Assert::assertDifference($report, 'function', $expectedLevel);
+		$this->assertSame('V004', $report['function'][$expectedLevel][0]->getCode());
+		$this->assertSame('Function implementation changed.', $report['function'][$expectedLevel][0]->getReason());
+		$this->assertSame('tmp', $report['function'][$expectedLevel][0]->getTarget());
 	}
 }

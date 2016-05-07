@@ -23,7 +23,11 @@ class InputMerger
 			if ($input->hasArgumentSet($argument)) {
 				$config->set($argument, $value);
 			} else {
-				$input->setArgument($argument, $config->get($argument));
+				$value = $config->get($argument);
+				if ($value) {
+					$input->setArgument($argument, $value);
+				}
+
 			}
 		}
 
@@ -31,7 +35,10 @@ class InputMerger
 			if ($input->hasOptionSet($option)) {
 				$config->set($option, $value);
 			} else {
-				$input->setOption($option, $config->get($option));
+				$value = $config->get($option);
+				if ($value) {
+					$input->setOption($option, $value);
+				}
 			}
 		}
 	}

@@ -10,8 +10,14 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class SelfUpdateCommand extends Command {
+	/**
+	 * @var string
+	 */
 	const MANIFEST_FILE = 'https://tomzx.github.io/php-semver-checker/manifest.json';
 
+	/**
+	 * @return void
+	 */
 	protected function configure()
 	{
 		$this
@@ -20,6 +26,10 @@ class SelfUpdateCommand extends Command {
 		;
 	}
 
+	/**
+	 * @param \Symfony\Component\Console\Input\InputInterface   $input
+	 * @param \Symfony\Component\Console\Output\OutputInterface $output
+	 */
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
 		$manager = new Manager(Manifest::loadFile(self::MANIFEST_FILE));

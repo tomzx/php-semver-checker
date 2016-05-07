@@ -5,15 +5,8 @@ namespace PHPSemVerChecker\Operation;
 use PhpParser\Node\Stmt\Function_;
 use PHPSemVerChecker\Node\Statement\Function_ as PFunction;
 
-class FunctionParameterChanged extends Operation {
-	/**
-	 * @var string
-	 */
-	protected $code = 'V002';
-	/**
-	 * @var string
-	 */
-	protected $reason = 'Function parameter changed.';
+abstract class FunctionOperationDelta extends Operation
+{
 	/**
 	 * @var string
 	 */

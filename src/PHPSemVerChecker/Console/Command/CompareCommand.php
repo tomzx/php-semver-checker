@@ -17,6 +17,9 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class CompareCommand extends BaseCommand {
+	/**
+	 * @return void
+	 */
 	protected function configure()
 	{
 		$this
@@ -25,8 +28,8 @@ class CompareCommand extends BaseCommand {
 			->setDefinition([
 				new InputArgument('source-before', InputArgument::REQUIRED, 'A base directory to check (ex my-test)'),
 				new InputArgument('source-after', InputArgument::REQUIRED, 'A base directory to check against (ex my-test)'),
-				new InputOption('include-before', null, InputOption::VALUE_OPTIONAL, 'List of paths to include <info>(comma separated)</info>'),
-				new InputOption('include-after', null, InputOption::VALUE_OPTIONAL, 'List of paths to include <info>(comma separated)</info>'),
+				new InputOption('include-before', null, InputOption::VALUE_REQUIRED, 'List of paths to include <info>(comma separated)</info>'),
+				new InputOption('include-after', null, InputOption::VALUE_REQUIRED, 'List of paths to include <info>(comma separated)</info>'),
 				new InputOption('exclude-before', null, InputOption::VALUE_REQUIRED, 'List of paths to exclude <info>(comma separated)</info>'),
 				new InputOption('exclude-after', null, InputOption::VALUE_REQUIRED, 'List of paths to exclude <info>(comma separated)</info>'),
 				new InputOption('full-path', null, InputOption::VALUE_NONE, 'Display the full path to the file instead of the relative path'),

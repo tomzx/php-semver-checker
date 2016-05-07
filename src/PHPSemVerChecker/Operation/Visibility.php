@@ -45,6 +45,21 @@ class Visibility
 	}
 
 	/**
+	 * @param string $visibility
+	 * @return int
+	 */
+	public static function getModifier($visibility)
+	{
+		if ($visibility === 'public') {
+			return Class_::MODIFIER_PUBLIC;
+		} elseif ($visibility === 'protected') {
+			return Class_::MODIFIER_PROTECTED;
+		} else {
+			return Class_::MODIFIER_PRIVATE;
+		}
+	}
+
+	/**
 	 * @param int $visibility
 	 * @return string
 	 */
