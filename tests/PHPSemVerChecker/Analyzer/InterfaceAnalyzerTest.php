@@ -27,7 +27,7 @@ class InterfaceAnalyzerTest extends TestCase {
 		Assert::assertNoDifference($report);
 	}
 
-	public function testV033InterfaceRemoved()
+	public function testInterfaceRemoved()
 	{
 		$before = new Registry();
 		$after = new Registry();
@@ -37,12 +37,15 @@ class InterfaceAnalyzerTest extends TestCase {
 		$analyzer = new InterfaceAnalyzer();
 		$report = $analyzer->analyze($before, $after);
 
-		Assert::assertDifference($report, 'interface', Level::MAJOR);
-		$this->assertSame('Interface was removed.', $report['interface'][Level::MAJOR][0]->getReason());
-		$this->assertSame('tmp', $report['interface'][Level::MAJOR][0]->getTarget());
+		$context = 'interface';
+		$expectedLevel = Level::MAJOR;
+		Assert::assertDifference($report, $context, $expectedLevel);
+		$this->assertSame('V033', $report[$context][$expectedLevel][0]->getCode());
+		$this->assertSame('Interface was removed.', $report[$context][$expectedLevel][0]->getReason());
+		$this->assertSame('tmp', $report[$context][$expectedLevel][0]->getTarget());
 	}
 
-	public function testV032InterfaceAdded()
+	public function testInterfaceAdded()
 	{
 		$before = new Registry();
 		$after = new Registry();
@@ -52,8 +55,11 @@ class InterfaceAnalyzerTest extends TestCase {
 		$analyzer = new InterfaceAnalyzer();
 		$report = $analyzer->analyze($before, $after);
 
-		Assert::assertDifference($report, 'interface', Level::MINOR);
-		$this->assertSame('Interface was added.', $report['interface'][Level::MINOR][0]->getReason());
-		$this->assertSame('tmp', $report['interface'][Level::MINOR][0]->getTarget());
+		$context = 'interface';
+		$expectedLevel = Level::MINOR;
+		Assert::assertDifference($report, $context, $expectedLevel);
+		$this->assertSame('V032', $report[$context][$expectedLevel][0]->getCode());
+		$this->assertSame('Interface was added.', $report[$context][$expectedLevel][0]->getReason());
+		$this->assertSame('tmp', $report[$context][$expectedLevel][0]->getTarget());
 	}
 }

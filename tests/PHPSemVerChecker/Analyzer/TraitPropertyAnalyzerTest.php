@@ -15,15 +15,19 @@ class TraitPropertyAnalyzerTest extends TestCase {
 	public function testCompareSimilarProperty()
 	{
 		$traitBefore = new Trait_('tmp', [
-			new Property(Class_::MODIFIER_PUBLIC, [
-				new PropertyProperty('tmpProperty'),
-			]),
+			'stmts' => [
+				new Property(Class_::MODIFIER_PUBLIC, [
+					new PropertyProperty('tmpProperty'),
+				]),
+			],
 		]);
 
 		$traitAfter = new Trait_('tmp', [
-			new Property(Class_::MODIFIER_PUBLIC, [
-				new PropertyProperty('tmpProperty'),
-			]),
+			'stmts' => [
+				new Property(Class_::MODIFIER_PUBLIC, [
+					new PropertyProperty('tmpProperty'),
+				]),
+			],
 		]);
 
 		$analyzer = new PropertyAnalyzer('trait');
@@ -32,12 +36,14 @@ class TraitPropertyAnalyzerTest extends TestCase {
 		Assert::assertNoDifference($report);
 	}
 
-	public function testV040PublicPropertyRemoved()
+	public function testPublicPropertyRemoved()
 	{
 		$traitBefore = new Trait_('tmp', [
-			new Property(Class_::MODIFIER_PUBLIC, [
-				new PropertyProperty('tmpProperty'),
-			]),
+			'stmts' => [
+				new Property(Class_::MODIFIER_PUBLIC, [
+					new PropertyProperty('tmpProperty'),
+				]),
+			],
 		]);
 
 		$traitAfter = new Trait_('tmp');
@@ -45,26 +51,34 @@ class TraitPropertyAnalyzerTest extends TestCase {
 		$analyzer = new PropertyAnalyzer('trait');
 		$report = $analyzer->analyze($traitBefore, $traitAfter);
 
-		Assert::assertDifference($report, 'trait', Level::MAJOR);
-		$this->assertSame('[public] Property has been removed.', $report['trait'][Level::MAJOR][0]->getReason());
-		$this->assertSame('tmp::$tmpProperty', $report['trait'][Level::MAJOR][0]->getTarget());
+		$context = 'trait';
+		$expectedLevel = Level::MAJOR;
+		Assert::assertDifference($report, $context, $expectedLevel);
+		$this->assertSame('V040', $report[$context][$expectedLevel][0]->getCode());
+		$this->assertSame('[public] Property has been removed.', $report[$context][$expectedLevel][0]->getReason());
+		$this->assertSame('tmp::$tmpProperty', $report[$context][$expectedLevel][0]->getTarget());
 	}
 
-	public function testV049PropertyAdded()
+	public function testPropertyAdded()
 	{
 		$traitBefore = new Trait_('tmp');
 
 		$traitAfter = new Trait_('tmp', [
-			new Property(Class_::MODIFIER_PUBLIC, [
-				new PropertyProperty('tmpProperty'),
-			]),
+			'stmts' => [
+				new Property(Class_::MODIFIER_PUBLIC, [
+					new PropertyProperty('tmpProperty'),
+				]),
+			],
 		]);
 
 		$analyzer = new PropertyAnalyzer('trait');
 		$report = $analyzer->analyze($traitBefore, $traitAfter);
 
-		Assert::assertDifference($report, 'trait', Level::MAJOR);
-		$this->assertSame('[public] Property has been added.', $report['trait'][Level::MAJOR][0]->getReason());
-		$this->assertSame('tmp::$tmpProperty', $report['trait'][Level::MAJOR][0]->getTarget());
+		$context = 'trait';
+		$expectedLevel = Level::MAJOR;
+		Assert::assertDifference($report, $context, $expectedLevel);
+		$this->assertSame('V049', $report[$context][$expectedLevel][0]->getCode());
+		$this->assertSame('[public] Property has been added.', $report[$context][$expectedLevel][0]->getReason());
+		$this->assertSame('tmp::$tmpProperty', $report[$context][$expectedLevel][0]->getTarget());
 	}
 }

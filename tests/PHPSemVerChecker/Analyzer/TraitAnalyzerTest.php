@@ -27,7 +27,7 @@ class TraitAnalyzerTest extends TestCase {
 		Assert::assertNoDifference($report);
 	}
 
-	public function testV037TraitRemoved()
+	public function testTraitRemoved()
 	{
 		$before = new Registry();
 		$after = new Registry();
@@ -37,12 +37,15 @@ class TraitAnalyzerTest extends TestCase {
 		$analyzer = new TraitAnalyzer();
 		$report = $analyzer->analyze($before, $after);
 
-		Assert::assertDifference($report, 'trait', Level::MAJOR);
-		$this->assertSame('Trait was removed.', $report['trait'][Level::MAJOR][0]->getReason());
-		$this->assertSame('tmp', $report['trait'][Level::MAJOR][0]->getTarget());
+		$context = 'trait';
+		$expectedLevel = Level::MAJOR;
+		Assert::assertDifference($report, $context, $expectedLevel);
+		$this->assertSame('V037', $report[$context][$expectedLevel][0]->getCode());
+		$this->assertSame('Trait was removed.', $report[$context][$expectedLevel][0]->getReason());
+		$this->assertSame('tmp', $report[$context][$expectedLevel][0]->getTarget());
 	}
 
-	public function testV046TraitAdded()
+	public function testTraitAdded()
 	{
 		$before = new Registry();
 		$after = new Registry();
@@ -52,8 +55,11 @@ class TraitAnalyzerTest extends TestCase {
 		$analyzer = new TraitAnalyzer();
 		$report = $analyzer->analyze($before, $after);
 
-		Assert::assertDifference($report, 'trait', Level::MINOR);
-		$this->assertSame('Trait was added.', $report['trait'][Level::MINOR][0]->getReason());
-		$this->assertSame('tmp', $report['trait'][Level::MINOR][0]->getTarget());
+		$context = 'trait';
+		$expectedLevel = Level::MINOR;
+		Assert::assertDifference($report, $context, $expectedLevel);
+		$this->assertSame('V046', $report[$context][$expectedLevel][0]->getCode());
+		$this->assertSame('Trait was added.', $report[$context][$expectedLevel][0]->getReason());
+		$this->assertSame('tmp', $report[$context][$expectedLevel][0]->getTarget());
 	}
 }

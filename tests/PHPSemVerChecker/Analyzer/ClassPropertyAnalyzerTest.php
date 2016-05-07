@@ -35,7 +35,7 @@ class ClassPropertyAnalyzerTest extends TestCase {
 		Assert::assertNoDifference($report);
 	}
 
-	public function testV008PublicPropertyRemoved()
+	public function testPublicPropertyRemoved()
 	{
 		$classBefore = new Class_('tmp', [
 			'stmts' => [
@@ -50,12 +50,15 @@ class ClassPropertyAnalyzerTest extends TestCase {
 		$analyzer = new PropertyAnalyzer('class');
 		$report = $analyzer->analyze($classBefore, $classAfter);
 
-		Assert::assertDifference($report, 'class', Level::MAJOR);
-		$this->assertSame('[public] Property has been removed.', $report['class'][Level::MAJOR][0]->getReason());
-		$this->assertSame('tmp::$tmpProperty', $report['class'][Level::MAJOR][0]->getTarget());
+		$context = 'class';
+		$expectedLevel = Level::MAJOR;
+		Assert::assertDifference($report, $context, $expectedLevel);
+		$this->assertSame('V008', $report[$context][$expectedLevel][0]->getCode());
+		$this->assertSame('[public] Property has been removed.', $report[$context][$expectedLevel][0]->getReason());
+		$this->assertSame('tmp::$tmpProperty', $report[$context][$expectedLevel][0]->getTarget());
 	}
 
-	public function testV019PropertyAdded()
+	public function testPropertyAdded()
 	{
 		$classBefore = new Class_('tmp');
 
@@ -70,8 +73,11 @@ class ClassPropertyAnalyzerTest extends TestCase {
 		$analyzer = new PropertyAnalyzer('class');
 		$report = $analyzer->analyze($classBefore, $classAfter);
 
-		Assert::assertDifference($report, 'class', Level::MAJOR);
-		$this->assertSame('[public] Property has been added.', $report['class'][Level::MAJOR][0]->getReason());
-		$this->assertSame('tmp::$tmpProperty', $report['class'][Level::MAJOR][0]->getTarget());
+		$context = 'class';
+		$expectedLevel = Level::MAJOR;
+		Assert::assertDifference($report, $context, $expectedLevel);
+		$this->assertSame('V019', $report[$context][$expectedLevel][0]->getCode());
+		$this->assertSame('[public] Property has been added.', $report[$context][$expectedLevel][0]->getReason());
+		$this->assertSame('tmp::$tmpProperty', $report[$context][$expectedLevel][0]->getTarget());
 	}
 }

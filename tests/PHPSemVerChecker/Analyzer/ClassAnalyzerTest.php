@@ -27,22 +27,7 @@ class ClassAnalyzerTest extends TestCase {
 		Assert::assertNoDifference($report);
 	}
 
-	public function testV005ClassRemoved()
-	{
-		$before = new Registry();
-		$after = new Registry();
-
-		$before->addClass(new Class_('tmp'));
-
-		$analyzer = new ClassAnalyzer();
-		$report = $analyzer->analyze($before, $after);
-
-		Assert::assertDifference($report, 'class', Level::MAJOR);
-		$this->assertSame('Class was removed.', $report['class'][Level::MAJOR][0]->getReason());
-		$this->assertSame('tmp', $report['class'][Level::MAJOR][0]->getTarget());
-	}
-
-	public function testV014ClassAdded()
+	public function testClassAdded()
 	{
 		$before = new Registry();
 		$after = new Registry();
@@ -52,8 +37,29 @@ class ClassAnalyzerTest extends TestCase {
 		$analyzer = new ClassAnalyzer();
 		$report = $analyzer->analyze($before, $after);
 
-		Assert::assertDifference($report, 'class', Level::MINOR);
-		$this->assertSame('Class was added.', $report['class'][Level::MINOR][0]->getReason());
-		$this->assertSame('tmp', $report['class'][Level::MINOR][0]->getTarget());
+		$context = 'class';
+		$expectedLevel = Level::MINOR;
+		Assert::assertDifference($report, $context, $expectedLevel);
+		$this->assertSame('V014', $report[$context][$expectedLevel][0]->getCode());
+		$this->assertSame('Class was added.', $report[$context][$expectedLevel][0]->getReason());
+		$this->assertSame('tmp', $report[$context][$expectedLevel][0]->getTarget());
+	}
+
+	public function testClassRemoved()
+	{
+		$before = new Registry();
+		$after = new Registry();
+
+		$before->addClass(new Class_('tmp'));
+
+		$analyzer = new ClassAnalyzer();
+		$report = $analyzer->analyze($before, $after);
+
+		$context = 'class';
+		$expectedLevel = Level::MAJOR;
+		Assert::assertDifference($report, $context, $expectedLevel);
+		$this->assertSame('V005', $report[$context][$expectedLevel][0]->getCode());
+		$this->assertSame('Class was removed.', $report[$context][$expectedLevel][0]->getReason());
+		$this->assertSame('tmp', $report[$context][$expectedLevel][0]->getTarget());
 	}
 }
