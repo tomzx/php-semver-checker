@@ -19,10 +19,6 @@ class Implementation
 		$dumpA = $nodeDumper->dump($statementsA);
 		$dumpB = $nodeDumper->dump($statementsB);
 
-//		var_dump($dumpA === $dumpB);
-//		var_dump($statementsA == $statementsB);
-//		echo '-----'.PHP_EOL;
-
 		return $dumpA === $dumpB;
 	}
 }

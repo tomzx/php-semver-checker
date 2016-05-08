@@ -20,7 +20,7 @@ abstract class ClassMethodOperationDelta extends Operation {
 	 */
 	protected $fileBefore;
 	/**
-	 * @var Stmt
+	 * @var \PhpParser\Node\Stmt
 	 */
 	protected $contextBefore;
 	/**
@@ -32,7 +32,7 @@ abstract class ClassMethodOperationDelta extends Operation {
 	 */
 	protected $fileAfter;
 	/**
-	 * @var Stmt
+	 * @var \PhpParser\Node\Stmt
 	 */
 	protected $contextAfter;
 	/**
