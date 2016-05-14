@@ -4,6 +4,20 @@ This project follows [Semantic Versioning 2.0.0](http://semver.org/).
 
 ## <a name="unreleased"></a>Unreleased
 
+## <a name="v0.10.0"></a>v0.10.0 (2016-05-13)
+[Full Changelog](https://github.com/tomzx/php-semver-checker/compare/v0.9.1...v0.10.0)
+# Added
+* Add support to check for function, class/interface/trait methods signature:
+	* Parameter added/removed
+	* Parameter typing added/removed
+	* Parameter default added/removed
+	* Parameter default value changed
+
+# Changed
+* [#83] Removing method default parameter value should generate MAJOR level entry
+* Update V018, V021 level from PATCH to MINOR
+* Update V059 level from MAJOR to PATCH
+
 ## <a name="v0.9.1"></a>v0.9.1 (2016-02-11)
 [Full Changelog](https://github.com/tomzx/php-semver-checker/compare/v0.9.0...v0.9.1)
 ### Changed
