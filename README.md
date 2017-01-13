@@ -20,6 +20,15 @@ As this is still an alpha package, it is not suggested to include `php-semver-ch
 2. `php composer.phar create-project tomzx/php-semver-checker --stability=dev` will clone to a new php-semver-checker folder in your current working directory
 3. `git clone https://github.com/tomzx/php-semver-checker.git` and `php composer.phar install` in the newly cloned directory.
 
+See the example section for examples of how to use the tool.
+
+### Building `php-semver-checker.phar`
+First, make sure you have [box](https://github.com/box-project/box2) installed. Then, in the base directory, you can run the following command which will generate the `php-semver-checker.phar` file.
+
+```
+box build
+```
+
 ## Current ruleset & verification codes
 
 See [`docs/Ruleset.md`](docs/Ruleset.md) for an exhaustive list of currently supported (and to come) ruleset.
@@ -117,7 +126,7 @@ Trait (MAJOR)
 [Scanned files] Before: 26, After: 27, Identical: 0
 Time: 1.43 seconds, Memory: 5.123 MB
 ```
- 
+
 ## License
 
 The code is licensed under the [MIT license](http://choosealicense.com/licenses/mit/). See [LICENSE](LICENSE).
