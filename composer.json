@@ -46,6 +46,11 @@
 			"PHPSemVerChecker\\Test\\": "tests/PHPSemVerChecker"
 		}
 	},
+	"config": {
+		"platform": {
+			"php": "5.5.9"
+		}
+	},
 	"extra": {
 		"branch-alias": {
 			"dev-master": "0.11-dev"
