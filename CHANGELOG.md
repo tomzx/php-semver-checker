@@ -4,16 +4,25 @@ This project follows [Semantic Versioning 2.0.0](http://semver.org/).
 
 ## <a name="unreleased"></a>Unreleased
 
+## <a name="v0.11.0"></a>v0.11.0 (2017-12-09)
+[Full Changelog](https://github.com/tomzx/php-semver-checker/compare/v0.10.0...v0.11.0)
+### Added
+* Add support for PHP 7.0/7.1/7.2 during parsing of files
+
+### Changed
+* Update nikic/php-parser from ~2.0 to ^3.1
+* Update all dependencies to use the caret instead of the tilde
+
 ## <a name="v0.10.0"></a>v0.10.0 (2016-05-13)
 [Full Changelog](https://github.com/tomzx/php-semver-checker/compare/v0.9.1...v0.10.0)
-# Added
+### Added
 * Add support to check for function, class/interface/trait methods signature:
 	* Parameter added/removed
 	* Parameter typing added/removed
 	* Parameter default added/removed
 	* Parameter default value changed
 
-# Changed
+### Changed
 * [#83] Removing method default parameter value should generate MAJOR level entry
 * Update V018, V021 level from PATCH to MINOR
 * Update V059 level from MAJOR to PATCH
