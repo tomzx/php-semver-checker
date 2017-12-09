@@ -21,4 +21,28 @@ class ScannerTest extends TestCase {
 		$scanner = new Scanner();
 		$scanner->scan(__DIR__.'/../../fixtures/general/InvalidCode.php');
 	}
+
+	public function testPHP70()
+	{
+		$scanner = new Scanner();
+		$scanner->scan(__DIR__.'/../../fixtures/general/PHP7.0.php');
+
+		$this->assertTrue(true);
+	}
+
+	public function testPHP71()
+	{
+		$scanner = new Scanner();
+		$scanner->scan(__DIR__.'/../../fixtures/general/PHP7.1.php');
+
+		$this->assertTrue(true);
+	}
+
+	public function testPHP72()
+	{
+		$scanner = new Scanner();
+		$scanner->scan(__DIR__.'/../../fixtures/general/PHP7.2.php');
+
+		$this->assertTrue(true);
+	}
 }
