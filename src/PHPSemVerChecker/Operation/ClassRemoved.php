@@ -15,7 +15,7 @@ class ClassRemoved extends Operation {
 	 */
 	protected $reason = 'Class was removed.';
 	/**
-	 * @var
+	 * @var string
 	 */
 	protected $fileBefore;
 	/**

@@ -15,7 +15,7 @@ class TraitRemoved extends Operation {
 	 */
 	protected $reason = 'Trait was removed.';
 	/**
-	 * @var
+	 * @var string
 	 */
 	protected $fileBefore;
 	/**

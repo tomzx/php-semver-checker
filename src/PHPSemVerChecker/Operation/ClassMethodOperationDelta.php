@@ -108,7 +108,8 @@ abstract class ClassMethodOperationDelta extends Operation {
 	}
 
 	/**
-	 * @return string
+	 * @param mixed $context
+	 * @return int
 	 */
 	protected function getVisibility($context)
 	{

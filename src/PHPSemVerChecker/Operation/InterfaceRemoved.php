@@ -15,7 +15,7 @@ class InterfaceRemoved extends Operation {
 	 */
 	protected $reason = 'Interface was removed.';
 	/**
-	 * @var
+	 * @var string
 	 */
 	protected $fileBefore;
 	/**
