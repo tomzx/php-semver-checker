@@ -697,15 +697,46 @@ class ClassMethodAnalyzerTest extends TestCase
 		$this->assertSame('tmp::tmpMethod', $report[$context][$expectedLevel][0]->getTarget());
 	}
 
-	public function providerImplementationChanged()
-	{
-		return [
-			['class', 'public', 'V023'],
-			['class', 'protected', 'V024'],
-			['class', 'private', 'V025'],
-			['trait', 'public', 'V052'],
-			['trait', 'protected', 'V053'],
-			['trait', 'private', 'V054'],
-		];
-	}
+    public function providerImplementationChanged()
+    {
+        return [
+            ['class', 'public', 'V023'],
+            ['class', 'protected', 'V024'],
+            ['class', 'private', 'V025'],
+            ['trait', 'public', 'V052'],
+            ['trait', 'protected', 'V053'],
+            ['trait', 'private', 'V054'],
+        ];
+    }
+
+    public function testClassMethodCaseChangeIsIgnored()
+    {
+        $constructor = $this->getConstructorForContext('class');
+        $classBefore = new $constructor('tmp', [
+            'stmts' => [
+                new ClassMethod('tmpMethod', [
+                    'type'   => Visibility::getModifier('public'),
+                    'stmts' => [
+                        new MethodCall(new Variable('test'), 'someMethod'),
+                    ],
+                ]),
+            ],
+        ]);
+
+        $classAfter = new $constructor('tmp', [
+            'stmts' => [
+                new ClassMethod('tmpmethod', [
+                    'type'   => Visibility::getModifier('public'),
+                    'stmts' => [
+                        new MethodCall(new Variable('test'), 'someMethod'),
+                    ],
+                ]),
+            ],
+        ]);
+
+        $analyzer = new ClassMethodAnalyzer('class');
+        $report = $analyzer->analyze($classBefore, $classAfter);
+
+        Assert::assertNoDifference($report);
+    }
 }
