@@ -7,7 +7,7 @@ This project follows [Semantic Versioning 2.0.0](http://semver.org/).
 ## <a name="v0.12.0"></a>v0.12.0 (2018-02-08)
 [Full Changelog](https://github.com/tomzx/php-semver-checker/compare/v0.11.0...v0.12.0)
 ### Changed
-* Updated composer dependencies on outdated packages
+* Update composer outdated dependencies
 
 ### Removed
 * Remove the self-update command
