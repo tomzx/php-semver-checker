@@ -3,7 +3,6 @@
 namespace PHPSemVerChecker\Console;
 
 use PHPSemVerChecker\Console\Command\CompareCommand;
-use PHPSemVerChecker\Console\Command\SelfUpdateCommand;
 use Symfony\Component\Console\Application as SymfonyApplication;
 
 class Application extends SymfonyApplication {
@@ -31,7 +30,6 @@ class Application extends SymfonyApplication {
 	{
 		$commands = parent::getDefaultCommands();
 		$commands[] = $this->add(new CompareCommand());
-		$commands[] = $this->add(new SelfUpdateCommand());
 		return $commands;
 	}
 }
