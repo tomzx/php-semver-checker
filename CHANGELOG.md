@@ -9,7 +9,7 @@ This project follows [Semantic Versioning 2.0.0](http://semver.org/).
 ### Changed
 * Updated composer dependencies on outdated packages
 
-# Removed
+### Removed
 * Remove the self-update command
 
 ## <a name="v0.11.0"></a>v0.11.0 (2017-12-09)
