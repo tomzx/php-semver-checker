@@ -4,6 +4,11 @@ This project follows [Semantic Versioning 2.0.0](http://semver.org/).
 
 ## <a name="unreleased"></a>Unreleased
 
+## <a name="v0.12.1"></a>v0.12.1 (2018-02-08)
+[Full Changelog](https://github.com/tomzx/php-semver-checker-git/compare/v0.12.0...v0.12.1)
+### Changed
+* Remove dependency to herrera-io/phar-update in box.json
+
 ## <a name="v0.12.0"></a>v0.12.0 (2018-02-08)
 [Full Changelog](https://github.com/tomzx/php-semver-checker/compare/v0.11.0...v0.12.0)
 ### Changed
