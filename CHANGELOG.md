@@ -4,6 +4,14 @@ This project follows [Semantic Versioning 2.0.0](http://semver.org/).
 
 ## <a name="unreleased"></a>Unreleased
 
+## <a name="v0.12.0"></a>v0.12.0 (2018-02-08)
+[Full Changelog](https://github.com/tomzx/php-semver-checker/compare/v0.11.0...v0.12.0)
+### Changed
+* Updated composer dependencies on outdated packages
+
+# Removed
+* Remove the self-update command
+
 ## <a name="v0.11.0"></a>v0.11.0 (2017-12-09)
 [Full Changelog](https://github.com/tomzx/php-semver-checker/compare/v0.10.0...v0.11.0)
 ### Added
