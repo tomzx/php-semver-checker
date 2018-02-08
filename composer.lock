@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "f2e6fec8df89815710bc219e83dc9e37",
+    "content-hash": "8109e7fc43fb451a0e307c36e3b33f77",
     "packages": [
         {
             "name": "hassankhan/config",
