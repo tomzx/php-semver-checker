@@ -34,6 +34,11 @@ class PropertyAnalyzer {
 		$this->fileAfter = $fileAfter;
 	}
 
+	/**
+	 * @param \PhpParser\Node\Stmt $contextBefore
+	 * @param \PhpParser\Node\Stmt $contextAfter
+	 * @return \PHPSemVerChecker\Report\Report
+	 */
 	public function analyze(Stmt $contextBefore, Stmt $contextAfter)
 	{
 		$report = new Report();
@@ -72,6 +77,10 @@ class PropertyAnalyzer {
 		return $report;
 	}
 
+	/**
+	 * @param \PhpParser\Node\Stmt $context
+	 * @return array
+	 */
 	protected function getProperties(Stmt $context)
 	{
 		$properties = [];
@@ -83,6 +92,10 @@ class PropertyAnalyzer {
 		return $properties;
 	}
 
+	/**
+	 * @param \PhpParser\Node\Stmt\Property $property
+	 * @return string
+	 */
 	protected function getName(Property $property)
 	{
 		return $property->props[0]->name;

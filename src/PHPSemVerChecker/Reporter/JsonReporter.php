@@ -33,6 +33,9 @@ class JsonReporter
 		$this->filesystem = $filesystem ?: new Filesystem();
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getOutput()
 	{
 		$output = [];

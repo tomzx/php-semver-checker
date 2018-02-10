@@ -8,8 +8,16 @@ use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 
 class InterfaceAnalyzer {
+	/**
+	 * @var string
+	 */
 	protected $context = 'interface';
 
+	/**
+	 * @param \PHPSemVerChecker\Registry\Registry $registryBefore
+	 * @param \PHPSemVerChecker\Registry\Registry $registryAfter
+	 * @return \PHPSemVerChecker\Report\Report
+	 */
 	public function analyze(Registry $registryBefore, Registry $registryAfter)
 	{
 		$report = new Report();

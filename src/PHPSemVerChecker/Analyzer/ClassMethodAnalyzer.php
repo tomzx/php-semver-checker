@@ -20,8 +20,17 @@ use PHPSemVerChecker\Operation\ClassMethodRemoved;
 use PHPSemVerChecker\Report\Report;
 
 class ClassMethodAnalyzer {
+	/**
+	 * @var string
+	 */
 	protected $context;
+	/**
+	 * @var null|string
+	 */
 	protected $fileBefore;
+	/**
+	 * @var null|string
+	 */
 	protected $fileAfter;
 
 	/**
@@ -36,6 +45,11 @@ class ClassMethodAnalyzer {
 		$this->fileAfter = $fileAfter;
 	}
 
+	/**
+	 * @param \PhpParser\Node\Stmt $contextBefore
+	 * @param \PhpParser\Node\Stmt $contextAfter
+	 * @return \PHPSemVerChecker\Report\Report
+	 */
 	public function analyze(Stmt $contextBefore, Stmt $contextAfter)
 	{
 		$report = new Report();

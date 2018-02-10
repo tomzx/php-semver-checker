@@ -41,6 +41,9 @@ class ClassRemoved extends Operation {
 		return $this->fileBefore;
 	}
 
+	/**
+	 * @return int
+	 */
 	public function getLine()
 	{
 		return $this->classBefore->getLine();

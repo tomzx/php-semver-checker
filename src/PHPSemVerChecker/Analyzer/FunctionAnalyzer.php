@@ -17,11 +17,13 @@ use PHPSemVerChecker\Operation\FunctionParameterRemoved;
 use PHPSemVerChecker\Operation\FunctionParameterTypingAdded;
 use PHPSemVerChecker\Operation\FunctionParameterTypingRemoved;
 use PHPSemVerChecker\Operation\FunctionRemoved;
-use PHPSemVerChecker\Operation\Unknown;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 
 class FunctionAnalyzer {
+	/**
+	 * @var string
+	 */
 	protected $context = 'function';
 
 	/**
