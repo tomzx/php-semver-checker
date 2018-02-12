@@ -87,10 +87,7 @@ class ClassMethodAnalyzer
 
 			if (!$this->areMethodsEqual($methodBefore, $methodAfter)) {
 
-				$paramsBefore = $methodBefore->params;
-				$paramsAfter = $methodAfter->params;
-
-				$signatureResult = Signature::analyze($paramsBefore, $paramsAfter);
+				$signatureResult = Signature::analyze($methodBefore, $methodAfter);
 
 				$changes = [
 					'parameter_added' => ClassMethodParameterAdded::class,

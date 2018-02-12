@@ -55,10 +55,8 @@ class FunctionAnalyzer {
 
 			// Leave non-strict comparison here
 			if ($functionBefore != $functionAfter) {
-				$paramsBefore = $functionBefore->params;
-				$paramsAfter = $functionAfter->params;
 
-				$signatureResult = Signature::analyze($paramsBefore, $paramsAfter);
+				$signatureResult = Signature::analyze($functionBefore, $functionAfter);
 
 				$changes = [
 					'parameter_added' => FunctionParameterAdded::class,
