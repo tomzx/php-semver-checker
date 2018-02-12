@@ -121,6 +121,9 @@ class LevelMapping
 		'V115' => Level::MAJOR,
 		'V116' => Level::MAJOR,
 		'V117' => Level::MAJOR,
+		'V150' => Level::PATCH,
+		'V151' => Level::PATCH,
+		'V152' => Level::PATCH,
 	];
 
 	public static function getLevelForCode($code)

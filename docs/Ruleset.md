@@ -70,6 +70,7 @@ V096 | PATCH | Class private method parameter default removed
 V097 | MAJOR | Class public method parameter default value changed
 V098 | MAJOR | Class protected method parameter default value changed
 V099 | PATCH | Class private method parameter default value changed
+V150 | PATCH | Class public/protected/private method renamed (case only)
 VXXX | MAJOR | *Final class public method parameter added*
 VXXX | MAJOR | *Final class protected method parameter added*
 VXXX | PATCH | *Final class private method parameter added*
@@ -109,6 +110,7 @@ V076 | MAJOR | Interface method parameter typing removed
 V077 | MINOR | Interface method parameter default added
 V078 | MAJOR | Interface method parameter default removed
 V079 | MAJOR | Interface method parameter default value changed
+V151 | PATCH | Interface method renamed (case only)
 
 # Trait
 
@@ -158,6 +160,7 @@ V114 | MAJOR | Trait private method parameter default removed
 V115 | MAJOR | Trait public method parameter default value changed
 V116 | MAJOR | Trait protected method parameter default value changed
 V117 | MAJOR | Trait private method parameter default value changed
+V152 | PATCH | Trait method renamed (case only)
 
 # To classify
 
