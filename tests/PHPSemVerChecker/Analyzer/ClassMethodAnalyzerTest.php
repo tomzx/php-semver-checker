@@ -737,8 +737,6 @@ class ClassMethodAnalyzerTest extends TestCase
         $analyzer = new ClassMethodAnalyzer('class');
         $report = $analyzer->analyze($classBefore, $classAfter);
 
-//        var_dump( $report ); die;
-
         Assert::assertDifference($report, 'class', Level::PATCH);
     }
 }
