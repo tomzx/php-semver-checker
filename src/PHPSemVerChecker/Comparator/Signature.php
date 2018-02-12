@@ -22,7 +22,24 @@ class Signature
 			'parameter_default_value_changed' => false,
 		];
 
+		$changes = self::detectFunctionNameChanges($changes, $functionA, $functionB);
 		$changes = self::detectParameterChanges($changes, $functionA, $functionB);
+
+		return $changes;
+	}
+
+	private static function detectFunctionNameChanges($changes, FunctionLike $functionA, FunctionLike $functionB)
+	{
+		if ($functionA->name != $functionB->name) {
+
+			if (strtolower($functionA->name) == strtolower($functionB->name)) {
+				$changes['function_renamed_case_only'] = true;
+			} else {
+				$changes['function_renamed'] = true;
+			}
+
+			return $changes;
+		}
 
 		return $changes;
 	}
