@@ -4,6 +4,7 @@ namespace PHPSemVerChecker\Analyzer;
 
 use PHPSemVerChecker\Operation\InterfaceAdded;
 use PHPSemVerChecker\Operation\InterfaceRemoved;
+use PHPSemVerChecker\Operation\InterfaceRenamedCaseOnly;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 
@@ -14,30 +15,57 @@ class InterfaceAnalyzer {
 	{
 		$report = new Report();
 
-		$keysBefore = array_keys($registryBefore->data['interface']);
-		$keysAfter = array_keys($registryAfter->data['interface']);
-		$added = array_diff($keysAfter, $keysBefore);
-		$removed = array_diff($keysBefore, $keysAfter);
-		$toVerify = array_intersect($keysBefore, $keysAfter);
+		$interfacesBefore = $registryBefore->data['interface'];
+		$interfacesAfter = $registryAfter->data['interface'];
+
+		$interfacesBeforeKeyed = [];
+		$mappingsBeforeKeyed = [];
+		foreach($interfacesBefore as $key => $interfaceBefore)
+		{
+			$interfacesBeforeKeyed[strtolower($interfaceBefore->name)] = $interfaceBefore;
+			$mappingsBeforeKeyed[strtolower($interfaceBefore->name)] = $registryBefore->mapping['interface'][$key];
+		}
+
+		$interfacesAfterKeyed = [];
+		$mappingsAfterKeyed = [];
+		foreach($interfacesAfter as $key => $interfaceAfter)
+		{
+			$interfacesAfterKeyed[strtolower($interfaceAfter->name)] = $interfaceAfter;
+			$mappingsAfterKeyed[strtolower($interfaceAfter->name)] = $registryAfter->mapping['interface'][$key];
+		}
+
+
+		$interfaceNamesBefore = array_keys($interfacesBeforeKeyed);
+		$interfaceNamesAfter = array_keys($interfacesAfterKeyed);
+		$added = array_diff($interfaceNamesAfter, $interfaceNamesBefore);
+		$removed = array_diff($interfaceNamesBefore, $interfaceNamesAfter);
+		$toVerify = array_intersect($interfaceNamesBefore, $interfaceNamesAfter);
 
 		foreach ($removed as $key) {
-			$fileBefore = $registryBefore->mapping['interface'][$key];
-			$interfaceBefore = $registryBefore->data['interface'][$key];
+			$fileBefore = $mappingsBeforeKeyed[$key];
+			$interfaceBefore = $interfacesBeforeKeyed[$key];
 
 			$data = new InterfaceRemoved($fileBefore, $interfaceBefore);
 			$report->addInterface($data);
 		}
 
 		foreach ($toVerify as $key) {
-			$fileBefore = $registryBefore->mapping['interface'][$key];
+			$fileBefore = $mappingsBeforeKeyed[$key];
 			/** @var \PhpParser\Node\Stmt\Interface_ $interfaceBefore */
-			$interfaceBefore = $registryBefore->data['interface'][$key];
-			$fileAfter = $registryAfter->mapping['interface'][$key];
+			$interfaceBefore = $interfacesBeforeKeyed[$key];
+			$fileAfter = $mappingsAfterKeyed[$key];
 			/** @var \PhpParser\Node\Stmt\Interface_ $interfaceBefore */
-			$interfaceAfter = $registryAfter->data['interface'][$key];
+			$interfaceAfter = $interfacesAfterKeyed[$key];
 
 			// Leave non-strict comparison here
 			if ($interfaceBefore != $interfaceAfter) {
+
+				// Check if the name of the interface has changed case.
+				if($interfaceBefore->name !== $interfaceAfter->name)
+				{
+					$report->add('interface', new InterfaceRenamedCaseOnly($fileAfter, $interfaceAfter));
+				}
+
 				$analyzer = new ClassMethodAnalyzer('interface', $fileBefore, $fileAfter);
 				$interfaceMethodReport = $analyzer->analyze($interfaceBefore, $interfaceAfter);
 				$report->merge($interfaceMethodReport);
@@ -45,8 +73,9 @@ class InterfaceAnalyzer {
 		}
 
 		foreach ($added as $key) {
-			$fileAfter = $registryAfter->mapping['interface'][$key];
-			$interfaceAfter = $registryAfter->data['interface'][$key];
+
+			$fileAfter = $mappingsAfterKeyed[$key];
+			$interfaceAfter = $interfacesAfterKeyed[$key];
 
 			$data = new InterfaceAdded($fileAfter, $interfaceAfter);
 			$report->addInterface($data);

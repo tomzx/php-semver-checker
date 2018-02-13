@@ -111,6 +111,7 @@ V077 | MINOR | Interface method parameter default added
 V078 | MAJOR | Interface method parameter default removed
 V079 | MAJOR | Interface method parameter default value changed
 V151 | PATCH | Interface method renamed (case only)
+V153 | PATCH | Interface renamed (case only)
 
 # Trait
 
