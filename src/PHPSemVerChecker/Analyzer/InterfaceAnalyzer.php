@@ -34,7 +34,6 @@ class InterfaceAnalyzer {
 			$mappingsAfterKeyed[strtolower($interfaceAfter->name)] = $registryAfter->mapping['interface'][$key];
 		}
 
-
 		$interfaceNamesBefore = array_keys($interfacesBeforeKeyed);
 		$interfaceNamesAfter = array_keys($interfacesAfterKeyed);
 		$added = array_diff($interfaceNamesAfter, $interfaceNamesBefore);
