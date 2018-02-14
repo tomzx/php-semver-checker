@@ -2,16 +2,15 @@
 
 namespace PHPSemVerChecker\Comparator;
 
-use PhpParser\Node\FunctionLike;
-
-class Signature
-{
-
-	public static function analyze(FunctionLike $functionA, FunctionLike $functionB)
+class Signature {
+	/**
+	 * @param array $parametersA
+	 * @param array $parametersB
+	 * @return array
+	 */
+	public static function analyze(array $parametersA, array $parametersB)
 	{
 		$changes = [
-			'function_renamed' => false,
-			'function_renamed_case_only' => false,
 			'parameter_added' => false,
 			'parameter_removed' => false,
 			'parameter_renamed' => false,
@@ -21,34 +20,6 @@ class Signature
 			'parameter_default_removed' => false,
 			'parameter_default_value_changed' => false,
 		];
-
-		$changes = self::detectFunctionNameChanges($changes, $functionA, $functionB);
-		$changes = self::detectParameterChanges($changes, $functionA, $functionB);
-
-		return $changes;
-	}
-
-	private static function detectFunctionNameChanges($changes, FunctionLike $functionA, FunctionLike $functionB)
-	{
-		if ($functionA->name != $functionB->name) {
-
-			if (strtolower($functionA->name) == strtolower($functionB->name)) {
-				$changes['function_renamed_case_only'] = true;
-			} else {
-				$changes['function_renamed'] = true;
-			}
-
-			return $changes;
-		}
-
-		return $changes;
-	}
-
-	private static function detectParameterChanges($changes, FunctionLike $functionA, FunctionLike $functionB)
-	{
-		$parametersA = $functionA->getParams();
-		$parametersB = $functionB->getParams();
-
 		$lengthA = count($parametersA);
 		$lengthB = count($parametersB);
 
@@ -85,8 +56,8 @@ class Signature
 				$changes['parameter_default_removed'] = true;
 			} elseif ($parametersA[$i]->default === null && $parametersB[$i]->default !== null) {
 				$changes['parameter_default_added'] = true;
-				// TODO(tom@tomrochette.com): Not all nodes have a value property
-			} elseif (!Node::isEqual($parametersA[$i]->default, $parametersB[$i]->default)) {
+			// TODO(tom@tomrochette.com): Not all nodes have a value property
+			} elseif ( ! Node::isEqual($parametersA[$i]->default, $parametersB[$i]->default)) {
 				$changes['parameter_default_value_changed'] = true;
 			}
 		}

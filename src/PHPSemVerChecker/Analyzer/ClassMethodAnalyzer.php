@@ -78,10 +78,17 @@ class ClassMethodAnalyzer {
 			// Leave non-strict comparison here
 			if ($methodBefore != $methodAfter) {
 
-				$signatureResult = Signature::analyze($methodBefore, $methodAfter);
+				// Detect method renamed case only.
+				if(
+					$methodBefore->name !== $methodAfter->name
+					 && strtolower($methodBefore->name) === strtolower($methodAfter->name)
+				) {
+					$report->add($this->context, new ClassMethodRenamedCaseOnly($this->context, $this->fileAfter, $contextAfter, $methodAfter));
+				}
+
+				$signatureResult = Signature::analyze($methodBefore->getParams(), $methodAfter->getParams());
 
 				$changes = [
-					'function_renamed_case_only' => ClassMethodRenamedCaseOnly::class,
 					'parameter_added' => ClassMethodParameterAdded::class,
 					'parameter_removed' => ClassMethodParameterRemoved::class,
 					'parameter_renamed' => ClassMethodParameterNameChanged::class,
