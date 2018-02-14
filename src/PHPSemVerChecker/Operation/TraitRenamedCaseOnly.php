@@ -9,7 +9,7 @@ class TraitRenamedCaseOnly extends Operation {
 	/**
 	 * @var string
 	 */
-	protected $code = 'V152';
+	protected $code = 'V155';
 	/**
 	 * @var string
 	 */

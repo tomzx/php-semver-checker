@@ -77,7 +77,7 @@ class TraitAnalyzerTest extends TestCase {
 		$context = 'trait';
 		$expectedLevel = Level::PATCH;
 		Assert::assertDifference($report, $context, $expectedLevel);
-		$this->assertSame('V152', $report[$context][$expectedLevel][0]->getCode());
+		$this->assertSame('V155', $report[$context][$expectedLevel][0]->getCode());
 		$this->assertSame('Trait was renamed (case only).', $report[$context][$expectedLevel][0]->getReason());
 		$this->assertSame('testtrait', $report[$context][$expectedLevel][0]->getTarget());
 	}

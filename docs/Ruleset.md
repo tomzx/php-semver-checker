@@ -163,6 +163,7 @@ V115 | MAJOR | Trait public method parameter default value changed
 V116 | MAJOR | Trait protected method parameter default value changed
 V117 | MAJOR | Trait private method parameter default value changed
 V152 | PATCH | Trait method renamed (case only)
+V155 | PATCH | Trait renamed (case only)
 
 # To classify
 
