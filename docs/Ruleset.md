@@ -71,6 +71,7 @@ V097 | MAJOR | Class public method parameter default value changed
 V098 | MAJOR | Class protected method parameter default value changed
 V099 | PATCH | Class private method parameter default value changed
 V150 | PATCH | Class public/protected/private method renamed (case only)
+V154 | PATCH | Class renamed (case only)
 VXXX | MAJOR | *Final class public method parameter added*
 VXXX | MAJOR | *Final class protected method parameter added*
 VXXX | PATCH | *Final class private method parameter added*

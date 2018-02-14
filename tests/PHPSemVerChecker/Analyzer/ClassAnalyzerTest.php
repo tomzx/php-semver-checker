@@ -62,4 +62,23 @@ class ClassAnalyzerTest extends TestCase {
 		$this->assertSame('Class was removed.', $report[$context][$expectedLevel][0]->getReason());
 		$this->assertSame('tmp', $report[$context][$expectedLevel][0]->getTarget());
 	}
+
+	public function testClassRenamedCaseOnly()
+	{
+		$before = new Registry();
+		$after = new Registry();
+
+		$before->addClass(new Class_('TestCLASS'));
+		$after->addClass(new Class_('TestClass'));
+
+		$analyzer = new ClassAnalyzer();
+		$report = $analyzer->analyze($before, $after);
+
+		$context = 'class';
+		$expectedLevel = Level::PATCH;
+		Assert::assertDifference($report, $context, $expectedLevel);
+		$this->assertSame('V154', $report[$context][$expectedLevel][0]->getCode());
+		$this->assertSame('Class was renamed (case only).', $report[$context][$expectedLevel][0]->getReason());
+		$this->assertSame('TestClass', $report[$context][$expectedLevel][0]->getTarget());
+	}
 }
