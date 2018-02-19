@@ -709,13 +709,16 @@ class ClassMethodAnalyzerTest extends TestCase
         ];
     }
 
-    public function testClassMethodCaseChangeIsIgnored()
+	/**
+	 * @dataProvider providerCaseChanged
+	 */
+    public function testClassMethodCaseChangeChanged($context, $visibility, $code)
     {
-        $constructor = $this->getConstructorForContext('class');
+        $constructor = $this->getConstructorForContext($context);
         $classBefore = new $constructor('tmp', [
             'stmts' => [
                 new ClassMethod('tmpMethod', [
-                    'type'   => Visibility::getModifier('public'),
+                    'type'   => Visibility::getModifier($visibility),
                     'stmts' => [
                         new MethodCall(new Variable('test'), 'someMethod'),
                     ],
@@ -726,7 +729,7 @@ class ClassMethodAnalyzerTest extends TestCase
         $classAfter = new $constructor('tmp', [
             'stmts' => [
                 new ClassMethod('tmpmethod', [
-                    'type'   => Visibility::getModifier('public'),
+                    'type'   => Visibility::getModifier($visibility),
                     'stmts' => [
                         new MethodCall(new Variable('test'), 'someMethod'),
                     ],
@@ -734,9 +737,25 @@ class ClassMethodAnalyzerTest extends TestCase
             ],
         ]);
 
-        $analyzer = new ClassMethodAnalyzer('class');
+        $analyzer = new ClassMethodAnalyzer($context);
         $report = $analyzer->analyze($classBefore, $classAfter);
 
-        Assert::assertDifference($report, 'class', Level::PATCH);
+        Assert::assertDifference($report, $context, Level::PATCH);
+
+		$expectedLevel = LevelMapping::getLevelForCode($code);
+        $this->assertSame($code, $report[$context][$expectedLevel][0]->getCode());
+		$this->assertSame(sprintf('[%s] Method has been renamed (case only).', $visibility), $report[$context][$expectedLevel][0]->getReason());
     }
+
+	public function providerCaseChanged()
+	{
+		return [
+			['class', 'public', 'V150'],
+			['class', 'protected', 'V156'],
+			['class', 'private', 'V157'],
+			['trait', 'public', 'V152'],
+			['trait', 'protected', 'V158'],
+			['trait', 'private', 'V159'],
+		];
+	}
 }
