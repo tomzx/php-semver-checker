@@ -134,6 +134,7 @@ class LevelMapping
 		'V157' => Level::PATCH,
 		'V158' => Level::PATCH,
 		'V159' => Level::PATCH,
+		'V160' => Level::PATCH,
 	];
 
 	/**

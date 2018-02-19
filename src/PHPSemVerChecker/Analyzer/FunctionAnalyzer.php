@@ -17,6 +17,7 @@ use PHPSemVerChecker\Operation\FunctionParameterRemoved;
 use PHPSemVerChecker\Operation\FunctionParameterTypingAdded;
 use PHPSemVerChecker\Operation\FunctionParameterTypingRemoved;
 use PHPSemVerChecker\Operation\FunctionRemoved;
+use PHPSemVerChecker\Operation\FunctionRenamedCaseOnly;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 
@@ -35,28 +36,62 @@ class FunctionAnalyzer {
 	{
 		$report = new Report();
 
-		$keysBefore = array_keys($registryBefore->data['function']);
-		$keysAfter = array_keys($registryAfter->data['function']);
-		$added = array_diff($keysAfter, $keysBefore);
-		$removed = array_diff($keysBefore, $keysAfter);
-		$toVerify = array_intersect($keysBefore, $keysAfter);
+
+		$functionsBefore = $registryBefore->data['function'];
+		$functionsAfter = $registryAfter->data['function'];
+
+		$functionsBeforeKeyed = [];
+		$filesBeforeKeyed = [];
+		foreach($functionsBefore as $key => $functionBefore)
+		{
+			$functionsBeforeKeyed[strtolower($functionBefore->name)] = $functionBefore;
+			$filesBeforeKeyed[strtolower($functionBefore->name)] = $registryBefore->mapping['function'][$key];
+		}
+
+		$functionsAfterKeyed = [];
+		$filesAfterKeyed = [];
+		foreach($functionsAfter as $key => $functionAfter)
+		{
+			$functionsAfterKeyed[strtolower($functionAfter->name)] = $functionAfter;
+			$filesAfterKeyed[strtolower($functionAfter->name)] = $registryAfter->mapping['function'][$key];
+		}
+
+		$functionNamesBefore = array_keys($functionsBeforeKeyed);
+		$functionNamesAfter = array_keys($functionsAfterKeyed);
+		$added = array_diff($functionNamesAfter, $functionNamesBefore);
+		$removed = array_diff($functionNamesBefore, $functionNamesAfter);
+		$toVerify = array_intersect($functionNamesBefore, $functionNamesAfter);
 
 		foreach ($removed as $key) {
-			$fileBefore = $registryBefore->mapping['function'][$key];
-			$functionBefore = $registryBefore->data['function'][$key];
+			$fileBefore = $filesBeforeKeyed[$key];
+			$functionBefore = $functionsBeforeKeyed[$key];
 
 			$data = new FunctionRemoved($fileBefore, $functionBefore);
 			$report->addFunction($data);
 		}
 
 		foreach ($toVerify as $key) {
-			$fileBefore = $registryBefore->mapping['function'][$key];
-			$functionBefore = $registryBefore->data['function'][$key];
-			$fileAfter = $registryAfter->mapping['function'][$key];
-			$functionAfter = $registryAfter->data['function'][$key];
+			$fileBefore = $filesBeforeKeyed[$key];
+			$functionBefore = $functionsBeforeKeyed[$key];
+			$fileAfter = $filesAfterKeyed[$key];
+			$functionAfter = $functionsAfterKeyed[$key];
 
 			// Leave non-strict comparison here
 			if ($functionBefore != $functionAfter) {
+
+				// Check if the name of the interface has changed case.
+				// If we entered this section then the normalized names (lowercase) were equal.
+				if ($functionBefore->name !== $functionAfter->name) {
+					$report->addFunction(
+						new FunctionRenamedCaseOnly(
+							$fileBefore,
+							$functionBefore,
+							$fileAfter,
+							$functionAfter
+						)
+					);
+				}
+
 				$signatureResult = Signature::analyze($functionBefore->getParams(), $functionAfter->getParams());
 
 				$changes = [

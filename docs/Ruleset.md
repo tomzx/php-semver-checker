@@ -15,6 +15,7 @@ V070 | MINOR | Function parameter typing removed
 V071 | MINOR | Function parameter default added
 V072 | MAJOR | Function parameter default removed
 V073 | MINOR | Function parameter default value changed
+V160 | PATCH | Function renamed (case only)
 
 # Classes
 
