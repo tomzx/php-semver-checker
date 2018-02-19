@@ -58,10 +58,8 @@ class TraitAnalyzer {
 
 		foreach ($toVerify as $key) {
 			$fileBefore = $filesBeforeKeyed[$key];
-			/** @var \PhpParser\Node\Stmt\Class_ $traitBefore */
 			$traitBefore = $traitsBeforeKeyed[$key];
 			$fileAfter = $filesAfterKeyed[$key];
-			/** @var \PhpParser\Node\Stmt\Class_ $traitBefore */
 			$traitAfter = $traitsAfterKeyed[$key];
 
 			// Leave non-strict comparison here
@@ -69,8 +67,16 @@ class TraitAnalyzer {
 
 				// Check for name case change.
 				// If we entered this section then the normalized names (lowercase) were equal.
-				if($traitBefore->name !== $traitAfter->name) {
-					$report->add($this->context, new TraitRenamedCaseOnly($fileAfter, $traitAfter));
+				if ($traitBefore->name !== $traitAfter->name) {
+					$report->add(
+						$this->context,
+						new TraitRenamedCaseOnly(
+							$fileBefore,
+							$traitBefore,
+							$fileAfter,
+							$traitAfter
+						)
+					);
 				}
 
 				$analyzers = [
