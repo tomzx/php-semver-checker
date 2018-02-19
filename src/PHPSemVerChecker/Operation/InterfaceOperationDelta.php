@@ -5,24 +5,34 @@ namespace PHPSemVerChecker\Operation;
 use PhpParser\Node\Stmt\Interface_;
 use PHPSemVerChecker\Node\Statement\Interface_ as PInterface;
 
-class InterfaceOperationUnary extends Operation {
+class InterfaceOperationDelta extends Operation {
 	/**
 	 * @var string
 	 */
-	protected $file;
+	protected $fileBefore;
 	/**
 	 * @var \PhpParser\Node\Stmt\Interface_
 	 */
-	protected $interface;
+	protected $interfaceBefore;
+	/**
+	 * @var string
+	 */
+	protected $fileAfter;
+	/**
+	 * @var \PhpParser\Node\Stmt\Interface_
+	 */
+	protected $interfaceAfter;
 
 	/**
 	 * @param string                          $fileAfter
 	 * @param \PhpParser\Node\Stmt\Interface_ $interface
 	 */
-	public function __construct($fileAfter, Interface_ $interface)
+	public function __construct($fileBefore, Interface_ $interfaceBefore, $fileAfter, Interface_ $interfaceAfter)
 	{
-		$this->file = $fileAfter;
-		$this->interface = $interface;
+		$this->fileBefore = $fileBefore;
+		$this->interfaceBefore = $interfaceBefore;
+		$this->fileAfter = $fileAfter;
+		$this->interfaceAfter = $interfaceAfter;
 	}
 
 	/**
@@ -30,7 +40,7 @@ class InterfaceOperationUnary extends Operation {
 	 */
 	public function getLocation()
 	{
-		return $this->file;
+		return $this->fileAfter;
 	}
 
 	/**
@@ -38,7 +48,7 @@ class InterfaceOperationUnary extends Operation {
 	 */
 	public function getLine()
 	{
-		return $this->interface->getLine();
+		return $this->interfaceAfter->getLine();
 	}
 
 	/**
@@ -46,6 +56,6 @@ class InterfaceOperationUnary extends Operation {
 	 */
 	public function getTarget()
 	{
-		return PInterface::getFullyQualifiedName($this->interface);
+		return PInterface::getFullyQualifiedName($this->interfaceAfter);
 	}
 }

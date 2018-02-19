@@ -27,19 +27,19 @@ class InterfaceAnalyzer {
 		$interfacesAfter = $registryAfter->data['interface'];
 
 		$interfacesBeforeKeyed = [];
-		$mappingsBeforeKeyed = [];
+		$filesBeforeKeyed = [];
 		foreach($interfacesBefore as $key => $interfaceBefore)
 		{
 			$interfacesBeforeKeyed[strtolower($interfaceBefore->name)] = $interfaceBefore;
-			$mappingsBeforeKeyed[strtolower($interfaceBefore->name)] = $registryBefore->mapping['interface'][$key];
+			$filesBeforeKeyed[strtolower($interfaceBefore->name)] = $registryBefore->mapping['interface'][$key];
 		}
 
 		$interfacesAfterKeyed = [];
-		$mappingsAfterKeyed = [];
+		$filesAfterKeyed = [];
 		foreach($interfacesAfter as $key => $interfaceAfter)
 		{
 			$interfacesAfterKeyed[strtolower($interfaceAfter->name)] = $interfaceAfter;
-			$mappingsAfterKeyed[strtolower($interfaceAfter->name)] = $registryAfter->mapping['interface'][$key];
+			$filesAfterKeyed[strtolower($interfaceAfter->name)] = $registryAfter->mapping['interface'][$key];
 		}
 
 		$interfaceNamesBefore = array_keys($interfacesBeforeKeyed);
@@ -49,7 +49,7 @@ class InterfaceAnalyzer {
 		$toVerify = array_intersect($interfaceNamesBefore, $interfaceNamesAfter);
 
 		foreach ($removed as $key) {
-			$fileBefore = $mappingsBeforeKeyed[$key];
+			$fileBefore = $filesBeforeKeyed[$key];
 			$interfaceBefore = $interfacesBeforeKeyed[$key];
 
 			$data = new InterfaceRemoved($fileBefore, $interfaceBefore);
@@ -57,10 +57,10 @@ class InterfaceAnalyzer {
 		}
 
 		foreach ($toVerify as $key) {
-			$fileBefore = $mappingsBeforeKeyed[$key];
+			$fileBefore = $filesBeforeKeyed[$key];
 			/** @var \PhpParser\Node\Stmt\Interface_ $interfaceBefore */
 			$interfaceBefore = $interfacesBeforeKeyed[$key];
-			$fileAfter = $mappingsAfterKeyed[$key];
+			$fileAfter = $filesAfterKeyed[$key];
 			/** @var \PhpParser\Node\Stmt\Interface_ $interfaceBefore */
 			$interfaceAfter = $interfacesAfterKeyed[$key];
 
@@ -68,9 +68,16 @@ class InterfaceAnalyzer {
 			if ($interfaceBefore != $interfaceAfter) {
 
 				// Check if the name of the interface has changed case.
-				if($interfaceBefore->name !== $interfaceAfter->name)
-				{
-					$report->add('interface', new InterfaceRenamedCaseOnly($fileAfter, $interfaceAfter));
+				if ($interfaceBefore->name !== $interfaceAfter->name) {
+					$report->add(
+						'interface',
+						new InterfaceRenamedCaseOnly(
+							$fileBefore,
+							$interfaceBefore,
+							$fileAfter,
+							$interfaceAfter
+						)
+					);
 				}
 
 				$analyzer = new ClassMethodAnalyzer('interface', $fileBefore, $fileAfter);
@@ -81,7 +88,7 @@ class InterfaceAnalyzer {
 
 		foreach ($added as $key) {
 
-			$fileAfter = $mappingsAfterKeyed[$key];
+			$fileAfter = $filesAfterKeyed[$key];
 			$interfaceAfter = $interfacesAfterKeyed[$key];
 
 			$data = new InterfaceAdded($fileAfter, $interfaceAfter);

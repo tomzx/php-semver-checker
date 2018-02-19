@@ -27,19 +27,19 @@ class ClassAnalyzer {
 		$classesAfter = $registryAfter->data['class'];
 
 		$classesBeforeKeyed = [];
-		$mappingsBeforeKeyed = [];
+		$filesBeforeKeyed = [];
 		foreach($classesBefore as $key => $classBefore)
 		{
 			$classesBeforeKeyed[strtolower($classBefore->name)] = $classBefore;
-			$mappingsBeforeKeyed[strtolower($classBefore->name)] = $registryBefore->mapping['class'][$key];
+			$filesBeforeKeyed[strtolower($classBefore->name)] = $registryBefore->mapping['class'][$key];
 		}
 
 		$classesAfterKeyed = [];
-		$mappingsAfterKeyed = [];
+		$filesAfterKeyed = [];
 		foreach($classesAfter as $key => $classAfter)
 		{
 			$classesAfterKeyed[strtolower($classAfter->name)] = $classAfter;
-			$mappingsAfterKeyed[strtolower($classAfter->name)] = $registryAfter->mapping['class'][$key];
+			$filesAfterKeyed[strtolower($classAfter->name)] = $registryAfter->mapping['class'][$key];
 		}
 
 		$classNamesBefore = array_keys($classesBeforeKeyed);
@@ -49,7 +49,7 @@ class ClassAnalyzer {
 		$toVerify = array_intersect($classNamesBefore, $classNamesAfter);
 
 		foreach ($removed as $key) {
-			$fileBefore = $mappingsBeforeKeyed[$key];
+			$fileBefore = $filesBeforeKeyed[$key];
 			$classBefore = $classesBeforeKeyed[$key];
 
 			$data = new ClassRemoved($fileBefore, $classBefore);
@@ -57,10 +57,10 @@ class ClassAnalyzer {
 		}
 
 		foreach ($toVerify as $key) {
-			$fileBefore = $mappingsBeforeKeyed[$key];
+			$fileBefore = $filesBeforeKeyed[$key];
 			/** @var \PhpParser\Node\Stmt\Class_ $classBefore */
 			$classBefore = $classesBeforeKeyed[$key];
-			$fileAfter = $mappingsAfterKeyed[$key];
+			$fileAfter = $filesAfterKeyed[$key];
 			/** @var \PhpParser\Node\Stmt\Class_ $classBefore */
 			$classAfter = $classesAfterKeyed[$key];
 
@@ -88,7 +88,7 @@ class ClassAnalyzer {
 		}
 
 		foreach ($added as $key) {
-			$fileAfter = $mappingsAfterKeyed[$key];
+			$fileAfter = $filesAfterKeyed[$key];
 			$classAfter = $classesAfterKeyed[$key];
 
 			$data = new ClassAdded($fileAfter, $classAfter);

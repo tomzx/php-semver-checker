@@ -27,19 +27,19 @@ class TraitAnalyzer {
 		$traitsAfter = $registryAfter->data['trait'];
 
 		$traitsBeforeKeyed = [];
-		$mappingsBeforeKeyed = [];
+		$filesBeforeKeyed = [];
 		foreach($traitsBefore as $key => $traitBefore)
 		{
 			$traitsBeforeKeyed[strtolower($traitBefore->name)] = $traitBefore;
-			$mappingsBeforeKeyed[strtolower($traitBefore->name)] = $registryBefore->mapping['trait'][$key];
+			$filesBeforeKeyed[strtolower($traitBefore->name)] = $registryBefore->mapping['trait'][$key];
 		}
 
 		$traitsAfterKeyed = [];
-		$mappingsAfterKeyed = [];
+		$filesAfterKeyed = [];
 		foreach($traitsAfter as $key => $traitAfter)
 		{
 			$traitsAfterKeyed[strtolower($traitAfter->name)] = $traitAfter;
-			$mappingsAfterKeyed[strtolower($traitAfter->name)] = $registryAfter->mapping['trait'][$key];
+			$filesAfterKeyed[strtolower($traitAfter->name)] = $registryAfter->mapping['trait'][$key];
 		}
 
 		$traitNamesBefore = array_keys($traitsBeforeKeyed);
@@ -49,7 +49,7 @@ class TraitAnalyzer {
 		$toVerify = array_intersect($traitNamesBefore, $traitNamesAfter);
 
 		foreach ($removed as $key) {
-			$fileBefore = $mappingsBeforeKeyed[$key];
+			$fileBefore = $filesBeforeKeyed[$key];
 			$traitBefore = $traitsBeforeKeyed[$key];
 
 			$data = new TraitRemoved($fileBefore, $traitBefore);
@@ -57,10 +57,10 @@ class TraitAnalyzer {
 		}
 
 		foreach ($toVerify as $key) {
-			$fileBefore = $mappingsBeforeKeyed[$key];
+			$fileBefore = $filesBeforeKeyed[$key];
 			/** @var \PhpParser\Node\Stmt\Class_ $traitBefore */
 			$traitBefore = $traitsBeforeKeyed[$key];
-			$fileAfter = $mappingsAfterKeyed[$key];
+			$fileAfter = $filesAfterKeyed[$key];
 			/** @var \PhpParser\Node\Stmt\Class_ $traitBefore */
 			$traitAfter = $traitsAfterKeyed[$key];
 
@@ -88,7 +88,7 @@ class TraitAnalyzer {
 		}
 
 		foreach ($added as $key) {
-			$fileAfter = $mappingsAfterKeyed[$key];
+			$fileAfter = $filesAfterKeyed[$key];
 			$traitAfter = $traitsAfter[$key];
 
 			$data = new TraitAdded($fileAfter, $traitAfter);
