@@ -8,9 +8,9 @@ class ClassMethodRenamedCaseOnly extends ClassMethodOperationUnary
 	 * @var array
 	 */
 	protected $code = [
-		'class' => ['V150'],
+		'class' => ['V150', 'V156', 'V157'],
 		'interface' => ['V151'],
-		'trait' => ['V152'],
+		'trait' => ['V152', 'V158', 'V159'],
 	];
 	/**
 	 * @var string

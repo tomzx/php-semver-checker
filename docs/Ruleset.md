@@ -70,7 +70,9 @@ V096 | PATCH | Class private method parameter default removed
 V097 | MAJOR | Class public method parameter default value changed
 V098 | MAJOR | Class protected method parameter default value changed
 V099 | PATCH | Class private method parameter default value changed
-V150 | PATCH | Class public/protected/private method renamed (case only)
+V150 | PATCH | Class public method renamed (case only)
+V156 | PATCH | Class protected method renamed (case only)
+V157 | PATCH | Class private method renamed (case only)
 V154 | PATCH | Class renamed (case only)
 VXXX | MAJOR | *Final class public method parameter added*
 VXXX | MAJOR | *Final class protected method parameter added*
@@ -162,7 +164,9 @@ V114 | MAJOR | Trait private method parameter default removed
 V115 | MAJOR | Trait public method parameter default value changed
 V116 | MAJOR | Trait protected method parameter default value changed
 V117 | MAJOR | Trait private method parameter default value changed
-V152 | PATCH | Trait method renamed (case only)
+V152 | PATCH | Trait public method renamed (case only)
+V158 | PATCH | Trait protected method renamed (case only)
+V159 | PATCH | Trait private method renamed (case only)
 V155 | PATCH | Trait renamed (case only)
 
 # To classify
