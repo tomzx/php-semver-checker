@@ -68,10 +68,8 @@ class TraitAnalyzer {
 			if ($traitBefore != $traitAfter) {
 
 				// Check for name case change.
-				if(
-					$traitBefore->name !== $traitAfter->name
-					&& strtolower($traitBefore->name) === strtolower($traitAfter->name)
-				) {
+				// If we entered this section then the normalized names (lowercase) were equal.
+				if($traitBefore->name !== $traitAfter->name) {
 					$report->add($this->context, new TraitRenamedCaseOnly($fileAfter, $traitAfter));
 				}
 

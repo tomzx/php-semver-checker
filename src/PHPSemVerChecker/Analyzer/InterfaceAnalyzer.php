@@ -68,6 +68,7 @@ class InterfaceAnalyzer {
 			if ($interfaceBefore != $interfaceAfter) {
 
 				// Check if the name of the interface has changed case.
+				// If we entered this section then the normalized names (lowercase) were equal.
 				if ($interfaceBefore->name !== $interfaceAfter->name) {
 					$report->add(
 						'interface',

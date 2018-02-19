@@ -93,10 +93,8 @@ class ClassMethodAnalyzer {
 			if ($methodBefore != $methodAfter) {
 
 				// Detect method renamed case only.
-				if(
-					$methodBefore->name !== $methodAfter->name
-					 && strtolower($methodBefore->name) === strtolower($methodAfter->name)
-				) {
+				// If we entered this section then the normalized names (lowercase) were equal.
+				if($methodBefore->name !== $methodAfter->name) {
 					$report->add($this->context, new ClassMethodRenamedCaseOnly($this->context, $this->fileAfter, $contextAfter, $methodAfter));
 				}
 
