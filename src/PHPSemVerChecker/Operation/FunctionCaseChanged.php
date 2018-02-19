@@ -2,7 +2,7 @@
 
 namespace PHPSemVerChecker\Operation;
 
-class FunctionRenamedCaseOnly extends FunctionOperationDelta
+class FunctionCaseChanged extends FunctionOperationDelta
 {
 	/**
 	 * @var string

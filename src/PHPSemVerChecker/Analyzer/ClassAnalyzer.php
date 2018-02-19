@@ -4,7 +4,7 @@ namespace PHPSemVerChecker\Analyzer;
 
 use PHPSemVerChecker\Operation\ClassAdded;
 use PHPSemVerChecker\Operation\ClassRemoved;
-use PHPSemVerChecker\Operation\ClassRenamedCaseOnly;
+use PHPSemVerChecker\Operation\ClassCaseChanged;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 
@@ -72,7 +72,7 @@ class ClassAnalyzer {
 				if ($classBefore->name !== $classAfter->name) {
 					$report->add(
 						$this->context,
-						new ClassRenamedCaseOnly(
+						new ClassCaseChanged(
 							$fileBefore,
 							$classBefore,
 							$fileAfter,

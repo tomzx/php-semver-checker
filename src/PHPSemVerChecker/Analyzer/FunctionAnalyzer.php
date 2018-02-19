@@ -17,7 +17,7 @@ use PHPSemVerChecker\Operation\FunctionParameterRemoved;
 use PHPSemVerChecker\Operation\FunctionParameterTypingAdded;
 use PHPSemVerChecker\Operation\FunctionParameterTypingRemoved;
 use PHPSemVerChecker\Operation\FunctionRemoved;
-use PHPSemVerChecker\Operation\FunctionRenamedCaseOnly;
+use PHPSemVerChecker\Operation\FunctionCaseChanged;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 
@@ -83,7 +83,7 @@ class FunctionAnalyzer {
 				// If we entered this section then the normalized names (lowercase) were equal.
 				if ($functionBefore->name !== $functionAfter->name) {
 					$report->addFunction(
-						new FunctionRenamedCaseOnly(
+						new FunctionCaseChanged(
 							$fileBefore,
 							$functionBefore,
 							$fileAfter,

@@ -4,7 +4,7 @@ namespace PHPSemVerChecker\Analyzer;
 
 use PHPSemVerChecker\Operation\InterfaceAdded;
 use PHPSemVerChecker\Operation\InterfaceRemoved;
-use PHPSemVerChecker\Operation\InterfaceRenamedCaseOnly;
+use PHPSemVerChecker\Operation\InterfaceCaseChanged;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 
@@ -72,7 +72,7 @@ class InterfaceAnalyzer {
 				if ($interfaceBefore->name !== $interfaceAfter->name) {
 					$report->add(
 						'interface',
-						new InterfaceRenamedCaseOnly(
+						new InterfaceCaseChanged(
 							$fileBefore,
 							$interfaceBefore,
 							$fileAfter,

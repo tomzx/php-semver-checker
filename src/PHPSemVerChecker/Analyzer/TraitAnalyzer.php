@@ -4,7 +4,7 @@ namespace PHPSemVerChecker\Analyzer;
 
 use PHPSemVerChecker\Operation\TraitAdded;
 use PHPSemVerChecker\Operation\TraitRemoved;
-use PHPSemVerChecker\Operation\TraitRenamedCaseOnly;
+use PHPSemVerChecker\Operation\TraitCaseChanged;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 
@@ -70,7 +70,7 @@ class TraitAnalyzer {
 				if ($traitBefore->name !== $traitAfter->name) {
 					$report->add(
 						$this->context,
-						new TraitRenamedCaseOnly(
+						new TraitCaseChanged(
 							$fileBefore,
 							$traitBefore,
 							$fileAfter,

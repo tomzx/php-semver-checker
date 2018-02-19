@@ -17,7 +17,7 @@ use PHPSemVerChecker\Operation\ClassMethodParameterRemoved;
 use PHPSemVerChecker\Operation\ClassMethodParameterTypingAdded;
 use PHPSemVerChecker\Operation\ClassMethodParameterTypingRemoved;
 use PHPSemVerChecker\Operation\ClassMethodRemoved;
-use PHPSemVerChecker\Operation\ClassMethodRenamedCaseOnly;
+use PHPSemVerChecker\Operation\ClassMethodCaseChanged;
 use PHPSemVerChecker\Report\Report;
 
 class ClassMethodAnalyzer {
@@ -97,7 +97,7 @@ class ClassMethodAnalyzer {
 				if ($methodBefore->name !== $methodAfter->name) {
 					$report->add(
 						$this->context,
-						new ClassMethodRenamedCaseOnly(
+						new ClassMethodCaseChanged(
 							$this->context,
 							$this->fileBefore,
 							$contextAfter,

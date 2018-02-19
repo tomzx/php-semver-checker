@@ -5,7 +5,7 @@ namespace PHPSemVerChecker\Operation;
 use PhpParser\Node\Stmt\Class_;
 use PHPSemVerChecker\Node\Statement\Class_ as PClass;
 
-class ClassRenamedCaseOnly extends ClassOperationDelta {
+class ClassCaseChanged extends ClassOperationDelta {
 	/**
 	 * @var string
 	 */
