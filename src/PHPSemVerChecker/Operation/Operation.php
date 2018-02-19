@@ -37,6 +37,9 @@ abstract class Operation {
 		return $this;
 	}
 
+	/**
+	 * @return int
+	 */
 	public function getLevel()
 	{
 		return LevelMapping::getLevelForCode($this->getCode());
@@ -66,6 +69,9 @@ abstract class Operation {
 	 */
 	public abstract function getLocation();
 
+	/**
+	 * @return int
+	 */
 	public abstract function getLine();
 
 	/**

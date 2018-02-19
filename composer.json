@@ -20,17 +20,16 @@
 		"issues": "https://github.com/tomzx/php-semver-checker/issues"
 	},
 	"require": {
-		"php": ">=5.5.0",
+		"php": ">=5.6.0",
 
-		"hassankhan/config": "^0.10",
-		"herrera-io/phar-update": "^2.0",
+		"hassankhan/config": "^0.11",
 		"nikic/php-parser": "^3.1",
-		"symfony/console": "^2.7|^3.0",
-		"symfony/yaml": "^2.7|^3.0",
+		"symfony/console": "^2.7|^3.0|^4.0",
+		"symfony/yaml": "^2.7|^3.0|^4.0",
 		"tomzx/finder": "^0.1"
 	},
 	"require-dev": {
-		"mockery/mockery": "^0.9",
+		"mockery/mockery": "^1.0",
 		"phpunit/phpunit": "^4.0|^5.0"
 	},
 	"bin": [
@@ -48,12 +47,12 @@
 	},
 	"config": {
 		"platform": {
-			"php": "5.5.9"
+			"php": "5.6.0"
 		}
 	},
 	"extra": {
 		"branch-alias": {
-			"dev-master": "0.12-dev"
+			"dev-master": "0.13-dev"
 		}
 	}
 }

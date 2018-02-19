@@ -6,6 +6,11 @@ use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\Property as BaseProperty;
 
 class Property {
+	/**
+	 * @param \PhpParser\Node\Stmt          $context
+	 * @param \PhpParser\Node\Stmt\Property $property
+	 * @return string
+	 */
 	public static function getFullyQualifiedName(Stmt $context, BaseProperty $property)
 	{
 		$namespace = $context->name;

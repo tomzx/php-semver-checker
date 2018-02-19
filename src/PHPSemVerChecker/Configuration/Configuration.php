@@ -18,6 +18,7 @@ class Configuration
 
 	/**
 	 * @param string|array $path
+	 * @throws \Noodlehaus\Exception\EmptyDirectoryException
 	 */
 	public function __construct($path)
 	{
@@ -28,6 +29,7 @@ class Configuration
 	/**
 	 * @param string|array $file
 	 * @return \PHPSemVerChecker\Configuration\Configuration
+	 * @throws \Noodlehaus\Exception\EmptyDirectoryException
 	 */
 	public static function fromFile($file)
 	{
@@ -35,7 +37,9 @@ class Configuration
 	}
 
 	/**
+	 * @param string $name
 	 * @return \PHPSemVerChecker\Configuration\Configuration
+	 * @throws \Noodlehaus\Exception\EmptyDirectoryException
 	 */
 	public static function defaults($name)
 	{

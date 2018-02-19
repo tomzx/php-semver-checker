@@ -2,10 +2,6 @@
 
 namespace PHPSemVerChecker\Operation;
 
-use PhpParser\Node\Stmt;
-use PhpParser\Node\Stmt\ClassMethod;
-use PHPSemVerChecker\Node\Statement\ClassMethod as PClassMethod;
-
 class ClassMethodRemoved extends ClassMethodOperationUnary {
 	/**
 	 * @var array

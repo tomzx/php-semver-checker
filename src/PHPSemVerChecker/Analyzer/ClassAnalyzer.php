@@ -9,8 +9,16 @@ use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 
 class ClassAnalyzer {
+	/**
+	 * @var string
+	 */
 	protected $context = 'class';
 
+	/**
+	 * @param \PHPSemVerChecker\Registry\Registry $registryBefore
+	 * @param \PHPSemVerChecker\Registry\Registry $registryAfter
+	 * @return \PHPSemVerChecker\Report\Report
+	 */
 	public function analyze(Registry $registryBefore, Registry $registryAfter)
 	{
 		$report = new Report();

@@ -3,7 +3,7 @@
     "compactors": ["Herrera\\Box\\Compactor\\Php"],
     "compression": "GZ",
     "directories": ["src"],
-    "files": ["LICENSE", "vendor/herrera-io/phar-update/res/schema.json"],
+    "files": ["LICENSE"],
     "finder": [
         {
             "name": "*.php",

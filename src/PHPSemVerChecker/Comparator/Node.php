@@ -4,6 +4,11 @@ namespace PHPSemVerChecker\Comparator;
 
 class Node
 {
+	/**
+	 * @param \PhpParser\Node $nodeA
+	 * @param \PhpParser\Node $nodeB
+	 * @return bool
+	 */
 	public static function isEqual(\PhpParser\Node $nodeA, \PhpParser\Node $nodeB)
 	{
 		if ($nodeA->getType() !== $nodeB->getType()) {

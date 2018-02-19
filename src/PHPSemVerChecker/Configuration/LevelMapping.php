@@ -6,6 +6,9 @@ use PHPSemVerChecker\SemanticVersioning\Level;
 
 class LevelMapping
 {
+	/**
+	 * @var array
+	 */
 	public static $mapping = [
 		'V001' => Level::MAJOR,
 		'V002' => Level::MAJOR,
@@ -133,11 +136,18 @@ class LevelMapping
 		'V159' => Level::PATCH,
 	];
 
+	/**
+	 * @param string $code
+	 * @return int
+	 */
 	public static function getLevelForCode($code)
 	{
 		return static::$mapping[$code];
 	}
 
+	/**
+	 * @param array $mapping
+	 */
 	public static function setOverrides(array $mapping)
 	{
 		foreach ($mapping as $code => $level) {

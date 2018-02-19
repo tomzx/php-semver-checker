@@ -152,16 +152,28 @@ class Report implements ArrayAccess, IteratorAggregate {
 	}
 
 	// TODO: Get rid of ArrayAccess (temporary to transition) <tom@tomrochette.com>
+	/**
+	 * @param string $offset
+	 * @return bool
+	 */
 	public function offsetExists($offset)
 	{
 		return isset($this->differences[$offset]);
 	}
 
+	/**
+	 * @param string $offset
+	 * @return array
+	 */
 	public function offsetGet($offset)
 	{
 		return $this->differences[$offset];
 	}
 
+	/**
+	 * @param string $offset
+	 * @param mixed $value
+	 */
 	public function offsetSet($offset, $value)
 	{
 		if ($offset === null) {
@@ -171,11 +183,17 @@ class Report implements ArrayAccess, IteratorAggregate {
 		}
 	}
 
+	/**
+	 * @param string $offset
+	 */
 	public function offsetUnset($offset)
 	{
 		unset($this->differences[$offset]);
 	}
 
+	/**
+	 * @return \ArrayIterator|\Traversable
+	 */
 	public function getIterator()
 	{
 		return new ArrayIterator($this->differences);

@@ -19,6 +19,7 @@ class BaseCommand extends Command
 	/**
 	 * @param \Symfony\Component\Console\Input\InputInterface   $input
 	 * @param \Symfony\Component\Console\Output\OutputInterface $output
+	 * @throws \Noodlehaus\Exception\EmptyDirectoryException
 	 */
 	protected function initialize(InputInterface $input, OutputInterface $output)
 	{

@@ -22,12 +22,19 @@ class Reporter {
 	 */
 	protected $fullPath = false;
 
+	/**
+	 * @param \PHPSemVerChecker\Report\Report $report
+	 */
 	public function __construct(Report $report)
 	{
 		$this->report = $report;
 		$this->cwd = getcwd();
 	}
 
+	/**
+	 * @param bool $fullPath
+	 * @return $this
+	 */
 	public function setFullPath($fullPath)
 	{
 		$this->fullPath = $fullPath;
@@ -35,6 +42,9 @@ class Reporter {
 		return $this;
 	}
 
+	/**
+	 * @param \Symfony\Component\Console\Output\OutputInterface $output
+	 */
 	public function output(OutputInterface $output)
 	{
 		$suggestedChange = $this->report->getSuggestedLevel();
@@ -54,6 +64,11 @@ class Reporter {
 		}
 	}
 
+	/**
+	 * @param \Symfony\Component\Console\Output\OutputInterface $output
+	 * @param \PHPSemVerChecker\Report\Report                   $report
+	 * @param string                                            $context
+	 */
 	protected function outputReport(OutputInterface $output, Report $report, $context)
 	{
 		if ( ! $report->hasDifferences($context)) {
@@ -84,6 +99,10 @@ class Reporter {
 		$table->render();
 	}
 
+	/**
+	 * @param \PHPSemVerChecker\Operation\Operation $operation
+	 * @return string
+	 */
 	protected function getLocation(Operation $operation)
 	{
 		$isFullPath = $this->fullPath;
