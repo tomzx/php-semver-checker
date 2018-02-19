@@ -11,5 +11,5 @@ class FunctionCaseChanged extends FunctionOperationDelta
 	/**
 	 * @var string
 	 */
-	protected $reason = 'Function renamed (case only).';
+	protected $reason = 'Function name case was changed.';
 }

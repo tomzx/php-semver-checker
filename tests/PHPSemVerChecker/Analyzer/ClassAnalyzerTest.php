@@ -63,7 +63,7 @@ class ClassAnalyzerTest extends TestCase {
 		$this->assertSame('tmp', $report[$context][$expectedLevel][0]->getTarget());
 	}
 
-	public function testClassRenamedCaseOnly()
+	public function testClassCaseChanged()
 	{
 		$before = new Registry();
 		$after = new Registry();
@@ -78,7 +78,7 @@ class ClassAnalyzerTest extends TestCase {
 		$expectedLevel = Level::PATCH;
 		Assert::assertDifference($report, $context, $expectedLevel);
 		$this->assertSame('V154', $report[$context][$expectedLevel][0]->getCode());
-		$this->assertSame('Class was renamed (case only).', $report[$context][$expectedLevel][0]->getReason());
+		$this->assertSame('Class name case was changed.', $report[$context][$expectedLevel][0]->getReason());
 		$this->assertSame('TestClass', $report[$context][$expectedLevel][0]->getTarget());
 	}
 }

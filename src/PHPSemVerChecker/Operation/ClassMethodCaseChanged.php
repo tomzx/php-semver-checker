@@ -15,5 +15,5 @@ class ClassMethodCaseChanged extends ClassMethodOperationDelta
 	/**
 	 * @var string
 	 */
-	protected $reason = 'Method has been renamed (case only).';
+	protected $reason = 'Method name case was changed.';
 }

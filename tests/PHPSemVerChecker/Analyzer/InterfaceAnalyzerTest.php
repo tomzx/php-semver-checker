@@ -81,6 +81,6 @@ class InterfaceAnalyzerTest extends TestCase {
 		$expectedLevel = Level::PATCH;
 		Assert::assertDifference($report, $context, $expectedLevel);
 		$this->assertSame('V153', $report[$context][$expectedLevel][0]->getCode());
-		$this->assertSame('Interface was renamed (case only).', $report[$context][$expectedLevel][0]->getReason());
+		$this->assertSame('Interface name case was changed.', $report[$context][$expectedLevel][0]->getReason());
 	}
 }

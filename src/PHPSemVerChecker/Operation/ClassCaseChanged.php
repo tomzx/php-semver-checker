@@ -13,7 +13,7 @@ class ClassCaseChanged extends ClassOperationDelta {
 	/**
 	 * @var string
 	 */
-	protected $reason = 'Class was renamed (case only).';
+	protected $reason = 'Class name case was changed.';
 	/**
 	 * @var string
 	 */

@@ -13,5 +13,5 @@ class TraitCaseChanged extends TraitOperationDelta {
 	/**
 	 * @var string
 	 */
-	protected $reason = 'Trait was renamed (case only).';
+	protected $reason = 'Trait name case was changed.';
 }

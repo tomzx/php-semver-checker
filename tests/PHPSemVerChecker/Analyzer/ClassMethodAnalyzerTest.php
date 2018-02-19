@@ -744,7 +744,7 @@ class ClassMethodAnalyzerTest extends TestCase
 
 		$expectedLevel = LevelMapping::getLevelForCode($code);
 		$this->assertSame($code, $report[$context][$expectedLevel][0]->getCode());
-		$this->assertSame(sprintf('[%s] Method has been renamed (case only).', $visibility), $report[$context][$expectedLevel][0]->getReason());
+		$this->assertSame(sprintf('[%s] Method name case was changed.', $visibility), $report[$context][$expectedLevel][0]->getReason());
 	}
 
 	public function providerCaseChanged()

@@ -414,7 +414,7 @@ class FunctionAnalyzerTest extends TestCase {
 		$expectedLevel = Level::PATCH;
 		Assert::assertDifference($report, 'function', $expectedLevel);
 		$this->assertSame('V160', $report['function'][$expectedLevel][0]->getCode());
-		$this->assertSame('Function renamed (case only).', $report['function'][$expectedLevel][0]->getReason());
+		$this->assertSame('Function name case was changed.', $report['function'][$expectedLevel][0]->getReason());
 		$this->assertSame('someFunctionName', $report['function'][$expectedLevel][0]->getTarget());
 	}
 }

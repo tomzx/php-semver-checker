@@ -10,5 +10,5 @@ class InterfaceCaseChanged extends InterfaceOperationDelta {
 	/**
 	 * @var string
 	 */
-	protected $reason = 'Interface was renamed (case only).';
+	protected $reason = 'Interface name case was changed.';
 }
