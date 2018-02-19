@@ -57,7 +57,6 @@ class FunctionAnalyzer {
 
 			// Leave non-strict comparison here
 			if ($functionBefore != $functionAfter) {
-
 				$signatureResult = Signature::analyze($functionBefore->getParams(), $functionAfter->getParams());
 
 				$changes = [
