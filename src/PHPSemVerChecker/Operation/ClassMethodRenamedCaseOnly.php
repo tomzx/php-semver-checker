@@ -2,7 +2,7 @@
 
 namespace PHPSemVerChecker\Operation;
 
-class ClassMethodRenamedCaseOnly extends ClassMethodOperationUnary
+class ClassMethodRenamedCaseOnly extends ClassMethodOperationDelta
 {
 	/**
 	 * @var array

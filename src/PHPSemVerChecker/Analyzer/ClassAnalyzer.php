@@ -67,12 +67,18 @@ class ClassAnalyzer {
 			// Leave non-strict comparison here
 			if ($classBefore != $classAfter) {
 
-				// Check for case change of class name
-				if(
-					$classBefore->name !== $classAfter->name
-					&& strtolower($classBefore->name) === strtolower($classAfter->name)
-				) {
-					$report->add($this->context, new ClassRenamedCaseOnly($fileAfter, $classAfter));
+				// Check for case change of class name.
+				// If we entered this section then the normalized names (lowercase) were equal.
+				if ($classBefore->name !== $classAfter->name) {
+					$report->add(
+						$this->context,
+						new ClassRenamedCaseOnly(
+							$fileBefore,
+							$classBefore,
+							$fileAfter,
+							$classAfter
+						)
+					);
 				}
 
 				$analyzers = [

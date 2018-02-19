@@ -94,8 +94,19 @@ class ClassMethodAnalyzer {
 
 				// Detect method renamed case only.
 				// If we entered this section then the normalized names (lowercase) were equal.
-				if($methodBefore->name !== $methodAfter->name) {
-					$report->add($this->context, new ClassMethodRenamedCaseOnly($this->context, $this->fileAfter, $contextAfter, $methodAfter));
+				if ($methodBefore->name !== $methodAfter->name) {
+					$report->add(
+						$this->context,
+						new ClassMethodRenamedCaseOnly(
+							$this->context,
+							$this->fileBefore,
+							$contextAfter,
+							$methodBefore,
+							$this->fileAfter,
+							$contextAfter,
+							$methodAfter
+						)
+					);
 				}
 
 				$signatureResult = Signature::analyze($methodBefore->getParams(), $methodAfter->getParams());
