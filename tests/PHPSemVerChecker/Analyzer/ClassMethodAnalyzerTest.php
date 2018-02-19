@@ -697,55 +697,55 @@ class ClassMethodAnalyzerTest extends TestCase
 		$this->assertSame('tmp::tmpMethod', $report[$context][$expectedLevel][0]->getTarget());
 	}
 
-    public function providerImplementationChanged()
-    {
-        return [
-            ['class', 'public', 'V023'],
-            ['class', 'protected', 'V024'],
-            ['class', 'private', 'V025'],
-            ['trait', 'public', 'V052'],
-            ['trait', 'protected', 'V053'],
-            ['trait', 'private', 'V054'],
-        ];
-    }
+	public function providerImplementationChanged()
+	{
+		return [
+			['class', 'public', 'V023'],
+			['class', 'protected', 'V024'],
+			['class', 'private', 'V025'],
+			['trait', 'public', 'V052'],
+			['trait', 'protected', 'V053'],
+			['trait', 'private', 'V054'],
+		];
+	}
 
 	/**
 	 * @dataProvider providerCaseChanged
 	 */
-    public function testClassMethodCaseChangeChanged($context, $visibility, $code)
-    {
-        $constructor = $this->getConstructorForContext($context);
-        $classBefore = new $constructor('tmp', [
-            'stmts' => [
-                new ClassMethod('tmpMethod', [
-                    'type'   => Visibility::getModifier($visibility),
-                    'stmts' => [
-                        new MethodCall(new Variable('test'), 'someMethod'),
-                    ],
-                ]),
-            ],
-        ]);
+	public function testClassMethodCaseChangeChanged($context, $visibility, $code)
+	{
+		$constructor = $this->getConstructorForContext($context);
+		$classBefore = new $constructor('tmp', [
+			'stmts' => [
+				new ClassMethod('tmpMethod', [
+					'type'   => Visibility::getModifier($visibility),
+					'stmts' => [
+						new MethodCall(new Variable('test'), 'someMethod'),
+					],
+				]),
+			],
+		]);
 
-        $classAfter = new $constructor('tmp', [
-            'stmts' => [
-                new ClassMethod('tmpmethod', [
-                    'type'   => Visibility::getModifier($visibility),
-                    'stmts' => [
-                        new MethodCall(new Variable('test'), 'someMethod'),
-                    ],
-                ]),
-            ],
-        ]);
+		$classAfter = new $constructor('tmp', [
+			'stmts' => [
+				new ClassMethod('tmpmethod', [
+					'type'   => Visibility::getModifier($visibility),
+					'stmts' => [
+						new MethodCall(new Variable('test'), 'someMethod'),
+					],
+				]),
+			],
+		]);
 
-        $analyzer = new ClassMethodAnalyzer($context);
-        $report = $analyzer->analyze($classBefore, $classAfter);
+		$analyzer = new ClassMethodAnalyzer($context);
+		$report = $analyzer->analyze($classBefore, $classAfter);
 
-        Assert::assertDifference($report, $context, Level::PATCH);
+		Assert::assertDifference($report, $context, Level::PATCH);
 
 		$expectedLevel = LevelMapping::getLevelForCode($code);
-        $this->assertSame($code, $report[$context][$expectedLevel][0]->getCode());
+		$this->assertSame($code, $report[$context][$expectedLevel][0]->getCode());
 		$this->assertSame(sprintf('[%s] Method has been renamed (case only).', $visibility), $report[$context][$expectedLevel][0]->getReason());
-    }
+	}
 
 	public function providerCaseChanged()
 	{
