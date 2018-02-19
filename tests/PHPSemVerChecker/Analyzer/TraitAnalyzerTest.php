@@ -63,7 +63,7 @@ class TraitAnalyzerTest extends TestCase {
 		$this->assertSame('tmp', $report[$context][$expectedLevel][0]->getTarget());
 	}
 
-	public function testTraitRenamedCaseOnly()
+	public function testTraitCaseChanged()
 	{
 		$before = new Registry();
 		$after = new Registry();

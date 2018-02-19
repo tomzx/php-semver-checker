@@ -63,7 +63,7 @@ class InterfaceAnalyzerTest extends TestCase {
 		$this->assertSame('tmp', $report[$context][$expectedLevel][0]->getTarget());
 	}
 
-	public function testInterfaceRenamedCaseOnly()
+	public function testInterfaceCaseChanged()
 	{
 		$before = new Registry();
 		$after = new Registry();
