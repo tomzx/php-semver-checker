@@ -5,7 +5,8 @@ namespace PHPSemVerChecker\Visitor;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Function_;
 
-class FunctionVisitor extends VisitorAbstract {
+class FunctionVisitor extends VisitorAbstract
+{
 	/**
 	 * @param \PhpParser\Node $node
 	 */

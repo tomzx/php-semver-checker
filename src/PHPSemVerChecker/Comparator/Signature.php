@@ -2,7 +2,8 @@
 
 namespace PHPSemVerChecker\Comparator;
 
-class Signature {
+class Signature
+{
 	/**
 	 * @param array $parametersA
 	 * @param array $parametersB
@@ -11,13 +12,13 @@ class Signature {
 	public static function analyze(array $parametersA, array $parametersB)
 	{
 		$changes = [
-			'parameter_added' => false,
-			'parameter_removed' => false,
-			'parameter_renamed' => false,
-			'parameter_typing_added' => false,
-			'parameter_typing_removed' => false,
-			'parameter_default_added' => false,
-			'parameter_default_removed' => false,
+			'parameter_added'                 => false,
+			'parameter_removed'               => false,
+			'parameter_renamed'               => false,
+			'parameter_typing_added'          => false,
+			'parameter_typing_removed'        => false,
+			'parameter_default_added'         => false,
+			'parameter_default_removed'       => false,
 			'parameter_default_value_changed' => false,
 		];
 		$lengthA = count($parametersA);
@@ -39,8 +40,8 @@ class Signature {
 
 			// Type checking
 			if (Type::get($parametersA[$i]->type) !== Type::get($parametersB[$i]->type)) {
-//				if ($paramsA[$i]->default !== null && $paramsB[$i]->default !== null) {
-//					$changes['parameter_default_value_changed'] = true;
+				//if ($paramsA[$i]->default !== null && $paramsB[$i]->default !== null) {
+				//	$changes['parameter_default_value_changed'] = true;
 				if ($parametersA[$i]->type !== null) {
 					$changes['parameter_typing_removed'] = true;
 				}
@@ -56,7 +57,7 @@ class Signature {
 				$changes['parameter_default_removed'] = true;
 			} elseif ($parametersA[$i]->default === null && $parametersB[$i]->default !== null) {
 				$changes['parameter_default_added'] = true;
-			// TODO(tom@tomrochette.com): Not all nodes have a value property
+				// TODO(tom@tomrochette.com): Not all nodes have a value property
 			} elseif ( ! Node::isEqual($parametersA[$i]->default, $parametersB[$i]->default)) {
 				$changes['parameter_default_value_changed'] = true;
 			}

@@ -708,4 +708,54 @@ class ClassMethodAnalyzerTest extends TestCase
 			['trait', 'private', 'V054'],
 		];
 	}
+
+	/**
+	 * @dataProvider providerCaseChanged
+	 */
+	public function testClassMethodCaseChanged($context, $visibility, $code)
+	{
+		$constructor = $this->getConstructorForContext($context);
+		$classBefore = new $constructor('tmp', [
+			'stmts' => [
+				new ClassMethod('tmpMethod', [
+					'type'   => Visibility::getModifier($visibility),
+					'stmts' => [
+						new MethodCall(new Variable('test'), 'someMethod'),
+					],
+				]),
+			],
+		]);
+
+		$classAfter = new $constructor('tmp', [
+			'stmts' => [
+				new ClassMethod('tmpmethod', [
+					'type'   => Visibility::getModifier($visibility),
+					'stmts' => [
+						new MethodCall(new Variable('test'), 'someMethod'),
+					],
+				]),
+			],
+		]);
+
+		$analyzer = new ClassMethodAnalyzer($context);
+		$report = $analyzer->analyze($classBefore, $classAfter);
+
+		Assert::assertDifference($report, $context, Level::PATCH);
+
+		$expectedLevel = LevelMapping::getLevelForCode($code);
+		$this->assertSame($code, $report[$context][$expectedLevel][0]->getCode());
+		$this->assertSame(sprintf('[%s] Method name case was changed.', $visibility), $report[$context][$expectedLevel][0]->getReason());
+	}
+
+	public function providerCaseChanged()
+	{
+		return [
+			['class', 'public', 'V150'],
+			['class', 'protected', 'V156'],
+			['class', 'private', 'V157'],
+			['trait', 'public', 'V152'],
+			['trait', 'protected', 'V158'],
+			['trait', 'private', 'V159'],
+		];
+	}
 }

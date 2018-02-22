@@ -4,7 +4,8 @@ namespace PHPSemVerChecker\Node\Statement;
 
 use PhpParser\Node\Stmt\Class_ as BaseClass;
 
-class Class_ {
+class Class_
+{
 	/**
 	 * @param \PhpParser\Node\Stmt\Class_ $class
 	 * @return null|string

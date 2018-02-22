@@ -8,7 +8,8 @@ use PHPSemVerChecker\Operation\PropertyAdded;
 use PHPSemVerChecker\Operation\PropertyRemoved;
 use PHPSemVerChecker\Report\Report;
 
-class PropertyAnalyzer {
+class PropertyAnalyzer
+{
 	/**
 	 * @var string
 	 */

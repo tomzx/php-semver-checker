@@ -2,7 +2,8 @@
 
 namespace PHPSemVerChecker\Operation;
 
-class ClassRemoved extends ClassOperationUnary {
+class ClassRemoved extends ClassOperationUnary
+{
 	/**
 	 * @var string
 	 */

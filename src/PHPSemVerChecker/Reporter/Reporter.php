@@ -8,7 +8,8 @@ use PHPSemVerChecker\SemanticVersioning\Level;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class Reporter {
+class Reporter
+{
 	/**
 	 * @var \PHPSemVerChecker\Report\Report
 	 */

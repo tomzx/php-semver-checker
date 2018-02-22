@@ -62,4 +62,25 @@ class InterfaceAnalyzerTest extends TestCase {
 		$this->assertSame('Interface was added.', $report[$context][$expectedLevel][0]->getReason());
 		$this->assertSame('tmp', $report[$context][$expectedLevel][0]->getTarget());
 	}
+
+	public function testInterfaceCaseChanged()
+	{
+		$before = new Registry();
+		$after = new Registry();
+
+		$interfaceBefore = new Interface_('TestInterface');
+		$before->addInterface($interfaceBefore);
+
+		$interfaceAfter = new Interface_('testinterface');
+		$after->addInterface($interfaceAfter);
+
+		$analyzer = new InterfaceAnalyzer();
+		$report = $analyzer->analyze($before, $after);
+
+		$context = 'interface';
+		$expectedLevel = Level::PATCH;
+		Assert::assertDifference($report, $context, $expectedLevel);
+		$this->assertSame('V153', $report[$context][$expectedLevel][0]->getCode());
+		$this->assertSame('Interface name case was changed.', $report[$context][$expectedLevel][0]->getReason());
+	}
 }

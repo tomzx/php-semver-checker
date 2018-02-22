@@ -6,6 +6,7 @@ use PhpParser\Node\Stmt;
 use PHPSemVerChecker\Comparator\Implementation;
 use PHPSemVerChecker\Comparator\Signature;
 use PHPSemVerChecker\Operation\ClassMethodAdded;
+use PHPSemVerChecker\Operation\ClassMethodCaseChanged;
 use PHPSemVerChecker\Operation\ClassMethodImplementationChanged;
 use PHPSemVerChecker\Operation\ClassMethodOperationUnary;
 use PHPSemVerChecker\Operation\ClassMethodParameterAdded;
@@ -19,7 +20,8 @@ use PHPSemVerChecker\Operation\ClassMethodParameterTypingRemoved;
 use PHPSemVerChecker\Operation\ClassMethodRemoved;
 use PHPSemVerChecker\Report\Report;
 
-class ClassMethodAnalyzer {
+class ClassMethodAnalyzer
+{
 	/**
 	 * @var string
 	 */
@@ -59,12 +61,12 @@ class ClassMethodAnalyzer {
 
 		$methodsBeforeKeyed = [];
 		foreach ($methodsBefore as $method) {
-			$methodsBeforeKeyed[$method->name] = $method;
+			$methodsBeforeKeyed[strtolower($method->name)] = $method;
 		}
 
 		$methodsAfterKeyed = [];
 		foreach ($methodsAfter as $method) {
-			$methodsAfterKeyed[$method->name] = $method;
+			$methodsAfterKeyed[strtolower($method->name)] = $method;
 		}
 
 		$methodNamesBefore = array_keys($methodsBeforeKeyed);
@@ -84,25 +86,39 @@ class ClassMethodAnalyzer {
 
 		foreach ($methodsToVerify as $method) {
 			/** @var \PhpParser\Node\Stmt\ClassMethod $methodBefore */
-			$methodBefore = $methodsBeforeKeyed[$method];
+			$methodBefore = $methodsBeforeKeyed[strtolower($method)];
 			/** @var \PhpParser\Node\Stmt\ClassMethod $methodAfter */
-			$methodAfter = $methodsAfterKeyed[$method];
+			$methodAfter = $methodsAfterKeyed[strtolower($method)];
 
 			// Leave non-strict comparison here
 			if ($methodBefore != $methodAfter) {
-				$paramsBefore = $methodBefore->params;
-				$paramsAfter = $methodAfter->params;
+				// Detect method case changed.
+				// If we entered this section then the normalized names (lowercase) were equal.
+				if ($methodBefore->name !== $methodAfter->name) {
+					$report->add(
+						$this->context,
+						new ClassMethodCaseChanged(
+							$this->context,
+							$this->fileBefore,
+							$contextAfter,
+							$methodBefore,
+							$this->fileAfter,
+							$contextAfter,
+							$methodAfter
+						)
+					);
+				}
 
-				$signatureResult = Signature::analyze($paramsBefore, $paramsAfter);
+				$signatureResult = Signature::analyze($methodBefore->getParams(), $methodAfter->getParams());
 
 				$changes = [
-					'parameter_added' => ClassMethodParameterAdded::class,
-					'parameter_removed' => ClassMethodParameterRemoved::class,
-					'parameter_renamed' => ClassMethodParameterNameChanged::class,
-					'parameter_typing_added' => ClassMethodParameterTypingAdded::class,
-					'parameter_typing_removed' => ClassMethodParameterTypingRemoved::class,
-					'parameter_default_added' => ClassMethodParameterDefaultAdded::class,
-					'parameter_default_removed' => ClassMethodParameterDefaultRemoved::class,
+					'parameter_added'                 => ClassMethodParameterAdded::class,
+					'parameter_removed'               => ClassMethodParameterRemoved::class,
+					'parameter_renamed'               => ClassMethodParameterNameChanged::class,
+					'parameter_typing_added'          => ClassMethodParameterTypingAdded::class,
+					'parameter_typing_removed'        => ClassMethodParameterTypingRemoved::class,
+					'parameter_default_added'         => ClassMethodParameterDefaultAdded::class,
+					'parameter_default_removed'       => ClassMethodParameterDefaultRemoved::class,
 					'parameter_default_value_changed' => ClassMethodParameterDefaultValueChanged::class,
 				];
 
@@ -113,7 +129,15 @@ class ClassMethodAnalyzer {
 					if (is_a($class, ClassMethodOperationUnary::class, true)) {
 						$data = new $class($this->context, $this->fileAfter, $contextAfter, $methodAfter);
 					} else {
-						$data = new $class($this->context, $this->fileBefore, $contextBefore, $methodBefore, $this->fileAfter, $contextAfter, $methodAfter);
+						$data = new $class(
+							$this->context,
+							$this->fileBefore,
+							$contextBefore,
+							$methodBefore,
+							$this->fileAfter,
+							$contextAfter,
+							$methodAfter
+						);
 					}
 					$report->add($this->context, $data);
 				}
@@ -121,7 +145,15 @@ class ClassMethodAnalyzer {
 				// Difference in source code
 				// Cast to array because interfaces do not have stmts (= null)
 				if ( ! Implementation::isSame((array)$methodBefore->stmts, (array)$methodAfter->stmts)) {
-					$data = new ClassMethodImplementationChanged($this->context, $this->fileBefore, $contextBefore, $methodBefore, $this->fileAfter, $contextAfter, $methodAfter);
+					$data = new ClassMethodImplementationChanged(
+						$this->context,
+						$this->fileBefore,
+						$contextBefore,
+						$methodBefore,
+						$this->fileAfter,
+						$contextAfter,
+						$methodAfter
+					);
 					$report->add($this->context, $data);
 				}
 			}
@@ -129,7 +161,7 @@ class ClassMethodAnalyzer {
 
 		// Added methods implies MINOR BUMP
 		foreach ($methodsAdded as $method) {
-			$methodAfter = $methodsAfterKeyed[$method];
+			$methodAfter = $methodsAfterKeyed[strtolower($method)];
 			$data = new ClassMethodAdded($this->context, $this->fileAfter, $contextAfter, $methodAfter);
 			$report->add($this->context, $data);
 		}

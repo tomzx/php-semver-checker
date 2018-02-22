@@ -62,4 +62,23 @@ class TraitAnalyzerTest extends TestCase {
 		$this->assertSame('Trait was added.', $report[$context][$expectedLevel][0]->getReason());
 		$this->assertSame('tmp', $report[$context][$expectedLevel][0]->getTarget());
 	}
+
+	public function testTraitCaseChanged()
+	{
+		$before = new Registry();
+		$after = new Registry();
+
+		$before->addTrait(new Trait_('testTRAIT'));
+		$after->addTrait(new Trait_('testtrait'));
+
+		$analyzer = new TraitAnalyzer();
+		$report = $analyzer->analyze($before, $after);
+
+		$context = 'trait';
+		$expectedLevel = Level::PATCH;
+		Assert::assertDifference($report, $context, $expectedLevel);
+		$this->assertSame('V155', $report[$context][$expectedLevel][0]->getCode());
+		$this->assertSame('Trait name case was changed.', $report[$context][$expectedLevel][0]->getReason());
+		$this->assertSame('testtrait', $report[$context][$expectedLevel][0]->getTarget());
+	}
 }

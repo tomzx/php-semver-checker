@@ -4,7 +4,8 @@ namespace PHPSemVerChecker\Operation;
 
 use PHPSemVerChecker\Configuration\LevelMapping;
 
-abstract class Operation {
+abstract class Operation
+{
 	/**
 	 * @var string
 	 */

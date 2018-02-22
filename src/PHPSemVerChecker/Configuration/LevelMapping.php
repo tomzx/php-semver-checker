@@ -124,6 +124,17 @@ class LevelMapping
 		'V115' => Level::MAJOR,
 		'V116' => Level::MAJOR,
 		'V117' => Level::MAJOR,
+		'V150' => Level::PATCH,
+		'V151' => Level::PATCH,
+		'V152' => Level::PATCH,
+		'V153' => Level::PATCH,
+		'V154' => Level::PATCH,
+		'V155' => Level::PATCH,
+		'V156' => Level::PATCH,
+		'V157' => Level::PATCH,
+		'V158' => Level::PATCH,
+		'V159' => Level::PATCH,
+		'V160' => Level::PATCH,
 	];
 
 	/**

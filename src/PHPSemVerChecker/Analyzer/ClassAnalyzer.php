@@ -3,11 +3,13 @@
 namespace PHPSemVerChecker\Analyzer;
 
 use PHPSemVerChecker\Operation\ClassAdded;
+use PHPSemVerChecker\Operation\ClassCaseChanged;
 use PHPSemVerChecker\Operation\ClassRemoved;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 
-class ClassAnalyzer {
+class ClassAnalyzer
+{
 	/**
 	 * @var string
 	 */
@@ -22,30 +24,61 @@ class ClassAnalyzer {
 	{
 		$report = new Report();
 
-		$keysBefore = array_keys($registryBefore->data['class']);
-		$keysAfter = array_keys($registryAfter->data['class']);
-		$added = array_diff($keysAfter, $keysBefore);
-		$removed = array_diff($keysBefore, $keysAfter);
-		$toVerify = array_intersect($keysBefore, $keysAfter);
+		$classesBefore = $registryBefore->data['class'];
+		$classesAfter = $registryAfter->data['class'];
+
+		$classesBeforeKeyed = [];
+		$filesBeforeKeyed = [];
+		foreach ($classesBefore as $key => $classBefore) {
+			$classesBeforeKeyed[strtolower($classBefore->name)] = $classBefore;
+			$filesBeforeKeyed[strtolower($classBefore->name)] = $registryBefore->mapping['class'][$key];
+		}
+
+		$classesAfterKeyed = [];
+		$filesAfterKeyed = [];
+		foreach ($classesAfter as $key => $classAfter) {
+			$classesAfterKeyed[strtolower($classAfter->name)] = $classAfter;
+			$filesAfterKeyed[strtolower($classAfter->name)] = $registryAfter->mapping['class'][$key];
+		}
+
+		$classNamesBefore = array_keys($classesBeforeKeyed);
+		$classNamesAfter = array_keys($classesAfterKeyed);
+		$added = array_diff($classNamesAfter, $classNamesBefore);
+		$removed = array_diff($classNamesBefore, $classNamesAfter);
+		$toVerify = array_intersect($classNamesBefore, $classNamesAfter);
 
 		foreach ($removed as $key) {
-			$fileBefore = $registryBefore->mapping['class'][$key];
-			$classBefore = $registryBefore->data['class'][$key];
+			$fileBefore = $filesBeforeKeyed[$key];
+			$classBefore = $classesBeforeKeyed[$key];
 
 			$data = new ClassRemoved($fileBefore, $classBefore);
 			$report->addClass($data);
 		}
 
 		foreach ($toVerify as $key) {
-			$fileBefore = $registryBefore->mapping['class'][$key];
+			$fileBefore = $filesBeforeKeyed[$key];
 			/** @var \PhpParser\Node\Stmt\Class_ $classBefore */
-			$classBefore = $registryBefore->data['class'][$key];
-			$fileAfter = $registryAfter->mapping['class'][$key];
+			$classBefore = $classesBeforeKeyed[$key];
+			$fileAfter = $filesAfterKeyed[$key];
 			/** @var \PhpParser\Node\Stmt\Class_ $classBefore */
-			$classAfter = $registryAfter->data['class'][$key];
+			$classAfter = $classesAfterKeyed[$key];
 
 			// Leave non-strict comparison here
 			if ($classBefore != $classAfter) {
+				// Check for case change of class name.
+				// If we entered this section then the normalized names (lowercase) were equal.
+				if ($classBefore->name !== $classAfter->name) {
+					$report->add(
+						$this->context,
+						new ClassCaseChanged(
+							$fileBefore,
+							$classBefore,
+							$fileAfter,
+							$classAfter
+						)
+					);
+				}
+
 				$analyzers = [
 					new ClassMethodAnalyzer('class', $fileBefore, $fileAfter),
 					new PropertyAnalyzer('class', $fileBefore, $fileAfter),
@@ -59,8 +92,8 @@ class ClassAnalyzer {
 		}
 
 		foreach ($added as $key) {
-			$fileAfter = $registryAfter->mapping['class'][$key];
-			$classAfter = $registryAfter->data['class'][$key];
+			$fileAfter = $filesAfterKeyed[$key];
+			$classAfter = $classesAfterKeyed[$key];
 
 			$data = new ClassAdded($fileAfter, $classAfter);
 			$report->addClass($data);

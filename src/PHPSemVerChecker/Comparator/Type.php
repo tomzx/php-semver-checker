@@ -2,7 +2,8 @@
 
 namespace PHPSemVerChecker\Comparator;
 
-class Type {
+class Type
+{
 	/**
 	 * @param \PhpParser\Node\Name|string|null $typeA
 	 * @param \PhpParser\Node\Name|string|null $typeB

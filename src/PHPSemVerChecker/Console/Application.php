@@ -5,7 +5,8 @@ namespace PHPSemVerChecker\Console;
 use PHPSemVerChecker\Console\Command\CompareCommand;
 use Symfony\Component\Console\Application as SymfonyApplication;
 
-class Application extends SymfonyApplication {
+class Application extends SymfonyApplication
+{
 
 	const VERSION = '@package_version@';
 

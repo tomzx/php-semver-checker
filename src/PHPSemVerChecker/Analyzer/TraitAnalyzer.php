@@ -3,11 +3,13 @@
 namespace PHPSemVerChecker\Analyzer;
 
 use PHPSemVerChecker\Operation\TraitAdded;
+use PHPSemVerChecker\Operation\TraitCaseChanged;
 use PHPSemVerChecker\Operation\TraitRemoved;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 
-class TraitAnalyzer {
+class TraitAnalyzer
+{
 	/**
 	 * @var string
 	 */
@@ -22,30 +24,59 @@ class TraitAnalyzer {
 	{
 		$report = new Report();
 
-		$keysBefore = array_keys($registryBefore->data['trait']);
-		$keysAfter = array_keys($registryAfter->data['trait']);
-		$added = array_diff($keysAfter, $keysBefore);
-		$removed = array_diff($keysBefore, $keysAfter);
-		$toVerify = array_intersect($keysBefore, $keysAfter);
+		$traitsBefore = $registryBefore->data['trait'];
+		$traitsAfter = $registryAfter->data['trait'];
+
+		$traitsBeforeKeyed = [];
+		$filesBeforeKeyed = [];
+		foreach ($traitsBefore as $key => $traitBefore) {
+			$traitsBeforeKeyed[strtolower($traitBefore->name)] = $traitBefore;
+			$filesBeforeKeyed[strtolower($traitBefore->name)] = $registryBefore->mapping['trait'][$key];
+		}
+
+		$traitsAfterKeyed = [];
+		$filesAfterKeyed = [];
+		foreach ($traitsAfter as $key => $traitAfter) {
+			$traitsAfterKeyed[strtolower($traitAfter->name)] = $traitAfter;
+			$filesAfterKeyed[strtolower($traitAfter->name)] = $registryAfter->mapping['trait'][$key];
+		}
+
+		$traitNamesBefore = array_keys($traitsBeforeKeyed);
+		$traitNamesAfter = array_keys($traitsAfterKeyed);
+		$added = array_diff($traitNamesAfter, $traitNamesBefore);
+		$removed = array_diff($traitNamesBefore, $traitNamesAfter);
+		$toVerify = array_intersect($traitNamesBefore, $traitNamesAfter);
 
 		foreach ($removed as $key) {
-			$fileBefore = $registryBefore->mapping['trait'][$key];
-			$traitBefore = $registryBefore->data['trait'][$key];
+			$fileBefore = $filesBeforeKeyed[$key];
+			$traitBefore = $traitsBeforeKeyed[$key];
 
 			$data = new TraitRemoved($fileBefore, $traitBefore);
 			$report->addTrait($data);
 		}
 
 		foreach ($toVerify as $key) {
-			$fileBefore = $registryBefore->mapping['trait'][$key];
-			/** @var \PhpParser\Node\Stmt\Class_ $traitBefore */
-			$traitBefore = $registryBefore->data['trait'][$key];
-			$fileAfter = $registryAfter->mapping['trait'][$key];
-			/** @var \PhpParser\Node\Stmt\Class_ $traitBefore */
-			$traitAfter = $registryAfter->data['trait'][$key];
+			$fileBefore = $filesBeforeKeyed[$key];
+			$traitBefore = $traitsBeforeKeyed[$key];
+			$fileAfter = $filesAfterKeyed[$key];
+			$traitAfter = $traitsAfterKeyed[$key];
 
 			// Leave non-strict comparison here
 			if ($traitBefore != $traitAfter) {
+				// Check for name case change.
+				// If we entered this section then the normalized names (lowercase) were equal.
+				if ($traitBefore->name !== $traitAfter->name) {
+					$report->add(
+						$this->context,
+						new TraitCaseChanged(
+							$fileBefore,
+							$traitBefore,
+							$fileAfter,
+							$traitAfter
+						)
+					);
+				}
+
 				$analyzers = [
 					new ClassMethodAnalyzer('trait', $fileBefore, $fileAfter),
 					new PropertyAnalyzer('trait', $fileBefore, $fileAfter),
@@ -59,8 +90,8 @@ class TraitAnalyzer {
 		}
 
 		foreach ($added as $key) {
-			$fileAfter = $registryAfter->mapping['trait'][$key];
-			$traitAfter = $registryAfter->data['trait'][$key];
+			$fileAfter = $filesAfterKeyed[$key];
+			$traitAfter = $traitsAfter[$key];
 
 			$data = new TraitAdded($fileAfter, $traitAfter);
 			$report->addTrait($data);

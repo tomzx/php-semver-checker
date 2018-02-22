@@ -5,7 +5,8 @@ namespace PHPSemVerChecker\Operation;
 use PhpParser\Node\Stmt\Interface_;
 use PHPSemVerChecker\Node\Statement\Interface_ as PInterface;
 
-class InterfaceOperationUnary extends Operation {
+class InterfaceOperationUnary extends Operation
+{
 	/**
 	 * @var string
 	 */

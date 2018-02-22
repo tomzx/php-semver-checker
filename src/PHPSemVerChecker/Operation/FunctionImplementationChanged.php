@@ -2,7 +2,8 @@
 
 namespace PHPSemVerChecker\Operation;
 
-class FunctionImplementationChanged extends FunctionOperationDelta {
+class FunctionImplementationChanged extends FunctionOperationDelta
+{
 	/**
 	 * @var string
 	 */

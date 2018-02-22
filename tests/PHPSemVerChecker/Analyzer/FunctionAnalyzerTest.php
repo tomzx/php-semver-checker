@@ -390,4 +390,31 @@ class FunctionAnalyzerTest extends TestCase {
 		$this->assertSame('Function implementation changed.', $report['function'][$expectedLevel][0]->getReason());
 		$this->assertSame('tmp', $report['function'][$expectedLevel][0]->getTarget());
 	}
+
+	public function testFunctionCaseChanged()
+	{
+		$before = new Registry();
+		$after = new Registry();
+
+		$before->addFunction(new Function_('somefunctionname', [
+			'stmts' => [
+				new FuncCall('someFunctionCall'),
+			],
+		]));
+
+		$after->addFunction(new Function_('someFunctionName', [
+			'stmts' => [
+				new FuncCall('someFunctionCall'),
+			],
+		]));
+
+		$analyzer = new FunctionAnalyzer();
+		$report = $analyzer->analyze($before, $after);
+
+		$expectedLevel = Level::PATCH;
+		Assert::assertDifference($report, 'function', $expectedLevel);
+		$this->assertSame('V160', $report['function'][$expectedLevel][0]->getCode());
+		$this->assertSame('Function name case was changed.', $report['function'][$expectedLevel][0]->getReason());
+		$this->assertSame('someFunctionName', $report['function'][$expectedLevel][0]->getTarget());
+	}
 }
