@@ -3,12 +3,13 @@
 namespace PHPSemVerChecker\Analyzer;
 
 use PHPSemVerChecker\Operation\TraitAdded;
-use PHPSemVerChecker\Operation\TraitRemoved;
 use PHPSemVerChecker\Operation\TraitCaseChanged;
+use PHPSemVerChecker\Operation\TraitRemoved;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 
-class TraitAnalyzer {
+class TraitAnalyzer
+{
 	/**
 	 * @var string
 	 */
@@ -28,16 +29,14 @@ class TraitAnalyzer {
 
 		$traitsBeforeKeyed = [];
 		$filesBeforeKeyed = [];
-		foreach($traitsBefore as $key => $traitBefore)
-		{
+		foreach ($traitsBefore as $key => $traitBefore) {
 			$traitsBeforeKeyed[strtolower($traitBefore->name)] = $traitBefore;
 			$filesBeforeKeyed[strtolower($traitBefore->name)] = $registryBefore->mapping['trait'][$key];
 		}
 
 		$traitsAfterKeyed = [];
 		$filesAfterKeyed = [];
-		foreach($traitsAfter as $key => $traitAfter)
-		{
+		foreach ($traitsAfter as $key => $traitAfter) {
 			$traitsAfterKeyed[strtolower($traitAfter->name)] = $traitAfter;
 			$filesAfterKeyed[strtolower($traitAfter->name)] = $registryAfter->mapping['trait'][$key];
 		}
@@ -64,7 +63,6 @@ class TraitAnalyzer {
 
 			// Leave non-strict comparison here
 			if ($traitBefore != $traitAfter) {
-
 				// Check for name case change.
 				// If we entered this section then the normalized names (lowercase) were equal.
 				if ($traitBefore->name !== $traitAfter->name) {

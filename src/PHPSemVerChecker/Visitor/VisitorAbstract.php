@@ -5,7 +5,8 @@ namespace PHPSemVerChecker\Visitor;
 use PhpParser\NodeVisitorAbstract;
 use PHPSemVerChecker\Registry\Registry;
 
-class VisitorAbstract extends NodeVisitorAbstract {
+class VisitorAbstract extends NodeVisitorAbstract
+{
 	/**
 	 * @var \PHPSemVerChecker\Registry\Registry
 	 */

@@ -8,8 +8,8 @@ class Finder
 {
 	/**
 	 * @param string $path
-	 * @param array $includes
-	 * @param array $excludes
+	 * @param array  $includes
+	 * @param array  $excludes
 	 * @return array
 	 */
 	public function find($path, array $includes, array $excludes = [])
@@ -47,13 +47,13 @@ class Finder
 		if ($includes === '*') {
 			$includes = [];
 		} else {
-			$includes = preg_split('@(?:\s*,\s*|^\s*|\s*$)@', $includes, NULL, PREG_SPLIT_NO_EMPTY);
+			$includes = preg_split('@(?:\s*,\s*|^\s*|\s*$)@', $includes, null, PREG_SPLIT_NO_EMPTY);
 		}
 
 		if ($excludes === '*') {
 			$excludes = [];
 		} else {
-			$excludes = preg_split('@(?:\s*,\s*|^\s*|\s*$)@', $excludes, NULL, PREG_SPLIT_NO_EMPTY);
+			$excludes = preg_split('@(?:\s*,\s*|^\s*|\s*$)@', $excludes, null, PREG_SPLIT_NO_EMPTY);
 		}
 
 		return $this->find($path, $includes, $excludes);

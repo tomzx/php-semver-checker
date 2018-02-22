@@ -2,7 +2,8 @@
 
 namespace PHPSemVerChecker\Operation;
 
-class InterfaceCaseChanged extends InterfaceOperationDelta {
+class InterfaceCaseChanged extends InterfaceOperationDelta
+{
 	/**
 	 * @var string
 	 */

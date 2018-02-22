@@ -5,7 +5,8 @@ namespace PHPSemVerChecker\Node\Statement;
 use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\ClassMethod as BaseClassMethod;
 
-class ClassMethod {
+class ClassMethod
+{
 	/**
 	 * @param \PhpParser\Node\Stmt             $context
 	 * @param \PhpParser\Node\Stmt\ClassMethod $classMethod

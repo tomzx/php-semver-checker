@@ -2,7 +2,8 @@
 
 namespace PHPSemVerChecker\Operation;
 
-class PropertyAdded extends PropertyOperationUnary {
+class PropertyAdded extends PropertyOperationUnary
+{
 	/**
 	 * @var array
 	 */

@@ -5,6 +5,7 @@ namespace PHPSemVerChecker\Analyzer;
 use PHPSemVerChecker\Comparator\Implementation;
 use PHPSemVerChecker\Comparator\Signature;
 use PHPSemVerChecker\Operation\FunctionAdded;
+use PHPSemVerChecker\Operation\FunctionCaseChanged;
 use PHPSemVerChecker\Operation\FunctionImplementationChanged;
 use PHPSemVerChecker\Operation\FunctionOperationUnary;
 use PHPSemVerChecker\Operation\FunctionParameterAdded;
@@ -17,11 +18,11 @@ use PHPSemVerChecker\Operation\FunctionParameterRemoved;
 use PHPSemVerChecker\Operation\FunctionParameterTypingAdded;
 use PHPSemVerChecker\Operation\FunctionParameterTypingRemoved;
 use PHPSemVerChecker\Operation\FunctionRemoved;
-use PHPSemVerChecker\Operation\FunctionCaseChanged;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 
-class FunctionAnalyzer {
+class FunctionAnalyzer
+{
 	/**
 	 * @var string
 	 */
@@ -36,22 +37,19 @@ class FunctionAnalyzer {
 	{
 		$report = new Report();
 
-
 		$functionsBefore = $registryBefore->data['function'];
 		$functionsAfter = $registryAfter->data['function'];
 
 		$functionsBeforeKeyed = [];
 		$filesBeforeKeyed = [];
-		foreach($functionsBefore as $key => $functionBefore)
-		{
+		foreach ($functionsBefore as $key => $functionBefore) {
 			$functionsBeforeKeyed[strtolower($functionBefore->name)] = $functionBefore;
 			$filesBeforeKeyed[strtolower($functionBefore->name)] = $registryBefore->mapping['function'][$key];
 		}
 
 		$functionsAfterKeyed = [];
 		$filesAfterKeyed = [];
-		foreach($functionsAfter as $key => $functionAfter)
-		{
+		foreach ($functionsAfter as $key => $functionAfter) {
 			$functionsAfterKeyed[strtolower($functionAfter->name)] = $functionAfter;
 			$filesAfterKeyed[strtolower($functionAfter->name)] = $registryAfter->mapping['function'][$key];
 		}
@@ -78,8 +76,7 @@ class FunctionAnalyzer {
 
 			// Leave non-strict comparison here
 			if ($functionBefore != $functionAfter) {
-
-				// Check if the name of the interface has changed case.
+				// Check if the name of the function has changed case.
 				// If we entered this section then the normalized names (lowercase) were equal.
 				if ($functionBefore->name !== $functionAfter->name) {
 					$report->addFunction(
@@ -95,13 +92,13 @@ class FunctionAnalyzer {
 				$signatureResult = Signature::analyze($functionBefore->getParams(), $functionAfter->getParams());
 
 				$changes = [
-					'parameter_added' => FunctionParameterAdded::class,
-					'parameter_removed' => FunctionParameterRemoved::class,
-					'parameter_renamed' => FunctionParameterNameChanged::class,
-					'parameter_typing_added' => FunctionParameterTypingAdded::class,
-					'parameter_typing_removed' => FunctionParameterTypingRemoved::class,
-					'parameter_default_added' => FunctionParameterDefaultAdded::class,
-					'parameter_default_removed' => FunctionParameterDefaultRemoved::class,
+					'parameter_added'                 => FunctionParameterAdded::class,
+					'parameter_removed'               => FunctionParameterRemoved::class,
+					'parameter_renamed'               => FunctionParameterNameChanged::class,
+					'parameter_typing_added'          => FunctionParameterTypingAdded::class,
+					'parameter_typing_removed'        => FunctionParameterTypingRemoved::class,
+					'parameter_default_added'         => FunctionParameterDefaultAdded::class,
+					'parameter_default_removed'       => FunctionParameterDefaultRemoved::class,
 					'parameter_default_value_changed' => FunctionParameterDefaultValueChanged::class,
 				];
 

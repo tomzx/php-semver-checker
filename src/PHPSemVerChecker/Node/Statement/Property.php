@@ -5,7 +5,8 @@ namespace PHPSemVerChecker\Node\Statement;
 use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\Property as BaseProperty;
 
-class Property {
+class Property
+{
 	/**
 	 * @param \PhpParser\Node\Stmt          $context
 	 * @param \PhpParser\Node\Stmt\Property $property

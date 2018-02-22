@@ -3,12 +3,13 @@
 namespace PHPSemVerChecker\Analyzer;
 
 use PHPSemVerChecker\Operation\InterfaceAdded;
-use PHPSemVerChecker\Operation\InterfaceRemoved;
 use PHPSemVerChecker\Operation\InterfaceCaseChanged;
+use PHPSemVerChecker\Operation\InterfaceRemoved;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 
-class InterfaceAnalyzer {
+class InterfaceAnalyzer
+{
 	/**
 	 * @var string
 	 */
@@ -28,16 +29,14 @@ class InterfaceAnalyzer {
 
 		$interfacesBeforeKeyed = [];
 		$filesBeforeKeyed = [];
-		foreach($interfacesBefore as $key => $interfaceBefore)
-		{
+		foreach ($interfacesBefore as $key => $interfaceBefore) {
 			$interfacesBeforeKeyed[strtolower($interfaceBefore->name)] = $interfaceBefore;
 			$filesBeforeKeyed[strtolower($interfaceBefore->name)] = $registryBefore->mapping['interface'][$key];
 		}
 
 		$interfacesAfterKeyed = [];
 		$filesAfterKeyed = [];
-		foreach($interfacesAfter as $key => $interfaceAfter)
-		{
+		foreach ($interfacesAfter as $key => $interfaceAfter) {
 			$interfacesAfterKeyed[strtolower($interfaceAfter->name)] = $interfaceAfter;
 			$filesAfterKeyed[strtolower($interfaceAfter->name)] = $registryAfter->mapping['interface'][$key];
 		}
@@ -66,7 +65,6 @@ class InterfaceAnalyzer {
 
 			// Leave non-strict comparison here
 			if ($interfaceBefore != $interfaceAfter) {
-
 				// Check if the name of the interface has changed case.
 				// If we entered this section then the normalized names (lowercase) were equal.
 				if ($interfaceBefore->name !== $interfaceAfter->name) {

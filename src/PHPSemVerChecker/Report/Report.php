@@ -8,7 +8,8 @@ use IteratorAggregate;
 use PHPSemVerChecker\Operation\Operation;
 use PHPSemVerChecker\SemanticVersioning\Level;
 
-class Report implements ArrayAccess, IteratorAggregate {
+class Report implements ArrayAccess, IteratorAggregate
+{
 	/**
 	 * @var array
 	 */
@@ -152,6 +153,7 @@ class Report implements ArrayAccess, IteratorAggregate {
 	}
 
 	// TODO: Get rid of ArrayAccess (temporary to transition) <tom@tomrochette.com>
+
 	/**
 	 * @param string $offset
 	 * @return bool
@@ -172,7 +174,7 @@ class Report implements ArrayAccess, IteratorAggregate {
 
 	/**
 	 * @param string $offset
-	 * @param mixed $value
+	 * @param mixed  $value
 	 */
 	public function offsetSet($offset, $value)
 	{

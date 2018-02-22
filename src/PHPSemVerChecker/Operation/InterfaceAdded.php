@@ -2,7 +2,8 @@
 
 namespace PHPSemVerChecker\Operation;
 
-class InterfaceAdded extends InterfaceOperationUnary {
+class InterfaceAdded extends InterfaceOperationUnary
+{
 	/**
 	 * @var string
 	 */

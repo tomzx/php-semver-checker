@@ -2,7 +2,8 @@
 
 namespace PHPSemVerChecker\Operation;
 
-class PropertyRemoved extends PropertyOperationUnary {
+class PropertyRemoved extends PropertyOperationUnary
+{
 	/**
 	 * @var array
 	 */

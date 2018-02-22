@@ -6,7 +6,8 @@ use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\Property;
 use PHPSemVerChecker\Node\Statement\Property as PProperty;
 
-class PropertyOperationUnary extends PropertyOperation {
+class PropertyOperationUnary extends PropertyOperation
+{
 	/**
 	 * @var string
 	 */

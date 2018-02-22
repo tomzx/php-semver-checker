@@ -3,8 +3,6 @@
 namespace PHPSemVerChecker\Console\Command;
 
 use PHPSemVerChecker\Analyzer\Analyzer;
-use PHPSemVerChecker\Configuration\Configuration;
-use PHPSemVerChecker\Configuration\LevelMapping;
 use PHPSemVerChecker\Filter\SourceFilter;
 use PHPSemVerChecker\Finder\Finder;
 use PHPSemVerChecker\Reporter\JsonReporter;
@@ -16,7 +14,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class CompareCommand extends BaseCommand {
+class CompareCommand extends BaseCommand
+{
 	/**
 	 * @return void
 	 */

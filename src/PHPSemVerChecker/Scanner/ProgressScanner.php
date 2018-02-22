@@ -36,8 +36,8 @@ class ProgressScanner
 	}
 
 	/**
-	 * @param string $name
-	 * @param string[] $fileList
+	 * @param string                            $name
+	 * @param string[]                          $fileList
 	 * @param \PHPSemVerChecker\Scanner\Scanner $scanner
 	 */
 	public function addJob($name, $fileList, $scanner)

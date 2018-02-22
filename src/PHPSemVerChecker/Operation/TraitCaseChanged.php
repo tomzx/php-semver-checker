@@ -2,10 +2,8 @@
 
 namespace PHPSemVerChecker\Operation;
 
-use PhpParser\Node\Stmt\Trait_;
-use PHPSemVerChecker\Node\Statement\Trait_ as PTrait;
-
-class TraitCaseChanged extends TraitOperationDelta {
+class TraitCaseChanged extends TraitOperationDelta
+{
 	/**
 	 * @var string
 	 */

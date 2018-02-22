@@ -2,7 +2,8 @@
 
 namespace PHPSemVerChecker\Operation;
 
-class Unknown extends Operation {
+class Unknown extends Operation
+{
 	/**
 	 * @var string
 	 */

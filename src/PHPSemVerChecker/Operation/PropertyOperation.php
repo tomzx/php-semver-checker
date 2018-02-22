@@ -4,7 +4,8 @@ namespace PHPSemVerChecker\Operation;
 
 use PhpParser\Node\Stmt;
 
-abstract class PropertyOperation extends Operation {
+abstract class PropertyOperation extends Operation
+{
 	/**
 	 * @var string
 	 */

@@ -3,12 +3,13 @@
 namespace PHPSemVerChecker\Analyzer;
 
 use PHPSemVerChecker\Operation\ClassAdded;
-use PHPSemVerChecker\Operation\ClassRemoved;
 use PHPSemVerChecker\Operation\ClassCaseChanged;
+use PHPSemVerChecker\Operation\ClassRemoved;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 
-class ClassAnalyzer {
+class ClassAnalyzer
+{
 	/**
 	 * @var string
 	 */
@@ -28,16 +29,14 @@ class ClassAnalyzer {
 
 		$classesBeforeKeyed = [];
 		$filesBeforeKeyed = [];
-		foreach($classesBefore as $key => $classBefore)
-		{
+		foreach ($classesBefore as $key => $classBefore) {
 			$classesBeforeKeyed[strtolower($classBefore->name)] = $classBefore;
 			$filesBeforeKeyed[strtolower($classBefore->name)] = $registryBefore->mapping['class'][$key];
 		}
 
 		$classesAfterKeyed = [];
 		$filesAfterKeyed = [];
-		foreach($classesAfter as $key => $classAfter)
-		{
+		foreach ($classesAfter as $key => $classAfter) {
 			$classesAfterKeyed[strtolower($classAfter->name)] = $classAfter;
 			$filesAfterKeyed[strtolower($classAfter->name)] = $registryAfter->mapping['class'][$key];
 		}
@@ -66,7 +65,6 @@ class ClassAnalyzer {
 
 			// Leave non-strict comparison here
 			if ($classBefore != $classAfter) {
-
 				// Check for case change of class name.
 				// If we entered this section then the normalized names (lowercase) were equal.
 				if ($classBefore->name !== $classAfter->name) {

@@ -4,7 +4,8 @@ namespace PHPSemVerChecker\Node\Statement;
 
 use PhpParser\Node\Stmt\Function_ as BaseFunction;
 
-class Function_ {
+class Function_
+{
 	/**
 	 * @param \PhpParser\Node\Stmt\Function_ $function
 	 * @return string

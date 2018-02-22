@@ -5,7 +5,8 @@ namespace PHPSemVerChecker\Visitor;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Interface_;
 
-class InterfaceVisitor extends VisitorAbstract {
+class InterfaceVisitor extends VisitorAbstract
+{
 	/**
 	 * @param \PhpParser\Node $node
 	 */

@@ -15,7 +15,7 @@ class InputMerger
 {
 	/**
 	 * @param \Symfony\Component\Console\Input\InputInterface $input
-	 * @param \PHPSemVerChecker\Configuration\Configuration $config
+	 * @param \PHPSemVerChecker\Configuration\Configuration   $config
 	 */
 	public function merge(InputInterface $input, Configuration $config)
 	{
@@ -27,7 +27,6 @@ class InputMerger
 				if ($value) {
 					$input->setArgument($argument, $value);
 				}
-
 			}
 		}
 

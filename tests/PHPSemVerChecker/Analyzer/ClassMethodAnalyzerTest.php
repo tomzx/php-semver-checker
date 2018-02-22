@@ -712,7 +712,7 @@ class ClassMethodAnalyzerTest extends TestCase
 	/**
 	 * @dataProvider providerCaseChanged
 	 */
-	public function testClassMethodCaseChangeChanged($context, $visibility, $code)
+	public function testClassMethodCaseChanged($context, $visibility, $code)
 	{
 		$constructor = $this->getConstructorForContext($context);
 		$classBefore = new $constructor('tmp', [

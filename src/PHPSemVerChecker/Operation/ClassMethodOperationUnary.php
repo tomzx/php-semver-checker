@@ -6,7 +6,8 @@ use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\ClassMethod;
 use PHPSemVerChecker\Node\Statement\ClassMethod as PClassMethod;
 
-abstract class ClassMethodOperationUnary extends Operation {
+abstract class ClassMethodOperationUnary extends Operation
+{
 	/**
 	 * @var string
 	 */

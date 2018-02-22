@@ -56,12 +56,12 @@ class JsonReporter
 				/** @var \PHPSemVerChecker\Operation\Operation $operation */
 				foreach ($reportForLevel as $operation) {
 					$output['changes'][$context][] = [
-						'level' => Level::toString($level),
+						'level'    => Level::toString($level),
 						'location' => $operation->getLocation(),
-						'line' => $operation->getLine(),
-						'target' => $operation->getTarget(),
-						'reason' => $operation->getReason(),
-						'code' => $operation->getCode(),
+						'line'     => $operation->getLine(),
+						'target'   => $operation->getTarget(),
+						'reason'   => $operation->getReason(),
+						'code'     => $operation->getCode(),
 					];
 				}
 			}

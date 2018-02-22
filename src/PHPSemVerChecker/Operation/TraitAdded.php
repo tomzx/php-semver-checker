@@ -2,7 +2,8 @@
 
 namespace PHPSemVerChecker\Operation;
 
-class TraitAdded extends TraitOperationUnary {
+class TraitAdded extends TraitOperationUnary
+{
 	/**
 	 * @var string
 	 */

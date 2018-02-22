@@ -6,6 +6,7 @@ use PhpParser\Node\Stmt;
 use PHPSemVerChecker\Comparator\Implementation;
 use PHPSemVerChecker\Comparator\Signature;
 use PHPSemVerChecker\Operation\ClassMethodAdded;
+use PHPSemVerChecker\Operation\ClassMethodCaseChanged;
 use PHPSemVerChecker\Operation\ClassMethodImplementationChanged;
 use PHPSemVerChecker\Operation\ClassMethodOperationUnary;
 use PHPSemVerChecker\Operation\ClassMethodParameterAdded;
@@ -17,10 +18,10 @@ use PHPSemVerChecker\Operation\ClassMethodParameterRemoved;
 use PHPSemVerChecker\Operation\ClassMethodParameterTypingAdded;
 use PHPSemVerChecker\Operation\ClassMethodParameterTypingRemoved;
 use PHPSemVerChecker\Operation\ClassMethodRemoved;
-use PHPSemVerChecker\Operation\ClassMethodCaseChanged;
 use PHPSemVerChecker\Report\Report;
 
-class ClassMethodAnalyzer {
+class ClassMethodAnalyzer
+{
 	/**
 	 * @var string
 	 */
@@ -91,7 +92,6 @@ class ClassMethodAnalyzer {
 
 			// Leave non-strict comparison here
 			if ($methodBefore != $methodAfter) {
-
 				// Detect method case changed.
 				// If we entered this section then the normalized names (lowercase) were equal.
 				if ($methodBefore->name !== $methodAfter->name) {
@@ -112,13 +112,13 @@ class ClassMethodAnalyzer {
 				$signatureResult = Signature::analyze($methodBefore->getParams(), $methodAfter->getParams());
 
 				$changes = [
-					'parameter_added' => ClassMethodParameterAdded::class,
-					'parameter_removed' => ClassMethodParameterRemoved::class,
-					'parameter_renamed' => ClassMethodParameterNameChanged::class,
-					'parameter_typing_added' => ClassMethodParameterTypingAdded::class,
-					'parameter_typing_removed' => ClassMethodParameterTypingRemoved::class,
-					'parameter_default_added' => ClassMethodParameterDefaultAdded::class,
-					'parameter_default_removed' => ClassMethodParameterDefaultRemoved::class,
+					'parameter_added'                 => ClassMethodParameterAdded::class,
+					'parameter_removed'               => ClassMethodParameterRemoved::class,
+					'parameter_renamed'               => ClassMethodParameterNameChanged::class,
+					'parameter_typing_added'          => ClassMethodParameterTypingAdded::class,
+					'parameter_typing_removed'        => ClassMethodParameterTypingRemoved::class,
+					'parameter_default_added'         => ClassMethodParameterDefaultAdded::class,
+					'parameter_default_removed'       => ClassMethodParameterDefaultRemoved::class,
 					'parameter_default_value_changed' => ClassMethodParameterDefaultValueChanged::class,
 				];
 
@@ -144,7 +144,7 @@ class ClassMethodAnalyzer {
 
 				// Difference in source code
 				// Cast to array because interfaces do not have stmts (= null)
-				if (!Implementation::isSame((array)$methodBefore->stmts, (array)$methodAfter->stmts)) {
+				if ( ! Implementation::isSame((array)$methodBefore->stmts, (array)$methodAfter->stmts)) {
 					$data = new ClassMethodImplementationChanged(
 						$this->context,
 						$this->fileBefore,

@@ -43,7 +43,7 @@ class Configuration
 	 */
 	public static function defaults($name)
 	{
-		return self::fromFile(['?'.$name.'.yml.dist', '?'.$name.'.yml']);
+		return self::fromFile(['?' . $name . '.yml.dist', '?' . $name . '.yml']);
 	}
 
 	/**
@@ -67,7 +67,7 @@ class Configuration
 
 	/**
 	 * @see \Noodlehaus\Config::get
-	 * @param string $key
+	 * @param string     $key
 	 * @param mixed|null $default
 	 * @return array|mixed|null
 	 */
@@ -79,7 +79,7 @@ class Configuration
 	/**
 	 * @see \Noodlehaus\Config::set
 	 * @param string $key
-	 * @param mixed $value
+	 * @param mixed  $value
 	 */
 	public function set($key, $value)
 	{
