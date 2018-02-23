@@ -134,6 +134,12 @@ Trait (MAJOR)
 Time: 1.43 seconds, Memory: 5.123 MB
 ```
 
+## Contributing
+### Adding new rules
+* Add the rules to the `docs/Ruleset.md` document
+* Run `php scripts/extract-rules-from-ruleset.php` to generate an up to date array to paste in the `Configuration/LevelMapping.php` file
+* Update the documentation @ https://github.com/tomzx/php-semver-checker-docs
+
 ## License
 
 The code is licensed under the [MIT license](http://choosealicense.com/licenses/mit/). See [LICENSE](LICENSE).
