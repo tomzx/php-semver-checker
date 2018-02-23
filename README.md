@@ -10,7 +10,14 @@
 
 PHP Semantic Versioning Checker is a console/library which allows you to inspect a set of before and after source code.
 
-After the inspection is completed, you are given a list of changes that have occurred between the two changesets. For each of these changes, the level of the change (MAJOR, MINOR, PATCH) will be given, as well as the location of the change (file and line number) and a reason as to why this level change is suggested.
+After the inspection is completed, you are given a list of changes that have occurred between the two changesets following [Semantic Versioning 2.0.0](https://semver.org/). For each of these changes, the level of the change (MAJOR, MINOR, PATCH) will be given, as well as the location of the change (file and line number) and a reason as to why this level change is suggested.
+
+## Semantic Versioning 2.0.0 Overview
+Given a version number MAJOR.MINOR.PATCH, increment the:
+
+* MAJOR version when you make incompatible API changes,
+* MINOR version when you add functionality in a backwards-compatible manner, and
+* PATCH version when you make backwards-compatible bug fixes.
 
 ## Getting started
 
