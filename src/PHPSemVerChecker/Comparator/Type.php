@@ -2,6 +2,8 @@
 
 namespace PHPSemVerChecker\Comparator;
 
+use PhpParser\Node\NullableType;
+
 class Type
 {
 	/**
@@ -17,11 +19,19 @@ class Type
 	}
 
 	/**
-	 * @param \PhpParser\Node\Name|string|null $type
+	 * @param \PhpParser\Node\Name|\PhpParser\Node\NullableType|string|null $type
 	 * @return string|null
 	 */
 	public static function get($type)
 	{
-		return is_object($type) ? $type->toString() : $type;
+		if (! is_object($type)) {
+			return $type;
+		}
+
+		if ($type instanceof NullableType) {
+			return '?'.static::get($type->type);
+		}
+
+		return $type->toString();
 	}
 }
