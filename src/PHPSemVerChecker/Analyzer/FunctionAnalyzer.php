@@ -40,18 +40,18 @@ class FunctionAnalyzer
 		$functionsBefore = $registryBefore->data['function'];
 		$functionsAfter = $registryAfter->data['function'];
 
-		$functionsBeforeKeyed = [];
 		$filesBeforeKeyed = [];
+		$functionsBeforeKeyed = [];
 		foreach ($functionsBefore as $key => $functionBefore) {
-			$functionsBeforeKeyed[strtolower($functionBefore->name)] = $functionBefore;
-			$filesBeforeKeyed[strtolower($functionBefore->name)] = $registryBefore->mapping['function'][$key];
+			$filesBeforeKeyed[strtolower($key)] = $registryBefore->mapping['function'][$key];
+			$functionsBeforeKeyed[strtolower($key)] = $functionBefore;
 		}
 
-		$functionsAfterKeyed = [];
 		$filesAfterKeyed = [];
+		$functionsAfterKeyed = [];
 		foreach ($functionsAfter as $key => $functionAfter) {
-			$functionsAfterKeyed[strtolower($functionAfter->name)] = $functionAfter;
-			$filesAfterKeyed[strtolower($functionAfter->name)] = $registryAfter->mapping['function'][$key];
+			$filesAfterKeyed[strtolower($key)] = $registryAfter->mapping['function'][$key];
+			$functionsAfterKeyed[strtolower($key)] = $functionAfter;
 		}
 
 		$functionNamesBefore = array_keys($functionsBeforeKeyed);
@@ -123,8 +123,8 @@ class FunctionAnalyzer
 		}
 
 		foreach ($added as $key) {
-			$fileAfter = $registryAfter->mapping['function'][$key];
-			$functionAfter = $registryAfter->data['function'][$key];
+			$fileAfter = $filesAfterKeyed[$key];
+			$functionAfter = $functionsAfterKeyed[$key];
 
 			$data = new FunctionAdded($fileAfter, $functionAfter);
 			$report->addFunction($data);

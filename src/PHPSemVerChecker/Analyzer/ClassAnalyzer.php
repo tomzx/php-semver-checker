@@ -27,18 +27,18 @@ class ClassAnalyzer
 		$classesBefore = $registryBefore->data['class'];
 		$classesAfter = $registryAfter->data['class'];
 
-		$classesBeforeKeyed = [];
 		$filesBeforeKeyed = [];
+		$classesBeforeKeyed = [];
 		foreach ($classesBefore as $key => $classBefore) {
-			$classesBeforeKeyed[strtolower($classBefore->name)] = $classBefore;
-			$filesBeforeKeyed[strtolower($classBefore->name)] = $registryBefore->mapping['class'][$key];
+			$filesBeforeKeyed[strtolower($key)] = $registryBefore->mapping['class'][$key];
+			$classesBeforeKeyed[strtolower($key)] = $classBefore;
 		}
 
-		$classesAfterKeyed = [];
 		$filesAfterKeyed = [];
+		$classesAfterKeyed = [];
 		foreach ($classesAfter as $key => $classAfter) {
-			$classesAfterKeyed[strtolower($classAfter->name)] = $classAfter;
-			$filesAfterKeyed[strtolower($classAfter->name)] = $registryAfter->mapping['class'][$key];
+			$filesAfterKeyed[strtolower($key)] = $registryAfter->mapping['class'][$key];
+			$classesAfterKeyed[strtolower($key)] = $classAfter;
 		}
 
 		$classNamesBefore = array_keys($classesBeforeKeyed);

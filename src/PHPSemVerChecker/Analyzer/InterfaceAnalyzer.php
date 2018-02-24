@@ -27,18 +27,18 @@ class InterfaceAnalyzer
 		$interfacesBefore = $registryBefore->data['interface'];
 		$interfacesAfter = $registryAfter->data['interface'];
 
-		$interfacesBeforeKeyed = [];
 		$filesBeforeKeyed = [];
+		$interfacesBeforeKeyed = [];
 		foreach ($interfacesBefore as $key => $interfaceBefore) {
-			$interfacesBeforeKeyed[strtolower($interfaceBefore->name)] = $interfaceBefore;
-			$filesBeforeKeyed[strtolower($interfaceBefore->name)] = $registryBefore->mapping['interface'][$key];
+			$filesBeforeKeyed[strtolower($key)] = $registryBefore->mapping['interface'][$key];
+			$interfacesBeforeKeyed[strtolower($key)] = $interfaceBefore;
 		}
 
-		$interfacesAfterKeyed = [];
 		$filesAfterKeyed = [];
+		$interfacesAfterKeyed = [];
 		foreach ($interfacesAfter as $key => $interfaceAfter) {
-			$interfacesAfterKeyed[strtolower($interfaceAfter->name)] = $interfaceAfter;
-			$filesAfterKeyed[strtolower($interfaceAfter->name)] = $registryAfter->mapping['interface'][$key];
+			$filesAfterKeyed[strtolower($key)] = $registryAfter->mapping['interface'][$key];
+			$interfacesAfterKeyed[strtolower($key)] = $interfaceAfter;
 		}
 
 		$interfaceNamesBefore = array_keys($interfacesBeforeKeyed);
@@ -86,7 +86,6 @@ class InterfaceAnalyzer
 		}
 
 		foreach ($added as $key) {
-
 			$fileAfter = $filesAfterKeyed[$key];
 			$interfaceAfter = $interfacesAfterKeyed[$key];
 

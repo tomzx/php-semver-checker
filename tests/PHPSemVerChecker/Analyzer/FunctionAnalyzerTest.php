@@ -3,6 +3,7 @@
 namespace PHPSemVerChecker\Test\Analyzer;
 
 use PhpParser\Node\Expr\FuncCall;
+use PhpParser\Node\Name;
 use PhpParser\Node\Param;
 use PhpParser\Node\Scalar\String_;
 use PhpParser\Node\Stmt\Function_;
@@ -416,5 +417,23 @@ class FunctionAnalyzerTest extends TestCase {
 		$this->assertSame('V160', $report['function'][$expectedLevel][0]->getCode());
 		$this->assertSame('Function name case was changed.', $report['function'][$expectedLevel][0]->getReason());
 		$this->assertSame('someFunctionName', $report['function'][$expectedLevel][0]->getTarget());
+	}
+
+	public function testFunctionNamespaceDoNotOverlap()
+	{
+		$before = new Registry();
+		$after = new Registry();
+
+		$before->addFunction(new Function_('tmp'));
+		$function = new Function_('tmp');
+		$function->namespacedName = Name::concat('namespaceTmp', 'tmp');
+		$before->addFunction($function);
+
+		$analyzer = new FunctionAnalyzer();
+		$report = $analyzer->analyze($before, $after);
+
+		$context = 'function';
+		$expectedLevel = Level::MAJOR;
+		$this->assertCount(2, $report[$context][$expectedLevel], 'Interfaces with similar names but different namespace are possibly considered the same in the analyzer logic');
 	}
 }

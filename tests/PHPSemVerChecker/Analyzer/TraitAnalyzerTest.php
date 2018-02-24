@@ -2,6 +2,7 @@
 
 namespace PHPSemVerChecker\Test\Analyzer;
 
+use PhpParser\Node\Name;
 use PhpParser\Node\Stmt\Trait_;
 use PHPSemVerChecker\Analyzer\TraitAnalyzer;
 use PHPSemVerChecker\Registry\Registry;
@@ -80,5 +81,23 @@ class TraitAnalyzerTest extends TestCase {
 		$this->assertSame('V155', $report[$context][$expectedLevel][0]->getCode());
 		$this->assertSame('Trait name case was changed.', $report[$context][$expectedLevel][0]->getReason());
 		$this->assertSame('testtrait', $report[$context][$expectedLevel][0]->getTarget());
+	}
+
+	public function testTraitNamespaceDoNotOverlap()
+	{
+		$before = new Registry();
+		$after = new Registry();
+
+		$before->addTrait(new Trait_('tmp'));
+		$trait = new Trait_('tmp');
+		$trait->namespacedName = Name::concat('namespaceTmp', 'tmp');
+		$before->addTrait($trait);
+
+		$analyzer = new TraitAnalyzer();
+		$report = $analyzer->analyze($before, $after);
+
+		$context = 'trait';
+		$expectedLevel = Level::MAJOR;
+		$this->assertCount(2, $report[$context][$expectedLevel], 'Traits with similar names but different namespace are possibly considered the same in the analyzer logic');
 	}
 }

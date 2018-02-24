@@ -2,6 +2,7 @@
 
 namespace PHPSemVerChecker\Test\Analyzer;
 
+use PhpParser\Node\Name;
 use PhpParser\Node\Stmt\Interface_;
 use PHPSemVerChecker\Analyzer\InterfaceAnalyzer;
 use PHPSemVerChecker\Registry\Registry;
@@ -82,5 +83,23 @@ class InterfaceAnalyzerTest extends TestCase {
 		Assert::assertDifference($report, $context, $expectedLevel);
 		$this->assertSame('V153', $report[$context][$expectedLevel][0]->getCode());
 		$this->assertSame('Interface name case was changed.', $report[$context][$expectedLevel][0]->getReason());
+	}
+
+	public function testInterfaceNamespaceDoNotOverlap()
+	{
+		$before = new Registry();
+		$after = new Registry();
+
+		$before->addInterface(new Interface_('tmp'));
+		$interface = new Interface_('tmp');
+		$interface->namespacedName = Name::concat('namespaceTmp', 'tmp');
+		$before->addInterface($interface);
+
+		$analyzer = new InterfaceAnalyzer();
+		$report = $analyzer->analyze($before, $after);
+
+		$context = 'interface';
+		$expectedLevel = Level::MAJOR;
+		$this->assertCount(2, $report[$context][$expectedLevel], 'Interfaces with similar names but different namespace are possibly considered the same in the analyzer logic');
 	}
 }

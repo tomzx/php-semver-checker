@@ -27,18 +27,18 @@ class TraitAnalyzer
 		$traitsBefore = $registryBefore->data['trait'];
 		$traitsAfter = $registryAfter->data['trait'];
 
-		$traitsBeforeKeyed = [];
 		$filesBeforeKeyed = [];
+		$traitsBeforeKeyed = [];
 		foreach ($traitsBefore as $key => $traitBefore) {
-			$traitsBeforeKeyed[strtolower($traitBefore->name)] = $traitBefore;
-			$filesBeforeKeyed[strtolower($traitBefore->name)] = $registryBefore->mapping['trait'][$key];
+			$filesBeforeKeyed[strtolower($key)] = $registryBefore->mapping['trait'][$key];
+			$traitsBeforeKeyed[strtolower($key)] = $traitBefore;
 		}
 
-		$traitsAfterKeyed = [];
 		$filesAfterKeyed = [];
+		$traitsAfterKeyed = [];
 		foreach ($traitsAfter as $key => $traitAfter) {
-			$traitsAfterKeyed[strtolower($traitAfter->name)] = $traitAfter;
-			$filesAfterKeyed[strtolower($traitAfter->name)] = $registryAfter->mapping['trait'][$key];
+			$filesAfterKeyed[strtolower($key)] = $registryAfter->mapping['trait'][$key];
+			$traitsAfterKeyed[strtolower($key)] = $traitAfter;
 		}
 
 		$traitNamesBefore = array_keys($traitsBeforeKeyed);
@@ -91,7 +91,7 @@ class TraitAnalyzer
 
 		foreach ($added as $key) {
 			$fileAfter = $filesAfterKeyed[$key];
-			$traitAfter = $traitsAfter[$key];
+			$traitAfter = $traitsAfterKeyed[$key];
 
 			$data = new TraitAdded($fileAfter, $traitAfter);
 			$report->addTrait($data);
