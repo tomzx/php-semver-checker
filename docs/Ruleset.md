@@ -143,7 +143,7 @@ V051 | ----- | *REMOVED*
 V052 | PATCH | Trait public method implementation changed
 V053 | PATCH | Trait protected method implementation changed
 V054 | PATCH | Trait private method implementation changed
-V059 | PATCH | Trait private method parameter added
+V059 | MAJOR | Trait private method parameter added
 V064 | PATCH | Trait public method parameter name changed
 V065 | PATCH | Trait protected method parameter name changed
 V066 | PATCH | Trait private method parameter name changed

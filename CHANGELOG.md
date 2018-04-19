@@ -3,6 +3,7 @@
 This project follows [Semantic Versioning 2.0.0](http://semver.org/).
 
 ## <a name="unreleased"></a>Unreleased
+* Revert V059 level from PATCH to MAJOR
 
 ## <a name="v0.12.1"></a>v0.12.1 (2018-02-08)
 [Full Changelog](https://github.com/tomzx/php-semver-checker-git/compare/v0.12.0...v0.12.1)

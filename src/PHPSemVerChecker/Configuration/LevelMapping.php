@@ -67,7 +67,7 @@ class LevelMapping
 		'V056' => Level::MAJOR,
 		'V057' => Level::MAJOR,
 		'V058' => Level::MAJOR,
-		'V059' => Level::PATCH,
+		'V059' => Level::MAJOR,
 		'V060' => Level::PATCH,
 		'V061' => Level::PATCH,
 		'V062' => Level::PATCH,
