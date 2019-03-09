@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8109e7fc43fb451a0e307c36e3b33f77",
+    "content-hash": "4cf4f7fba7ee03f5e2ee2501e9850581",
     "packages": [
         {
             "name": "hassankhan/config",
