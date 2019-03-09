@@ -3,7 +3,17 @@
 This project follows [Semantic Versioning 2.0.0](http://semver.org/).
 
 ## <a name="unreleased"></a>Unreleased
-* Revert V059 level from PATCH to MAJOR
+
+## <a name="v0.13.0"></a>v0.13.0 (2019-04-19)
+[Full Changelog](https://github.com/tomzx/php-semver-checker-git/compare/v0.12.1...v0.13.0)
+### Added
+* [#99] Add support for class [V154], class method [V150, V156, V157, V151, V152, V158, V159], function [V160], interface [V153] and trait [V155] case change
+
+### Changed
+* Update V059 level from PATCH to MAJOR
+
+### Fixed
+* [#94] PHP 7.1 nullable types not supported
 
 ## <a name="v0.12.1"></a>v0.12.1 (2018-02-08)
 [Full Changelog](https://github.com/tomzx/php-semver-checker-git/compare/v0.12.0...v0.12.1)
