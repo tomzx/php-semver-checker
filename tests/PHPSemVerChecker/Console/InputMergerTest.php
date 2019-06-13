@@ -6,9 +6,10 @@ use PHPSemVerChecker\Configuration\Configuration;
 use PHPSemVerChecker\Console\Command\CompareCommand;
 use PHPSemVerChecker\Console\InputMerger;
 use PHPSemVerChecker\Console\InspectableArgvInput;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Input\StringInput;
 
-class InputMergerTest extends \PHPUnit_Framework_TestCase
+class InputMergerTest extends TestCase
 {
 	public function testMerge()
 	{

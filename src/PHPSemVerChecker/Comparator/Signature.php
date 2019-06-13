@@ -34,7 +34,7 @@ class Signature
 		$iterations = min($lengthA, $lengthB);
 		for ($i = 0; $i < $iterations; ++$i) {
 			// Name checking
-			if ($parametersA[$i]->name !== $parametersB[$i]->name) {
+			if ($parametersA[$i]->var->name !== $parametersB[$i]->var->name) {
 				$changes['parameter_renamed'] = true;
 			}
 

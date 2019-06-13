@@ -63,5 +63,7 @@ class JsonReporterTest extends TestCase {
 
 		$reporter = new JsonReporter($report, 'filename', $filesystem);
 		$reporter->output();
+
+		$this->assertTrue(true);
 	}
 }

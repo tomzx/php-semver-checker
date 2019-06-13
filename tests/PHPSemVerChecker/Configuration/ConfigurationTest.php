@@ -4,16 +4,16 @@ namespace PHPSemVerChecker\Test\Configuration;
 
 use PHPSemVerChecker\Configuration\Configuration;
 use PHPSemVerChecker\SemanticVersioning\Level;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class ConfigurationTest extends PHPUnit_Framework_TestCase
+class ConfigurationTest extends TestCase
 {
 	/**
 	 * @var \PHPSemVerChecker\Configuration\Configuration
 	 */
 	protected $config;
 
-	public function setUp()
+	protected function setUp(): void
 	{
 		$this->config = new Configuration([__DIR__.'/../../fixtures/configuration/php-semver-checker.json']);
 	}

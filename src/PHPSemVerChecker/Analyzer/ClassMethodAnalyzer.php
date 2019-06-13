@@ -94,7 +94,7 @@ class ClassMethodAnalyzer
 			if ($methodBefore != $methodAfter) {
 				// Detect method case changed.
 				// If we entered this section then the normalized names (lowercase) were equal.
-				if ($methodBefore->name !== $methodAfter->name) {
+				if ($methodBefore->name->toString() !== $methodAfter->name->toString()) {
 					$report->add(
 						$this->context,
 						new ClassMethodCaseChanged(

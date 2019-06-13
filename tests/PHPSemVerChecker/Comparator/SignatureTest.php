@@ -2,11 +2,13 @@
 
 namespace PHPSemVerChecker\Test\Comparator;
 
+use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Param;
 use PhpParser\Node\Stmt\ClassMethod;
 use PHPSemVerChecker\Comparator\Signature;
+use PHPUnit\Framework\TestCase;
 
-class SignatureTest extends \PHPUnit_Framework_TestCase
+class SignatureTest extends TestCase
 {
 	public function testIdenticalSignaturesNoParameters()
 	{
@@ -28,8 +30,8 @@ class SignatureTest extends \PHPUnit_Framework_TestCase
 
 	public function testRenamedParameters()
 	{
-		$params1 = [new Param('testParameter')];
-		$params2 = [new Param('testRenamedParameter')];
+		$params1 = [new Param(new Variable('testParameter'))];
+		$params2 = [new Param(new Variable('testRenamedParameter'))];
 
 		$result = Signature::analyze($params1, $params2);
 
@@ -50,12 +52,12 @@ class SignatureTest extends \PHPUnit_Framework_TestCase
 	public function testAddedParameters()
 	{
 		$params1 = [
-			new Param('testParameter'),
+			new Param(new Variable('testParameter')),
 		];
 
 		$params2 = [
-			new Param('testParameter'),
-			new Param('testAddedParameter'),
+			new Param(new Variable('testParameter')),
+			new Param(new Variable('testAddedParameter')),
 		];
 
 		$result = Signature::analyze($params1, $params2);

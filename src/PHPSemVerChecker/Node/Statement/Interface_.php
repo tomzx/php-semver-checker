@@ -15,6 +15,6 @@ class Interface_
 		if (isset($interface->namespacedName)) {
 			return $interface->namespacedName->toString();
 		}
-		return $interface->name;
+		return $interface->name->toString();
 	}
 }

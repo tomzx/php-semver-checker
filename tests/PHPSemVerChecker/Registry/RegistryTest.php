@@ -12,9 +12,11 @@ class RegistryTest extends TestCase {
 		$registry = new Registry();
 
 		$node = m::mock('\PhpParser\Node\Stmt\Class_');
+		$node->name = m::mock('\PhpParser\Node\Identifier');
+		$node->name->shouldReceive('toString')->andReturn('SomeClass');
 
 		$registry->addClass($node);
-		$this->assertSame($node, $registry->data['class'][null]);
+		$this->assertSame($node, $registry->data['class']['SomeClass']);
 	}
 
 	public function testAddFunction()
@@ -22,9 +24,11 @@ class RegistryTest extends TestCase {
 		$registry = new Registry();
 
 		$node = m::mock('\PhpParser\Node\Stmt\Function_');
+		$node->name = m::mock('\PhpParser\Node\Identifier');
+		$node->name->shouldReceive('toString')->andReturn('SomeFunction');
 
 		$registry->addFunction($node);
-		$this->assertSame($node, $registry->data['function'][null]);
+		$this->assertSame($node, $registry->data['function']['SomeFunction']);
 	}
 
 	public function testAddInterface()
@@ -32,9 +36,11 @@ class RegistryTest extends TestCase {
 		$registry = new Registry();
 
 		$node = m::mock('\PhpParser\Node\Stmt\Interface_');
+		$node->name = m::mock('\PhpParser\Node\Identifier');
+		$node->name->shouldReceive('toString')->andReturn('SomeInterface');
 
 		$registry->addInterface($node);
-		$this->assertSame($node, $registry->data['interface'][null]);
+		$this->assertSame($node, $registry->data['interface']['SomeInterface']);
 	}
 
 	public function testAddTrait()
@@ -42,8 +48,10 @@ class RegistryTest extends TestCase {
 		$registry = new Registry();
 
 		$node = m::mock('\PhpParser\Node\Stmt\Trait_');
+		$node->name = m::mock('\PhpParser\Node\Identifier');
+		$node->name->shouldReceive('toString')->andReturn('SomeTrait');
 
 		$registry->addTrait($node);
-		$this->assertSame($node, $registry->data['trait'][null]);
+		$this->assertSame($node, $registry->data['trait']['SomeTrait']);
 	}
 }

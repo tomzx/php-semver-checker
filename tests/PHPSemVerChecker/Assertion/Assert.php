@@ -3,7 +3,7 @@
 namespace PHPSemVerChecker\Test\Assertion;
 
 use PHPSemVerChecker\Report\Report;
-use PHPUnit_Framework_Assert as BaseAssert;
+use PHPUnit\Framework\Assert as BaseAssert;
 
 class Assert
 {

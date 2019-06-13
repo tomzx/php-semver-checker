@@ -78,7 +78,7 @@ class FunctionAnalyzer
 			if ($functionBefore != $functionAfter) {
 				// Check if the name of the function has changed case.
 				// If we entered this section then the normalized names (lowercase) were equal.
-				if ($functionBefore->name !== $functionAfter->name) {
+				if ($functionBefore->name->toString() !== $functionAfter->name->toString()) {
 					$report->addFunction(
 						new FunctionCaseChanged(
 							$fileBefore,

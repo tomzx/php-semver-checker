@@ -14,10 +14,10 @@ class ClassMethod
 	 */
 	public static function getFullyQualifiedName(Stmt $context, BaseClassMethod $classMethod)
 	{
-		$namespace = $context->name;
+		$namespace = $context->name->toString();
 		if (isset($context->namespacedName)) {
 			$namespace = $context->namespacedName->toString();
 		}
-		return $namespace . '::' . $classMethod->name;
+		return $namespace . '::' . $classMethod->name->toString();
 	}
 }

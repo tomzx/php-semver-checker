@@ -15,6 +15,6 @@ class Trait_
 		if (isset($trait->namespacedName)) {
 			return $trait->namespacedName->toString();
 		}
-		return $trait->name;
+		return $trait->name->toString();
 	}
 }

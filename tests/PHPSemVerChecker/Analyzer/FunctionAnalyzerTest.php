@@ -3,6 +3,7 @@
 namespace PHPSemVerChecker\Test\Analyzer;
 
 use PhpParser\Node\Expr\FuncCall;
+use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Name;
 use PhpParser\Node\Param;
 use PhpParser\Node\Scalar\String_;
@@ -70,13 +71,13 @@ class FunctionAnalyzerTest extends TestCase {
 
 		$before->addFunction(new Function_('tmp', [
 			'params' => [
-				new Param('a', null),
+				new Param(new Variable('a'), null),
 			],
 		]));
 
 		$after->addFunction(new Function_('tmp', [
 			'params' => [
-				new Param('a', null),
+				new Param(new Variable('a'), null),
 			],
 		]));
 
@@ -93,13 +94,13 @@ class FunctionAnalyzerTest extends TestCase {
 
 		$before->addFunction(new Function_('tmp', [
 			'params' => [
-				new Param('a', null),
+				new Param(new Variable('a'), null),
 			],
 		]));
 
 		$after->addFunction(new Function_('tmp', [
 			'params' => [
-				new Param('b', null),
+				new Param(new Variable('b'), null),
 			],
 		]));
 
@@ -120,14 +121,14 @@ class FunctionAnalyzerTest extends TestCase {
 
 		$before->addFunction(new Function_('tmp', [
 			'params' => [
-				new Param('a', null, 'A'),
+				new Param(new Variable('a'), null, 'A'),
 			],
 		]));
 
 		$after->addFunction(new Function_('tmp', [
 			'params' => [
-				new Param('a', null, 'A'),
-				new Param('b', null, 'B'),
+				new Param(new Variable('a'), null, 'A'),
+				new Param(new Variable('b'), null, 'B'),
 			],
 		]));
 
@@ -148,14 +149,14 @@ class FunctionAnalyzerTest extends TestCase {
 
 		$before->addFunction(new Function_('tmp', [
 			'params' => [
-				new Param('a', null, 'A'),
-				new Param('b', null, 'B'),
+				new Param(new Variable('a'), null, 'A'),
+				new Param(new Variable('b'), null, 'B'),
 			],
 		]));
 
 		$after->addFunction(new Function_('tmp', [
 			'params' => [
-				new Param('a', null, 'A'),
+				new Param(new Variable('a'), null, 'A'),
 			],
 		]));
 
@@ -177,13 +178,13 @@ class FunctionAnalyzerTest extends TestCase {
 
 		$before->addFunction(new Function_('tmp', [
 			'params' => [
-				new Param('a', null),
+				new Param(new Variable('a'), null),
 			],
 		]));
 
 		$after->addFunction(new Function_('tmp', [
 			'params' => [
-				new Param('a', null, 'A'),
+				new Param(new Variable('a'), null, 'A'),
 			],
 		]));
 
@@ -204,13 +205,13 @@ class FunctionAnalyzerTest extends TestCase {
 
 		$before->addFunction(new Function_('tmp', [
 			'params' => [
-				new Param('a', null, 'A'),
+				new Param(new Variable('a'), null, 'A'),
 			],
 		]));
 
 		$after->addFunction(new Function_('tmp', [
 			'params' => [
-				new Param('a', null),
+				new Param(new Variable('a'), null),
 			],
 		]));
 
@@ -231,15 +232,15 @@ class FunctionAnalyzerTest extends TestCase {
 
 		$before->addFunction(new Function_('tmp', [
 			'params' => [
-				new Param('a', null, 'A'),
-				new Param('b', null, 'B'),
+				new Param(new Variable('a'), null, 'A'),
+				new Param(new Variable('b'), null, 'B'),
 			],
 		]));
 
 		$after->addFunction(new Function_('tmp', [
 			'params' => [
-				new Param('a', null, 'A'),
-				new Param('b', new String_('someDefaultValue'), 'B'),
+				new Param(new Variable('a'), null, 'A'),
+				new Param(new Variable('b'), new String_('someDefaultValue'), 'B'),
 			],
 		]));
 
@@ -260,15 +261,15 @@ class FunctionAnalyzerTest extends TestCase {
 
 		$before->addFunction(new Function_('tmp', [
 			'params' => [
-				new Param('a', null, 'A'),
-				new Param('b', new String_('someDefaultValue'), 'B'),
+				new Param(new Variable('a'), null, 'A'),
+				new Param(new Variable('b'), new String_('someDefaultValue'), 'B'),
 			],
 		]));
 
 		$after->addFunction(new Function_('tmp', [
 			'params' => [
-				new Param('a', null, 'A'),
-				new Param('a', null, 'B'),
+				new Param(new Variable('a'), null, 'A'),
+				new Param(new Variable('a'), null, 'B'),
 			],
 		]));
 
@@ -289,15 +290,15 @@ class FunctionAnalyzerTest extends TestCase {
 
 		$before->addFunction(new Function_('tmp', [
 			'params' => [
-				new Param('a', null, 'A'),
-				new Param('b', new String_('someDefaultValue'), 'B'),
+				new Param(new Variable('a'), null, 'A'),
+				new Param(new Variable('b'), new String_('someDefaultValue'), 'B'),
 			],
 		]));
 
 		$after->addFunction(new Function_('tmp', [
 			'params' => [
-				new Param('a', null, 'A'),
-				new Param('a', new String_('someNewDefaultValue'), 'B'),
+				new Param(new Variable('a'), null, 'A'),
+				new Param(new Variable('a'), new String_('someNewDefaultValue'), 'B'),
 			],
 		]));
 
@@ -318,14 +319,14 @@ class FunctionAnalyzerTest extends TestCase {
 
 		$before->addFunction(new Function_('tmp', [
 			'params' => [
-				new Param('a', null, 'A'),
+				new Param(new Variable('a'), null, 'A'),
 			],
 		]));
 
 		$after->addFunction(new Function_('tmp', [
 			'params' => [
-				new Param('a', null, 'A'),
-				new Param('a', new String_('someDefaultValue'), 'B'),
+				new Param(new Variable('a'), null, 'A'),
+				new Param(new Variable('a'), new String_('someDefaultValue'), 'B'),
 			],
 		]));
 

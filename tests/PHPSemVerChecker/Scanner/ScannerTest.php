@@ -4,6 +4,7 @@ namespace PHPSemVerChecker\Test\Scanner;
 
 use PHPSemVerChecker\Scanner\Scanner;
 use PHPSemVerChecker\Test\TestCase;
+use RuntimeException;
 
 class ScannerTest extends TestCase {
 	public function testScan()
@@ -13,11 +14,9 @@ class ScannerTest extends TestCase {
 		$this->assertNotEmpty($scanner->getRegistry());
 	}
 
-	/**
-	 * @expectedException \RuntimeException
-	 */
 	public function testInvalidCodeParsing()
 	{
+		$this->expectException(RuntimeException::class);
 		$scanner = new Scanner();
 		$scanner->scan(__DIR__.'/../../fixtures/general/InvalidCode.php');
 	}

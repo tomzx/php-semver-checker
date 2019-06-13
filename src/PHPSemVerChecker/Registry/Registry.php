@@ -91,7 +91,7 @@ class Registry
 	 */
 	protected function fullyQualifiedName(Stmt $node)
 	{
-		return isset($node->namespacedName) ? $node->namespacedName->toString() : $node->name;
+		return isset($node->namespacedName) ? $node->namespacedName->toString() : $node->name->toString();
 	}
 
 	/**

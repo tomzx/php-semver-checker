@@ -15,6 +15,6 @@ class Class_
 		if (isset($class->namespacedName)) {
 			return $class->namespacedName->toString();
 		}
-		return $class->name;
+		return $class->name->toString();
 	}
 }

@@ -50,5 +50,7 @@ class ReporterTest extends TestCase {
 
 		$reporter = new Reporter($report);
 		$reporter->output($output);
+
+		$this->assertTrue(true);
 	}
 }

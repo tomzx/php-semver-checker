@@ -99,6 +99,6 @@ class PropertyAnalyzer
 	 */
 	protected function getName(Property $property)
 	{
-		return $property->props[0]->name;
+		return $property->props[0]->name->toString();
 	}
 }
