@@ -1,0 +1,50 @@
+name: Continuous integration
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+        fail-fast: true
+        matrix:
+            php: [7.3, 7.4, 8.0]
+            stability: [prefer-lowest, prefer-stable]
+
+    name: PHP ${{ matrix.php }} - ${{ matrix.stability }}
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+          php-version: ${{ matrix.php }}
+          tools: composer:v2
+          coverage: xdebug
+
+    - name: Install dependencies
+      uses: nick-invision/retry@v1
+      with:
+          timeout_minutes: 5
+          max_attempts: 5
+          command: |
+            composer update --${{ matrix.stability }} --prefer-dist --no-interaction --no-progress
+            # revert updated composer.lock
+            git checkout composer.lock
+
+    - name: Run tests
+      run: php vendor/bin/phpunit
+
+    - name: Update scrutinizer-ci
+      run: |
+        wget https://scrutinizer-ci.com/ocular.phar
+        php ocular.phar code-coverage:upload --format=php-clover log/coverage.xml
+
+    - name: Evaluate semantic versioning
+      run: |
+        wget http://psvcg.coreteks.org/php-semver-checker-git.phar
+        php php-semver-checker-git.phar suggest -vvv
