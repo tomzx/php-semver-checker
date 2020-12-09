@@ -1,18 +1,19 @@
-<phpunit bootstrap="vendor/autoload.php">
-	<testsuite name="Tests">
-		<directory>./tests</directory>
-	</testsuite>
-
-	<filter>
-		<whitelist>
-			<directory suffix=".php">./src</directory>
-		</whitelist>
-	</filter>
-
-	<logging>
-		<log type="coverage-html" target="./log/report" lowUpperBound="50" highLowerBound="80" />
-		<log type="coverage-text" target="./log/coverage.txt"/>
-		<log type="coverage-clover" target="./log/coverage.xml"/>
-		<log type="testdox-html" target="./log/testdox.html" />
-	</logging>
+<?xml version="1.0"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="vendor/autoload.php" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+  <coverage>
+    <include>
+      <directory suffix=".php">./src</directory>
+    </include>
+    <report>
+      <clover outputFile="./log/coverage.xml"/>
+      <html outputDirectory="./log/report" lowUpperBound="50" highLowerBound="80"/>
+      <text outputFile="./log/coverage.txt"/>
+    </report>
+  </coverage>
+  <testsuite name="Tests">
+    <directory>./tests</directory>
+  </testsuite>
+  <logging>
+    <testdoxHtml outputFile="./log/testdox.html"/>
+  </logging>
 </phpunit>
