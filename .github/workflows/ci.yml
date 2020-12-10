@@ -39,10 +39,8 @@ jobs:
     - name: Run tests
       run: php vendor/bin/phpunit
 
-    - name: Update scrutinizer-ci
-      run: |
-        wget https://scrutinizer-ci.com/ocular.phar
-        php ocular.phar code-coverage:upload --format=php-clover log/coverage.xml
+    - name: Submit code coverage
+      uses: codecov/codecov-action@v1
 
     - name: Evaluate semantic versioning
       run: |

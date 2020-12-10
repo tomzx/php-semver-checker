@@ -4,8 +4,7 @@
 [![Latest Stable Version](https://poser.pugx.org/tomzx/php-semver-checker/v/stable.svg)](https://packagist.org/packages/tomzx/php-semver-checker)
 [![Latest Unstable Version](https://poser.pugx.org/tomzx/php-semver-checker/v/unstable.svg)](https://packagist.org/packages/tomzx/php-semver-checker)
 [![Build Status](https://img.shields.io/travis/tomzx/php-semver-checker.svg)](https://travis-ci.org/tomzx/php-semver-checker)
-[![Code Quality](https://img.shields.io/scrutinizer/g/tomzx/php-semver-checker.svg)](https://scrutinizer-ci.com/g/tomzx/php-semver-checker/code-structure)
-[![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/tomzx/php-semver-checker.svg)](https://scrutinizer-ci.com/g/tomzx/php-semver-checker)
+[![Code Coverage](https://img.shields.io/codecov/c/github/tomzx/php-semver-checker)](https://app.codecov.io/gh/tomzx/php-semver-checker/)
 [![Total Downloads](https://img.shields.io/packagist/dt/tomzx/php-semver-checker.svg)](https://packagist.org/packages/tomzx/php-semver-checker)
 
 PHP Semantic Versioning Checker is a console/library which allows you to inspect a set of before and after source code.
