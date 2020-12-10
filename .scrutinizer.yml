@@ -1,6 +1,0 @@
-filter:
-    paths:
-        - src/*
-tools:
-    external_code_coverage:
-        timeout: 1800
