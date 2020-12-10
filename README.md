@@ -3,7 +3,7 @@
 [![License](https://poser.pugx.org/tomzx/php-semver-checker/license.svg)](https://packagist.org/packages/tomzx/php-semver-checker)
 [![Latest Stable Version](https://poser.pugx.org/tomzx/php-semver-checker/v/stable.svg)](https://packagist.org/packages/tomzx/php-semver-checker)
 [![Latest Unstable Version](https://poser.pugx.org/tomzx/php-semver-checker/v/unstable.svg)](https://packagist.org/packages/tomzx/php-semver-checker)
-[![Build Status](https://img.shields.io/travis/tomzx/php-semver-checker.svg)](https://travis-ci.org/tomzx/php-semver-checker)
+[![Build Status](https://img.shields.io/github/workflow/status/tomzx/php-semver-checker/Continuous%20integration.svg)](https://github.com/tomzx/php-semver-checker/actions?query=workflow%3A%22Continuous+integration%22)
 [![Code Coverage](https://img.shields.io/codecov/c/github/tomzx/php-semver-checker)](https://app.codecov.io/gh/tomzx/php-semver-checker/)
 [![Total Downloads](https://img.shields.io/packagist/dt/tomzx/php-semver-checker.svg)](https://packagist.org/packages/tomzx/php-semver-checker)
 
