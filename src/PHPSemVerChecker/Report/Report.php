@@ -7,6 +7,7 @@ use ArrayIterator;
 use IteratorAggregate;
 use PHPSemVerChecker\Operation\Operation;
 use PHPSemVerChecker\SemanticVersioning\Level;
+use Traversable;
 
 class Report implements ArrayAccess, IteratorAggregate
 {
@@ -158,6 +159,7 @@ class Report implements ArrayAccess, IteratorAggregate
 	 * @param string $offset
 	 * @return bool
 	 */
+	#[\ReturnTypeWillChange]
 	public function offsetExists($offset)
 	{
 		return isset($this->differences[$offset]);
@@ -165,8 +167,9 @@ class Report implements ArrayAccess, IteratorAggregate
 
 	/**
 	 * @param string $offset
-	 * @return array
+	 * @return mixed
 	 */
+	#[\ReturnTypeWillChange]
 	public function offsetGet($offset)
 	{
 		return $this->differences[$offset];
@@ -176,6 +179,7 @@ class Report implements ArrayAccess, IteratorAggregate
 	 * @param string $offset
 	 * @param mixed  $value
 	 */
+	#[\ReturnTypeWillChange]
 	public function offsetSet($offset, $value)
 	{
 		if ($offset === null) {
@@ -188,14 +192,16 @@ class Report implements ArrayAccess, IteratorAggregate
 	/**
 	 * @param string $offset
 	 */
+	#[\ReturnTypeWillChange]
 	public function offsetUnset($offset)
 	{
 		unset($this->differences[$offset]);
 	}
 
 	/**
-	 * @return \ArrayIterator|\Traversable
+	 * @return Traversable
 	 */
+	#[\ReturnTypeWillChange]
 	public function getIterator()
 	{
 		return new ArrayIterator($this->differences);
