@@ -4,8 +4,21 @@ This project follows [Semantic Versioning 2.0.0](http://semver.org/).
 
 ## <a name="unreleased"></a>Unreleased
 
+## <a name="v0.14.0"></a>v0.15.0 (2021-11-07)
+[Full Changelog](https://github.com/tomzx/php-semver-checker/compare/v0.14.0...v0.15.0)
+### Added
+* Add support for PHP 8.0, 8.1
+* Use of GitHub actions for CI
+
+### Changed
+* PHP minimum version from >=7.2.29 to >=7.3
+
+### Removed
+* Drop support for PHP 7.2
+* Use of travis-ci for CI
+
 ## <a name="v0.14.0"></a>v0.14.0 (2020-04-17)
-[Full Changelog](https://github.com/tomzx/php-semver-checker-git/compare/v0.13.0...v0.14.0)
+[Full Changelog](https://github.com/tomzx/php-semver-checker/compare/v0.13.0...v0.14.0)
 ### Added
 * [#100] Add support for PHP 7.4
 
@@ -13,7 +26,7 @@ This project follows [Semantic Versioning 2.0.0](http://semver.org/).
 * Drop support for PHP 5.6, 7.0, 7.1 and hhvm
 
 ## <a name="v0.13.0"></a>v0.13.0 (2019-04-19)
-[Full Changelog](https://github.com/tomzx/php-semver-checker-git/compare/v0.12.1...v0.13.0)
+[Full Changelog](https://github.com/tomzx/php-semver-checker/compare/v0.12.1...v0.13.0)
 ### Added
 * [#99] Add support for class [V154], class method [V150, V156, V157, V151, V152, V158, V159], function [V160], interface [V153] and trait [V155] case change
 
@@ -24,7 +37,7 @@ This project follows [Semantic Versioning 2.0.0](http://semver.org/).
 * [#94] PHP 7.1 nullable types not supported
 
 ## <a name="v0.12.1"></a>v0.12.1 (2018-02-08)
-[Full Changelog](https://github.com/tomzx/php-semver-checker-git/compare/v0.12.0...v0.12.1)
+[Full Changelog](https://github.com/tomzx/php-semver-checker/compare/v0.12.0...v0.12.1)
 ### Changed
 * Remove dependency to herrera-io/phar-update in box.json
 
