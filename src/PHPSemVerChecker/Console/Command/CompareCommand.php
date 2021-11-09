@@ -88,5 +88,7 @@ class CompareCommand extends BaseCommand
 		$output->writeln('');
 		$output->writeln('[Scanned files] Before: ' . count($sourceBefore) . ', After: ' . count($sourceAfter) . ', Identical: ' . $identicalCount);
 		$output->writeln('Time: ' . round($duration, 3) . ' seconds, Memory: ' . round(memory_get_peak_usage() / 1024 / 1024, 3) . ' MB');
+
+		return 0;
 	}
 }

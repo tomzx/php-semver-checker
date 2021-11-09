@@ -44,13 +44,13 @@ class Finder
 	 */
 	public function findFromString($path, $includes, $excludes)
 	{
-		if ($includes === '*') {
+		if ($includes === '*' || $includes === null) {
 			$includes = [];
 		} else {
 			$includes = preg_split('@(?:\s*,\s*|^\s*|\s*$)@', $includes, null, PREG_SPLIT_NO_EMPTY);
 		}
 
-		if ($excludes === '*') {
+		if ($excludes === '*' || $excludes === null) {
 			$excludes = [];
 		} else {
 			$excludes = preg_split('@(?:\s*,\s*|^\s*|\s*$)@', $excludes, null, PREG_SPLIT_NO_EMPTY);

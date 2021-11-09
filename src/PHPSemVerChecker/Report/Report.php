@@ -158,7 +158,7 @@ class Report implements ArrayAccess, IteratorAggregate
 	 * @param string $offset
 	 * @return bool
 	 */
-	public function offsetExists($offset)
+	public function offsetExists($offset): bool
 	{
 		return isset($this->differences[$offset]);
 	}
@@ -167,6 +167,7 @@ class Report implements ArrayAccess, IteratorAggregate
 	 * @param string $offset
 	 * @return array
 	 */
+	#[\ReturnTypeWillChange]
 	public function offsetGet($offset)
 	{
 		return $this->differences[$offset];
@@ -176,7 +177,7 @@ class Report implements ArrayAccess, IteratorAggregate
 	 * @param string $offset
 	 * @param mixed  $value
 	 */
-	public function offsetSet($offset, $value)
+	public function offsetSet($offset, $value): void
 	{
 		if ($offset === null) {
 			$this->differences[] = $value;
@@ -188,7 +189,7 @@ class Report implements ArrayAccess, IteratorAggregate
 	/**
 	 * @param string $offset
 	 */
-	public function offsetUnset($offset)
+	public function offsetUnset($offset): void
 	{
 		unset($this->differences[$offset]);
 	}
@@ -196,7 +197,7 @@ class Report implements ArrayAccess, IteratorAggregate
 	/**
 	 * @return \ArrayIterator|\Traversable
 	 */
-	public function getIterator()
+	public function getIterator(): \Traversable
 	{
 		return new ArrayIterator($this->differences);
 	}

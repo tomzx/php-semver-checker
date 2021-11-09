@@ -25,7 +25,7 @@ class Application extends SymfonyApplication
 		parent::__construct('PHP Semantic Versioning Checker by Tom Rochette', self::VERSION);
 
 		// Suppress deprecated warnings
-		error_reporting(E_ALL ^E_DEPRECATED);
+		error_reporting(E_ALL & ~E_DEPRECATED);
 	}
 
 	/**
