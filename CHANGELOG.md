@@ -4,7 +4,18 @@ This project follows [Semantic Versioning 2.0.0](http://semver.org/).
 
 ## <a name="unreleased"></a>Unreleased
 
-## <a name="v0.14.0"></a>v0.15.0 (2021-11-07)
+## <a name="v0.15.1"></a>v0.15.1 (2021-12-30)
+[Full Changelog](https://github.com/tomzx/php-semver-checker/compare/v0.15.0...v0.15.1)
+### Changed
+* Bumped hassankhan/config to ^3.0.0
+
+### Fixed
+* Apply typing to `Report` class
+
+### Removed
+* Deprecation warnings suppression
+
+## <a name="v0.15.0"></a>v0.15.0 (2021-11-07)
 [Full Changelog](https://github.com/tomzx/php-semver-checker/compare/v0.14.0...v0.15.0)
 ### Added
 * Add support for PHP 8.0, 8.1
