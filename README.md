@@ -11,7 +11,14 @@ PHP Semantic Versioning Checker is a console/library which allows you to inspect
 
 After the inspection is completed, you are given a list of changes that have occurred between the two changesets following [Semantic Versioning 2.0.0](https://semver.org/). For each of these changes, the level of the change (MAJOR, MINOR, PATCH) will be given, as well as the location of the change (file and line number) and a reason as to why this level change is suggested.
 
+## For continuous integration
+
+If you'd like to use `php-semver-checker` in your CI pipeline, we recommend you look at
+[`php-semver-checker-git`](https://github.com/tomzx/php-semver-checker-git) which integrates with Git and will compare
+your latest changes with the latest Git tag of your repository.
+
 ## Semantic Versioning 2.0.0 Overview
+
 Given a version number MAJOR.MINOR.PATCH, increment the:
 
 * MAJOR version when you make incompatible API changes,
@@ -29,6 +36,7 @@ As this is still an alpha package, it is not suggested to include `php-semver-ch
 See the example section for examples of how to use the tool.
 
 ### Building `php-semver-checker.phar`
+
 First, make sure you have [box](https://github.com/box-project/box2) installed. Then, in the base directory, you can run the following command which will generate the `php-semver-checker.phar` file.
 
 ```
@@ -135,6 +143,7 @@ Time: 1.43 seconds, Memory: 5.123 MB
 
 ## Contributing
 ### Adding new rules
+
 * Add the rules to the `docs/Ruleset.md` document
 * Run `php scripts/extract-rules-from-ruleset.php` to generate an up to date array to paste in the `Configuration/LevelMapping.php` file
 * Update the documentation @ https://github.com/tomzx/php-semver-checker-docs
