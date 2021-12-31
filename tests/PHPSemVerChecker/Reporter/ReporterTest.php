@@ -6,7 +6,6 @@ use Mockery as m;
 use PHPSemVerChecker\Reporter\Reporter;
 use PHPSemVerChecker\SemanticVersioning\Level;
 use PHPSemVerChecker\Test\TestCase;
-use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 
 class ReporterTest extends TestCase {
@@ -43,7 +42,7 @@ class ReporterTest extends TestCase {
 			->shouldReceive('getLevelForContext')->andReturn(Level::MAJOR);
 
 		$operation->shouldReceive('getLocation')->once()->andReturn('test-location')
-			->shouldReceive('getLine')->once()->andReturn('test-line')
+			->shouldReceive('getLine')->once()->andReturn(1)
 			->shouldReceive('getTarget')->once()->andReturn('test-target')
 			->shouldReceive('getReason')->once()->andReturn('test-reason')
 			->shouldReceive('getCode')->once()->andReturn('test-code');

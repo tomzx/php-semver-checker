@@ -10,7 +10,7 @@ class Visibility
 	/**
 	 * @return array
 	 */
-	public static function getMapping()
+	public static function getMapping(): array
 	{
 		return [
 			Class_::MODIFIER_PUBLIC    => 0,
@@ -23,7 +23,7 @@ class Visibility
 	 * @param int $visibility
 	 * @return int
 	 */
-	public static function get($visibility)
+	public static function get(int $visibility): int
 	{
 		$mapping = self::getMapping();
 		return $mapping[$visibility];
@@ -33,7 +33,7 @@ class Visibility
 	 * @param \PhpParser\Node\Stmt $context
 	 * @return int
 	 */
-	public static function getForContext(Stmt $context)
+	public static function getForContext(Stmt $context): int
 	{
 		if ($context->isPublic()) {
 			return Class_::MODIFIER_PUBLIC;
@@ -48,7 +48,7 @@ class Visibility
 	 * @param string $visibility
 	 * @return int
 	 */
-	public static function getModifier($visibility)
+	public static function getModifier(string $visibility): int
 	{
 		if ($visibility === 'public') {
 			return Class_::MODIFIER_PUBLIC;
@@ -63,7 +63,7 @@ class Visibility
 	 * @param int $visibility
 	 * @return string
 	 */
-	public static function toString($visibility)
+	public static function toString(int $visibility): string
 	{
 		if ($visibility === Class_::MODIFIER_PUBLIC) {
 			return 'public';

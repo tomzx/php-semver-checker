@@ -50,7 +50,7 @@ class Scanner
 	/**
 	 * @param string $file
 	 */
-	public function scan($file)
+	public function scan(string $file)
 	{
 		// Set the current file used by the registry so that we can tell where the change was scanned.
 		$this->registry->setCurrentFile($file);
@@ -68,7 +68,7 @@ class Scanner
 	/**
 	 * @return \PHPSemVerChecker\Registry\Registry
 	 */
-	public function getRegistry()
+	public function getRegistry(): Registry
 	{
 		return $this->registry;
 	}

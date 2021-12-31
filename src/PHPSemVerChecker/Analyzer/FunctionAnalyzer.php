@@ -9,7 +9,6 @@ use PHPSemVerChecker\Operation\FunctionCaseChanged;
 use PHPSemVerChecker\Operation\FunctionImplementationChanged;
 use PHPSemVerChecker\Operation\FunctionOperationUnary;
 use PHPSemVerChecker\Operation\FunctionParameterAdded;
-use PHPSemVerChecker\Operation\FunctionParameterChanged;
 use PHPSemVerChecker\Operation\FunctionParameterDefaultAdded;
 use PHPSemVerChecker\Operation\FunctionParameterDefaultRemoved;
 use PHPSemVerChecker\Operation\FunctionParameterDefaultValueChanged;
@@ -33,7 +32,7 @@ class FunctionAnalyzer
 	 * @param \PHPSemVerChecker\Registry\Registry $registryAfter
 	 * @return \PHPSemVerChecker\Report\Report
 	 */
-	public function analyze(Registry $registryBefore, Registry $registryAfter)
+	public function analyze(Registry $registryBefore, Registry $registryAfter): Report
 	{
 		$report = new Report();
 

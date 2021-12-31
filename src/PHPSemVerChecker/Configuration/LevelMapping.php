@@ -141,7 +141,7 @@ class LevelMapping
 	 * @param string $code
 	 * @return int
 	 */
-	public static function getLevelForCode($code)
+	public static function getLevelForCode(string $code): int
 	{
 		return static::$mapping[$code];
 	}

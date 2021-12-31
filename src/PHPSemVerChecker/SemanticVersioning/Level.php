@@ -13,7 +13,7 @@ class Level
 	 * @param string $order
 	 * @return array
 	 */
-	public static function asList($order = 'asc')
+	public static function asList(string $order = 'asc'): array
 	{
 		$levels = [
 			self::PATCH,
@@ -32,7 +32,7 @@ class Level
 	 * @param int $level
 	 * @return string
 	 */
-	public static function toString($level)
+	public static function toString(int $level): string
 	{
 		$mapping = [
 			self::NONE  => 'NONE',
@@ -48,7 +48,7 @@ class Level
 	 * @param string $level
 	 * @return int
 	 */
-	public static function fromString($level)
+	public static function fromString(string $level): int
 	{
 		$mapping = [
 			'NONE'  => self::NONE,

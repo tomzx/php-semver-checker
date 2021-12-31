@@ -36,11 +36,11 @@ class ClassMethodAnalyzer
 	protected $fileAfter;
 
 	/**
-	 * @param string $context
-	 * @param string $fileBefore
-	 * @param string $fileAfter
+	 * @param string      $context
+	 * @param string|null $fileBefore
+	 * @param string|null $fileAfter
 	 */
-	public function __construct($context, $fileBefore = null, $fileAfter = null)
+	public function __construct(string $context, string $fileBefore = null, string $fileAfter = null)
 	{
 		$this->context = $context;
 		$this->fileBefore = $fileBefore;
@@ -52,7 +52,7 @@ class ClassMethodAnalyzer
 	 * @param \PhpParser\Node\Stmt $contextAfter
 	 * @return \PHPSemVerChecker\Report\Report
 	 */
-	public function analyze(Stmt $contextBefore, Stmt $contextAfter)
+	public function analyze(Stmt $contextBefore, Stmt $contextAfter): Report
 	{
 		$report = new Report();
 

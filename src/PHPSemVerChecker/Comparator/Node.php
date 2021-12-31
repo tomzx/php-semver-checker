@@ -9,7 +9,7 @@ class Node
 	 * @param \PhpParser\Node $nodeB
 	 * @return bool
 	 */
-	public static function isEqual(\PhpParser\Node $nodeA, \PhpParser\Node $nodeB)
+	public static function isEqual(\PhpParser\Node $nodeA, \PhpParser\Node $nodeB): bool
 	{
 		if ($nodeA->getType() !== $nodeB->getType()) {
 			return false;

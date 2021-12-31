@@ -17,10 +17,10 @@ abstract class FunctionOperationUnary extends Operation
 	protected $function;
 
 	/**
-	 * @param string                         $file
+	 * @param string|null                    $file
 	 * @param \PhpParser\Node\Stmt\Function_ $function
 	 */
-	public function __construct($file, Function_ $function)
+	public function __construct(?string $file, Function_ $function)
 	{
 		$this->file = $file;
 		$this->function = $function;
@@ -29,7 +29,7 @@ abstract class FunctionOperationUnary extends Operation
 	/**
 	 * @return string
 	 */
-	public function getLocation()
+	public function getLocation(): string
 	{
 		return $this->file;
 	}
@@ -37,7 +37,7 @@ abstract class FunctionOperationUnary extends Operation
 	/**
 	 * @return int
 	 */
-	public function getLine()
+	public function getLine(): int
 	{
 		return $this->function->getLine();
 	}
@@ -45,7 +45,7 @@ abstract class FunctionOperationUnary extends Operation
 	/**
 	 * @return string
 	 */
-	public function getTarget()
+	public function getTarget(): string
 	{
 		return PFunction::getFullyQualifiedName($this->function);
 	}

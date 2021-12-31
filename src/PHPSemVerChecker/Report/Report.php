@@ -31,7 +31,7 @@ class Report implements ArrayAccess, IteratorAggregate
 	 * @param \PHPSemVerChecker\Operation\Operation $classOperation
 	 * @return \PHPSemVerChecker\Report\Report
 	 */
-	public function addClass(Operation $classOperation)
+	public function addClass(Operation $classOperation): Report
 	{
 		return $this->add('class', $classOperation);
 	}
@@ -40,7 +40,7 @@ class Report implements ArrayAccess, IteratorAggregate
 	 * @param \PHPSemVerChecker\Operation\Operation $functionOperation
 	 * @return \PHPSemVerChecker\Report\Report
 	 */
-	public function addFunction(Operation $functionOperation)
+	public function addFunction(Operation $functionOperation): Report
 	{
 		return $this->add('function', $functionOperation);
 	}
@@ -49,7 +49,7 @@ class Report implements ArrayAccess, IteratorAggregate
 	 * @param \PHPSemVerChecker\Operation\Operation $interfaceOperation
 	 * @return \PHPSemVerChecker\Report\Report
 	 */
-	public function addInterface(Operation $interfaceOperation)
+	public function addInterface(Operation $interfaceOperation): Report
 	{
 		return $this->add('interface', $interfaceOperation);
 	}
@@ -58,7 +58,7 @@ class Report implements ArrayAccess, IteratorAggregate
 	 * @param \PHPSemVerChecker\Operation\Operation $traitOperation
 	 * @return \PHPSemVerChecker\Report\Report
 	 */
-	public function addTrait(Operation $traitOperation)
+	public function addTrait(Operation $traitOperation): Report
 	{
 		return $this->add('trait', $traitOperation);
 	}
@@ -68,7 +68,7 @@ class Report implements ArrayAccess, IteratorAggregate
 	 * @param \PHPSemVerChecker\Operation\Operation $operation
 	 * @return $this
 	 */
-	public function add($context, Operation $operation)
+	public function add(string $context, Operation $operation): Report
 	{
 		$level = $operation->getLevel();
 		$this->differences[$context][$level][] = $operation;
@@ -80,7 +80,7 @@ class Report implements ArrayAccess, IteratorAggregate
 	 * @param \PHPSemVerChecker\Report\Report $report
 	 * @return $this
 	 */
-	public function merge(Report $report)
+	public function merge(Report $report): Report
 	{
 		foreach ($report->differences as $context => $levels) {
 			foreach ($levels as $level => $differences) {
@@ -94,7 +94,7 @@ class Report implements ArrayAccess, IteratorAggregate
 	/**
 	 * @return array
 	 */
-	public function getDifferences()
+	public function getDifferences(): array
 	{
 		return $this->differences;
 	}
@@ -104,7 +104,7 @@ class Report implements ArrayAccess, IteratorAggregate
 	 * @param string|array|null $level
 	 * @return bool
 	 */
-	public function hasDifferences($context = null, $level = null)
+	public function hasDifferences($context = null, $level = null): bool
 	{
 		$queriedContexts = $context ? (array)$context : array_keys($this->differences);
 		$queriedLevels = $level ? (array)$level : Level::asList('desc');
@@ -122,7 +122,7 @@ class Report implements ArrayAccess, IteratorAggregate
 	 * @param string|array|null $context
 	 * @return int
 	 */
-	public function getLevelForContext($context = null)
+	public function getLevelForContext($context = null): int
 	{
 		$queriedContexts = $context ? (array)$context : array_keys($this->differences);
 		$levels = Level::asList('desc');
@@ -139,7 +139,7 @@ class Report implements ArrayAccess, IteratorAggregate
 	/**
 	 * @return int
 	 */
-	public function getSuggestedLevel()
+	public function getSuggestedLevel(): int
 	{
 		foreach (Level::asList('desc') as $level) {
 			foreach ($this->differences as $context => $levels) {
@@ -168,7 +168,7 @@ class Report implements ArrayAccess, IteratorAggregate
 	 * @return array
 	 */
 	#[\ReturnTypeWillChange]
-	public function offsetGet($offset)
+	public function offsetGet($offset): array
 	{
 		return $this->differences[$offset];
 	}

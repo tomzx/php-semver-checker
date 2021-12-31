@@ -40,7 +40,7 @@ class ProgressScanner
 	 * @param string[]                          $fileList
 	 * @param \PHPSemVerChecker\Scanner\Scanner $scanner
 	 */
-	public function addJob($name, $fileList, $scanner)
+	public function addJob(string $name, array $fileList, Scanner $scanner)
 	{
 		$this->fileLists[$name] = $fileList;
 		$this->scanners[$name] = $scanner;
@@ -61,7 +61,7 @@ class ProgressScanner
 	 *
 	 * @param string $jobName
 	 */
-	public function runJob($jobName)
+	public function runJob(string $jobName)
 	{
 		$progress = $this->getProgressBar();
 		$progress->setMessage('Scanning ' . $jobName);
@@ -78,7 +78,7 @@ class ProgressScanner
 	/**
 	 * @return int
 	 */
-	private function getFileCount()
+	private function getFileCount(): int
 	{
 		return array_sum(array_map('count', $this->fileLists));
 	}
@@ -86,7 +86,7 @@ class ProgressScanner
 	/**
 	 * @return \Symfony\Component\Console\Helper\ProgressBar
 	 */
-	private function getProgressBar()
+	private function getProgressBar(): ProgressBar
 	{
 		if ($this->progressBar === null) {
 			$this->progressBar = new ProgressBar($this->output, $this->getFileCount());

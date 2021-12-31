@@ -14,7 +14,7 @@ class Analyzer
 	 * @param \PHPSemVerChecker\Registry\Registry $registryAfter
 	 * @return \PHPSemVerChecker\Report\Report
 	 */
-	public function analyze(Registry $registryBefore, Registry $registryAfter)
+	public function analyze(Registry $registryBefore, Registry $registryAfter): Report
 	{
 		$finalReport = new Report();
 

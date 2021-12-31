@@ -22,7 +22,7 @@ abstract class Operation
 	/**
 	 * @return string
 	 */
-	public function getCode()
+	public function getCode(): string
 	{
 		return $this->code;
 	}
@@ -31,7 +31,7 @@ abstract class Operation
 	 * @param string $code
 	 * @return $this
 	 */
-	public function setCode($code)
+	public function setCode(string $code): Operation
 	{
 		$this->code = $code;
 
@@ -41,7 +41,7 @@ abstract class Operation
 	/**
 	 * @return int
 	 */
-	public function getLevel()
+	public function getLevel(): int
 	{
 		return LevelMapping::getLevelForCode($this->getCode());
 	}
@@ -49,7 +49,7 @@ abstract class Operation
 	/**
 	 * @return string
 	 */
-	public function getReason()
+	public function getReason(): string
 	{
 		return $this->reason;
 	}
@@ -58,7 +58,7 @@ abstract class Operation
 	 * @param string $reason
 	 * @return $this
 	 */
-	public function setReason($reason)
+	public function setReason(string $reason): Operation
 	{
 		$this->reason = $reason;
 
@@ -68,17 +68,17 @@ abstract class Operation
 	/**
 	 * @return string
 	 */
-	public abstract function getLocation();
+	public abstract function getLocation(): string;
 
 	/**
 	 * @return int
 	 */
-	public abstract function getLine();
+	public abstract function getLine(): int;
 
 	/**
 	 * @return string
 	 */
-	public function getTarget()
+	public function getTarget(): string
 	{
 		return $this->target;
 	}
@@ -87,7 +87,7 @@ abstract class Operation
 	 * @param string $target
 	 * @return $this
 	 */
-	public function setTarget($target)
+	public function setTarget(string $target): Operation
 	{
 		$this->target = $target;
 

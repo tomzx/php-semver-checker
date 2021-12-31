@@ -12,7 +12,7 @@ class Property
 	 * @param \PhpParser\Node\Stmt\Property $property
 	 * @return string
 	 */
-	public static function getFullyQualifiedName(Stmt $context, BaseProperty $property)
+	public static function getFullyQualifiedName(Stmt $context, BaseProperty $property): string
 	{
 		$namespace = $context->name;
 		if (isset($context->namespacedName)) {

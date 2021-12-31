@@ -9,7 +9,7 @@ class Filesystem
 	 * @param mixed  $data
 	 * @return bool|int
 	 */
-	public function write($filename, $data)
+	public function write(string $filename, $data)
 	{
 		return file_put_contents($filename, $data);
 	}
@@ -18,7 +18,7 @@ class Filesystem
 	 * @param string $filename
 	 * @return bool|string
 	 */
-	public function read($filename)
+	public function read(string $filename)
 	{
 		return file_get_contents($filename);
 	}

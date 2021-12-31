@@ -9,7 +9,7 @@ class SourceFilter
 	 * @param array $filesAfter
 	 * @return int
 	 */
-	public function filter(array &$filesBefore, array &$filesAfter)
+	public function filter(array &$filesBefore, array &$filesAfter): int
 	{
 		$hashedBefore = [];
 		foreach ($filesBefore as $fileBefore) {

@@ -28,7 +28,7 @@ class Application extends SymfonyApplication
 	/**
 	 * @return string
 	 */
-	public function getHelp()
+	public function getHelp(): string
 	{
 		return self::$logo . parent::getHelp();
 	}
@@ -36,7 +36,7 @@ class Application extends SymfonyApplication
 	/**
 	 * @return array|\Symfony\Component\Console\Command\Command[]
 	 */
-	protected function getDefaultCommands()
+	protected function getDefaultCommands(): array
 	{
 		$commands = parent::getDefaultCommands();
 		$commands[] = $this->add(new CompareCommand());

@@ -10,7 +10,7 @@ class Interface_
 	 * @param \PhpParser\Node\Stmt\Interface_ $interface
 	 * @return null|string
 	 */
-	public static function getFullyQualifiedName(BaseInterface $interface)
+	public static function getFullyQualifiedName(BaseInterface $interface): ?string
 	{
 		if (isset($interface->namespacedName)) {
 			return $interface->namespacedName->toString();

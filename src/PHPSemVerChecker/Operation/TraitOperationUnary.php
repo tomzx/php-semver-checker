@@ -17,10 +17,10 @@ class TraitOperationUnary extends Operation
 	protected $trait;
 
 	/**
-	 * @param string                      $file
+	 * @param string|null                 $file
 	 * @param \PhpParser\Node\Stmt\Trait_ $trait
 	 */
-	public function __construct($file, Trait_ $trait)
+	public function __construct(?string $file, Trait_ $trait)
 	{
 		$this->file = $file;
 		$this->trait = $trait;
@@ -29,7 +29,7 @@ class TraitOperationUnary extends Operation
 	/**
 	 * @return string
 	 */
-	public function getLocation()
+	public function getLocation(): string
 	{
 		return $this->file;
 	}
@@ -37,7 +37,7 @@ class TraitOperationUnary extends Operation
 	/**
 	 * @return int
 	 */
-	public function getLine()
+	public function getLine(): int
 	{
 		return $this->trait->getLine();
 	}
@@ -45,7 +45,7 @@ class TraitOperationUnary extends Operation
 	/**
 	 * @return string
 	 */
-	public function getTarget()
+	public function getTarget(): string
 	{
 		return PTrait::getFullyQualifiedName($this->trait);
 	}

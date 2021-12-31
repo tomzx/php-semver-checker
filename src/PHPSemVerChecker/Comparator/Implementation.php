@@ -11,7 +11,7 @@ class Implementation
 	 * @param array $statementsB
 	 * @return bool
 	 */
-	public static function isSame(array $statementsA, array $statementsB)
+	public static function isSame(array $statementsA, array $statementsB): bool
 	{
 		// Naive way to check if two implementation are the same
 		$nodeDumper = new NodeDumper();

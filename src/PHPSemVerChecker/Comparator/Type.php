@@ -11,7 +11,7 @@ class Type
 	 * @param \PhpParser\Node\Name|string|null $typeB
 	 * @return bool
 	 */
-	public static function isSame($typeA, $typeB)
+	public static function isSame($typeA, $typeB): bool
 	{
 		$typeA = self::get($typeA);
 		$typeB = self::get($typeB);
