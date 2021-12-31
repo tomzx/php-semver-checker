@@ -12,7 +12,7 @@ class Finder
 	 * @param array  $excludes
 	 * @return array
 	 */
-	public function find($path, array $includes, array $excludes = [])
+	public function find(string $path, array $includes, array $excludes = []): array
 	{
 		$finder = new BaseFinder();
 		$finder->ignoreDotFiles(true)
@@ -37,23 +37,23 @@ class Finder
 	}
 
 	/**
-	 * @param string $path
-	 * @param string $includes
-	 * @param string $excludes
+	 * @param string      $path
+	 * @param string|null $includes
+	 * @param string|null $excludes
 	 * @return array
 	 */
-	public function findFromString($path, $includes, $excludes)
+	public function findFromString(string $path, ?string $includes, ?string $excludes): array
 	{
 		if ($includes === '*' || $includes === null) {
 			$includes = [];
 		} else {
-			$includes = preg_split('@(?:\s*,\s*|^\s*|\s*$)@', $includes, null, PREG_SPLIT_NO_EMPTY);
+			$includes = preg_split('@(?:\s*,\s*|^\s*|\s*$)@', $includes, -1, PREG_SPLIT_NO_EMPTY);
 		}
 
 		if ($excludes === '*' || $excludes === null) {
 			$excludes = [];
 		} else {
-			$excludes = preg_split('@(?:\s*,\s*|^\s*|\s*$)@', $excludes, null, PREG_SPLIT_NO_EMPTY);
+			$excludes = preg_split('@(?:\s*,\s*|^\s*|\s*$)@', $excludes, -1, PREG_SPLIT_NO_EMPTY);
 		}
 
 		return $this->find($path, $includes, $excludes);
