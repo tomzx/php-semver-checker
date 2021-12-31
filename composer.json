@@ -22,7 +22,7 @@
 	"require": {
 		"php": ">=7.3",
 
-		"hassankhan/config": "^2.0",
+		"hassankhan/config": "^2.0 || ^3.0",
 		"nikic/php-parser": "^4.0",
 		"symfony/console": "^4.0|^5.0",
 		"symfony/yaml": "^4.0|^5.0",
