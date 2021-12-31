@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace PHPSemVerChecker\Analyzer;
 
@@ -61,12 +62,12 @@ class ClassMethodAnalyzer
 
 		$methodsBeforeKeyed = [];
 		foreach ($methodsBefore as $method) {
-			$methodsBeforeKeyed[strtolower($method->name)] = $method;
+			$methodsBeforeKeyed[$method->name->toLowerString()] = $method;
 		}
 
 		$methodsAfterKeyed = [];
 		foreach ($methodsAfter as $method) {
-			$methodsAfterKeyed[strtolower($method->name)] = $method;
+			$methodsAfterKeyed[$method->name->toLowerString()] = $method;
 		}
 
 		$methodNamesBefore = array_keys($methodsBeforeKeyed);
