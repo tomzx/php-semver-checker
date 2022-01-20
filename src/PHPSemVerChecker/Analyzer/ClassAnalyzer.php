@@ -67,7 +67,7 @@ class ClassAnalyzer
 			if ($classBefore != $classAfter) {
 				// Check for case change of class name.
 				// If we entered this section then the normalized names (lowercase) were equal.
-				if ($classBefore->name !== $classAfter->name) {
+				if ($classBefore->name->toString() !== $classAfter->name->toString()) {
 					$report->add(
 						$this->context,
 						new ClassCaseChanged(
