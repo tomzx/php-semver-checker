@@ -113,26 +113,28 @@ class ClassMethodAnalyzer
 				}
 
 				if ($methodBefore->returnType !== $methodAfter->returnType) {
-					$class = ClassMethodCaseChanged::class;
-					if ($methodBefore->returnType === null) {
+					$class = null;
+					if ($methodBefore->returnType !== null && $methodAfter->returnType === null) {
 						$class = ClassMethodReturnTypeAdded::class;
-					} elseif ($methodAfter->returnType === null) {
+					} elseif ($methodAfter->returnType === null && $methodBefore->returnType === null) {
 						$class = ClassMethodReturnTypeRemoved::class;
-					} elseif ($methodAfter->returnType->name !== $methodBefore->returnType->name) {
+					} elseif (strcasecmp($methodAfter->returnType->name, $methodBefore->returnType->name) !== 0) {
 						$class = ClassMethodReturnTypeChanged::class;
 					}
-					$report->add(
-						$this->context,
-						new $class(
+					if ($class) {
+						$report->add(
 							$this->context,
-							$this->fileBefore,
-							$contextAfter,
-							$methodBefore,
-							$this->fileAfter,
-							$contextAfter,
-							$methodAfter
-						)
-					);
+							new $class(
+								$this->context,
+								$this->fileBefore,
+								$contextAfter,
+								$methodBefore,
+								$this->fileAfter,
+								$contextAfter,
+								$methodAfter
+							)
+						);
+					}
 				}
 
 				$signatureResult = Signature::analyze($methodBefore->getParams(), $methodAfter->getParams());
