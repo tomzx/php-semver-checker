@@ -116,7 +116,7 @@ class ClassMethodAnalyzer
 					$class = null;
 					if ($methodBefore->returnType !== null && $methodAfter->returnType === null) {
 						$class = ClassMethodReturnTypeAdded::class;
-					} elseif ($methodAfter->returnType === null && $methodBefore->returnType === null) {
+					} elseif ($methodAfter->returnType !== null && $methodBefore->returnType === null) {
 						$class = ClassMethodReturnTypeRemoved::class;
 					} elseif (strcasecmp($methodAfter->returnType->name, $methodBefore->returnType->name) !== 0) {
 						$class = ClassMethodReturnTypeChanged::class;

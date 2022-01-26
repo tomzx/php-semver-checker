@@ -15,5 +15,5 @@ class ClassMethodReturnTypeAdded extends ClassMethodOperationDelta
 	/**
 	 * @var string
 	 */
-	protected $reason = 'Method return type added.';
+	protected $reason = 'Method return type was added.';
 }

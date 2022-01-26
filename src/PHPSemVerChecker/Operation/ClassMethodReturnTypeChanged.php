@@ -8,12 +8,12 @@ class ClassMethodReturnTypeChanged extends ClassMethodOperationDelta
 	 * @var array
 	 */
 	protected $code = [
-		'class'     => ['V164'],
-		'interface' => ['V165'],
-		'trait'     => ['V166'],
+		'class'     => ['V167'],
+		'interface' => ['V168'],
+		'trait'     => ['V169'],
 	];
 	/**
 	 * @var string
 	 */
-	protected $reason = 'Method return type changed.';
+	protected $reason = 'Method return type was changed.';
 }
