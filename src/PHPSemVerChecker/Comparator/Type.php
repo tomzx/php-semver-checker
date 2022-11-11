@@ -3,6 +3,7 @@
 namespace PHPSemVerChecker\Comparator;
 
 use PhpParser\Node\NullableType;
+use PhpParser\Node\UnionType;
 
 class Type
 {
@@ -19,7 +20,7 @@ class Type
 	}
 
 	/**
-	 * @param \PhpParser\Node\Name|\PhpParser\Node\NullableType|string|null $type
+	 * @param \PhpParser\Node\Name|\PhpParser\Node\NullableType|\PhpParser\Node\UnionType|string|null $type
 	 * @return string|null
 	 */
 	public static function get($type)
@@ -30,6 +31,15 @@ class Type
 
 		if ($type instanceof NullableType) {
 			return '?'.static::get($type->type);
+		}
+
+		if ($type instanceof UnionType) {
+		    $types = [];
+		    foreach ($type->types as $typ) {
+			$types[] = static::get($typ);
+		    }
+
+		    return implode('|', $types);
 		}
 
 		return $type->toString();
