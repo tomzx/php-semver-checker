@@ -2,8 +2,10 @@
 
 namespace PHPSemVerChecker\Test\Comparator;
 
+use PhpParser\Node\Identifier;
 use PhpParser\Node\Name;
 use PhpParser\Node\NullableType;
+use PhpParser\Node\UnionType;
 use PHPSemVerChecker\Comparator\Type;
 use PHPSemVerChecker\Test\TestCase;
 
@@ -22,7 +24,8 @@ class TypeComparatorTest extends TestCase
 		return [
 			[Name::concat(null, 'test'), Name::concat(null, 'test')],
 			['test', 'test'],
-			[null, null]
+			[null, null],
+			[new UnionType([new Identifier('self'), new Identifier('array')]), new UnionType([new Identifier('array'), new Identifier('self')])],
 		];
 	}
 
@@ -39,7 +42,8 @@ class TypeComparatorTest extends TestCase
 		return [
 			[Name::concat(null, 'test'), Name::concat(null, 'test1')],
 			['test', 'test1'],
-			[null, 'test']
+			[null, 'test'],
+			[new UnionType([new Identifier('self'), new Identifier('array')]), null],
 		];
 	}
 
@@ -59,6 +63,7 @@ class TypeComparatorTest extends TestCase
 			[Name::concat('namespaced', 'test'), 'namespaced\test'],
 			[new NullableType('test'), '?test'],
 			[new NullableType(Name::concat('namespaced', 'test')), '?namespaced\test'],
+			[new UnionType([new Identifier('self'), new Identifier('array')]), 'array|self'],
 		];
 	}
 }
