@@ -4,6 +4,15 @@ This project follows [Semantic Versioning 2.0.0](http://semver.org/).
 
 ## <a name="unreleased"></a>Unreleased
 
+## <a name="v0.16.0"></a>v0.16.0 (2023-06-18)
+[Full Changelog](https://github.com/tomzx/php-semver-checker/compare/v0.15.1...v0.16.0)
+### Changed
+* Added strict typing
+* Bumped minimum PHP version to ^8.0
+* Added support for union type comparison
+* Bumped symfony/console to ^6.0
+* Bumped symfony/yaml to ^6.0
+
 ## <a name="v0.15.1"></a>v0.15.1 (2021-12-30)
 [Full Changelog](https://github.com/tomzx/php-semver-checker/compare/v0.15.0...v0.15.1)
 ### Changed
