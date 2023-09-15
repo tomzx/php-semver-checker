@@ -12,9 +12,13 @@ use PHPSemVerChecker\Report\Report;
 class ClassAnalyzer
 {
 	/**
-	 * @var string
+	 * @param string $context
+	 * @param array $args
+	 * @return void
 	 */
-	protected $context = 'class';
+	public function __construct(protected array $args, protected string $context = 'class',)
+	{
+	}
 
 	/**
 	 * @param \PHPSemVerChecker\Registry\Registry $registryBefore
@@ -68,7 +72,7 @@ class ClassAnalyzer
 			if ($classBefore != $classAfter) {
 				// Check for case change of class name.
 				// If we entered this section then the normalized names (lowercase) were equal.
-				if ($classBefore->name !== $classAfter->name) {
+				if ($classBefore->name->toString() !== $classAfter->name->toString()) {
 					$report->add(
 						$this->context,
 						new ClassCaseChanged(
@@ -81,7 +85,7 @@ class ClassAnalyzer
 				}
 
 				$analyzers = [
-					new ClassMethodAnalyzer('class', $fileBefore, $fileAfter),
+					new ClassMethodAnalyzer('class', $fileBefore, $fileAfter, $this->args),
 					new PropertyAnalyzer('class', $fileBefore, $fileAfter),
 				];
 
