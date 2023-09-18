@@ -20,7 +20,7 @@ class CompareCommand extends BaseCommand
 	/**
 	 * @return void
 	 */
-	protected function configure()
+	protected function configure(): void
 	{
 		$this
 			->setName('compare')
@@ -34,7 +34,8 @@ class CompareCommand extends BaseCommand
 				new InputOption('exclude-after', null, InputOption::VALUE_REQUIRED, 'List of paths to exclude <info>(comma separated)</info>'),
 				new InputOption('full-path', null, InputOption::VALUE_NONE, 'Display the full path to the file instead of the relative path'),
 				new InputOption('config', null, InputOption::VALUE_REQUIRED, 'A configuration file to configure php-semver-checker'),
-				new InputOption('to-json', null, InputOption::VALUE_REQUIRED, 'Output the result to a JSON file')
+				new InputOption('to-json', null, InputOption::VALUE_REQUIRED, 'Output the result to a JSON file'),
+				new InputOption('api-only', null, InputOption::VALUE_REQUIRED, 'If true the tool only checks methods annotated with @api')
 			]);
 	}
 
@@ -72,7 +73,10 @@ class CompareCommand extends BaseCommand
 		$registryBefore = $scannerBefore->getRegistry();
 		$registryAfter = $scannerAfter->getRegistry();
 
+        $args = ['apiOnly' => $this->config->get('api-only')];
+
 		$analyzer = new Analyzer();
+        $analyzer->setArgs($args);
 		$report = $analyzer->analyze($registryBefore, $registryAfter);
 
 		$reporter = new Reporter($report);
