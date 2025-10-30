@@ -5,6 +5,7 @@ namespace PHPSemVerChecker\Test\Analyzer;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Expr\Variable;
+use PhpParser\Node\Name;
 use PhpParser\Node\Param;
 use PhpParser\Node\Scalar;
 use PhpParser\Node\Scalar\String_;
@@ -258,7 +259,7 @@ class ClassMethodAnalyzerTest extends TestCase
 				new ClassMethod('tmpMethod', [
 					'type'   => Visibility::getModifier($visibility),
 					'params' => [
-						new Param(new Variable('a'), null, 'A'),
+						new Param(new Variable('a'), null, new Name('A')),
 					],
 				]),
 			],
@@ -269,8 +270,8 @@ class ClassMethodAnalyzerTest extends TestCase
 				new ClassMethod('tmpMethod', [
 					'type'   => Visibility::getModifier($visibility),
 					'params' => [
-						new Param(new Variable('a'), null, 'A'),
-						new Param(new Variable('b'), null, 'B'),
+						new Param(new Variable('a'), null, new Name('A')),
+						new Param(new Variable('b'), null, new Name('B')),
 					],
 				]),
 			],
@@ -310,8 +311,8 @@ class ClassMethodAnalyzerTest extends TestCase
 				new ClassMethod('tmpMethod', [
 					'type'   => Visibility::getModifier($visibility),
 					'params' => [
-						new Param(new Variable('a'), null, 'A'),
-						new Param(new Variable('b'), null, 'B'),
+						new Param(new Variable('a'), null, new Name('A')),
+						new Param(new Variable('b'), null, new Name('B')),
 					],
 				]),
 			],
@@ -322,7 +323,7 @@ class ClassMethodAnalyzerTest extends TestCase
 				new ClassMethod('tmpMethod', [
 					'type'   => Visibility::getModifier($visibility),
 					'params' => [
-						new Param(new Variable('a'), null, 'A'),
+						new Param(new Variable('a'), null, new Name('A')),
 					],
 				]),
 			],
@@ -373,7 +374,7 @@ class ClassMethodAnalyzerTest extends TestCase
 				new ClassMethod('tmpMethod', [
 					'type'   => Visibility::getModifier($visibility),
 					'params' => [
-						new Param(new Variable('a'), null, 'A'),
+						new Param(new Variable('a'), null, new Name('A')),
 					],
 				]),
 			],
@@ -413,7 +414,7 @@ class ClassMethodAnalyzerTest extends TestCase
 				new ClassMethod('tmpMethod', [
 					'type'   => Visibility::getModifier($visibility),
 					'params' => [
-						new Param(new Variable('a'), null, 'A'),
+						new Param(new Variable('a'), null, new Name('A')),
 					],
 				]),
 			],
@@ -464,8 +465,8 @@ class ClassMethodAnalyzerTest extends TestCase
 				new ClassMethod('tmpMethod', [
 					'type'   => Visibility::getModifier($visibility),
 					'params' => [
-						new Param(new Variable('a'), null, 'A'),
-						new Param(new Variable('b'), null, 'B'),
+						new Param(new Variable('a'), null, new Name('A')),
+						new Param(new Variable('b'), null, new Name('B')),
 					],
 				]),
 			],
@@ -476,8 +477,8 @@ class ClassMethodAnalyzerTest extends TestCase
 				new ClassMethod('tmpMethod', [
 					'type'   => Visibility::getModifier($visibility),
 					'params' => [
-						new Param(new Variable('a'), null, 'A'),
-						new Param(new Variable('b'), new String_('someDefaultValue'), 'B'),
+						new Param(new Variable('a'), null, new Name('A')),
+						new Param(new Variable('b'), new String_('someDefaultValue'), new Name('B')),
 					],
 				]),
 			],
@@ -517,8 +518,8 @@ class ClassMethodAnalyzerTest extends TestCase
 				new ClassMethod('tmpMethod', [
 					'type'   => Visibility::getModifier($visibility),
 					'params' => [
-						new Param(new Variable('a'), null, 'A'),
-						new Param(new Variable('b'), new String_('someDefaultValue'), 'B'),
+						new Param(new Variable('a'), null, new Name('A')),
+						new Param(new Variable('b'), new String_('someDefaultValue'), new Name('B')),
 					],
 				]),
 			],
@@ -529,8 +530,8 @@ class ClassMethodAnalyzerTest extends TestCase
 				new ClassMethod('tmpMethod', [
 					'type'   => Visibility::getModifier($visibility),
 					'params' => [
-						new Param(new Variable('a'), null, 'A'),
-						new Param(new Variable('b'), null, 'B'),
+						new Param(new Variable('a'), null, new Name('A')),
+						new Param(new Variable('b'), null, new Name('B')),
 					],
 				]),
 			],
@@ -570,8 +571,8 @@ class ClassMethodAnalyzerTest extends TestCase
 				new ClassMethod('tmpMethod', [
 					'type'   => Visibility::getModifier($visibility),
 					'params' => [
-						new Param(new Variable('a'), null, 'A'),
-						new Param(new Variable('b'), new String_('someDefaultValue'), 'B'),
+						new Param(new Variable('a'), null, new Name('A')),
+						new Param(new Variable('b'), new String_('someDefaultValue'), new Name('B')),
 					],
 				]),
 			],
@@ -582,8 +583,8 @@ class ClassMethodAnalyzerTest extends TestCase
 				new ClassMethod('tmpMethod', [
 					'type'   => Visibility::getModifier($visibility),
 					'params' => [
-						new Param(new Variable('a'), null, 'A'),
-						new Param(new Variable('b'), new String_('someNewDefaultValue'), 'B'),
+						new Param(new Variable('a'), null, new Name('A')),
+						new Param(new Variable('b'), new String_('someNewDefaultValue'), new Name('B')),
 					],
 				]),
 			],

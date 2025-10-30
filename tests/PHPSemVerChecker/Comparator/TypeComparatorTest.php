@@ -61,7 +61,7 @@ class TypeComparatorTest extends TestCase
 			[null, null],
 			['test', 'test'],
 			[Name::concat('namespaced', 'test'), 'namespaced\test'],
-			[new NullableType('test'), '?test'],
+			[new NullableType(new Identifier('test')), '?test'],
 			[new NullableType(Name::concat('namespaced', 'test')), '?namespaced\test'],
 			[new UnionType([new Identifier('self'), new Identifier('array')]), 'array|self'],
 		];

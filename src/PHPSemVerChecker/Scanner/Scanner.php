@@ -32,7 +32,7 @@ class Scanner
 	public function __construct()
 	{
 		$this->registry = new Registry();
-		$this->parser = (new ParserFactory())->create(ParserFactory::PREFER_PHP7);
+		$this->parser = (new ParserFactory())->createForNewestSupportedVersion();
 		$this->traverser = new NodeTraverser();
 
 		$visitors = [
