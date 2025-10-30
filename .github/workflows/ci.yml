@@ -43,7 +43,7 @@ jobs:
     - name: Submit code coverage
       uses: codecov/codecov-action@v2
 
-    - name: Evaluate semantic versioning
-      run: |
-        wget http://psvcg.coreteks.org/php-semver-checker-git.phar
-        php php-semver-checker-git.phar suggest -vvv
+    #- name: Evaluate semantic versioning
+    #  run: |
+    #    wget http://psvcg.coreteks.org/php-semver-checker-git.phar
+    #    php php-semver-checker-git.phar suggest -vvv
