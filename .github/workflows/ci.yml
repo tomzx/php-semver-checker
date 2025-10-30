@@ -47,3 +47,45 @@ jobs:
     #  run: |
     #    wget http://psvcg.coreteks.org/php-semver-checker-git.phar
     #    php php-semver-checker-git.phar suggest -vvv
+
+  phar:
+    runs-on: ubuntu-latest
+    name: Build PHAR
+    if: startsWith(github.ref, 'refs/tags/')
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+          php-version: 8.4
+          tools: composer:v2
+
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-interaction --no-progress
+
+    - name: Install Box
+      run: |
+        wget https://github.com/box-project/box/releases/latest/download/box.phar
+        chmod +x box.phar
+        sudo mv box.phar /usr/local/bin/box
+
+    - name: Build PHAR
+      run: box compile
+
+    - name: Upload PHAR artifact
+      uses: actions/upload-artifact@v5
+      with:
+        name: php-semver-checker-phar
+        path: php-semver-checker.phar
+
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: php-semver-checker.phar
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
