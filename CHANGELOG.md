@@ -4,6 +4,16 @@ This project follows [Semantic Versioning 2.0.0](http://semver.org/).
 
 ## <a name="unreleased"></a>Unreleased
 
+## <a name="v0.17.0"></a>v0.17.0 (2025-10-30)
+[Full Changelog](https://github.com/tomzx/php-semver-checker/compare/v0.16.0...v0.17.0)
+### Added
+* Build .phar with GitHub Actions
+
+### Changed
+* Bumped minimum PHP version to ^8.1
+* Bumped nikic/php-parser to ^5.2 to support PHP 8.4
+* Removed PHP 7.3/7.4 from CI check
+
 ## <a name="v0.16.0"></a>v0.16.0 (2023-06-18)
 [Full Changelog](https://github.com/tomzx/php-semver-checker/compare/v0.15.1...v0.16.0)
 ### Changed
