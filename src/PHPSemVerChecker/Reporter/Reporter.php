@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace PHPSemVerChecker\Reporter;
 
+use PHPSemVerChecker\Console\Helper\MarkdownTable;
 use PHPSemVerChecker\Operation\Operation;
 use PHPSemVerChecker\Report\Report;
 use PHPSemVerChecker\SemanticVersioning\Level;
-use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class Reporter
@@ -89,7 +89,7 @@ class Reporter
 	 */
 	protected function outputTable(OutputInterface $output, Report $report, string $context)
 	{
-		$table = new Table($output);
+		$table = new MarkdownTable($output);
 		$table->setHeaders(['Level', 'Location', 'Target', 'Reason', 'Code']);
 		foreach (Level::asList('desc') as $level) {
 			$reportForLevel = $report[$context][$level];
