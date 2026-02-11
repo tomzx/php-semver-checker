@@ -8,6 +8,8 @@ use PHPSemVerChecker\Report\Report;
 
 class Analyzer
 {
+	/** @var array */
+	protected $args = ['apiOnly' => null];
 	/**
 	 * Compare with a destination registry (what the new source code is like).
 	 *
@@ -21,7 +23,7 @@ class Analyzer
 
 		$analyzers = [
 			new FunctionAnalyzer(),
-			new ClassAnalyzer(),
+			new ClassAnalyzer($this->args),
 			new InterfaceAnalyzer(),
 			new TraitAnalyzer(),
 		];
@@ -32,5 +34,14 @@ class Analyzer
 		}
 
 		return $finalReport;
+	}
+
+	/**
+	 * @param array $args
+	 * @return void
+	 */
+	public function setArgs(array $args): void
+	{
+		$this->args = $args;
 	}
 }
