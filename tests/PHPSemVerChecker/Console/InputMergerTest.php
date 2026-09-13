@@ -20,7 +20,7 @@ class InputMergerTest extends TestCase
 		$config->set('full-path', true);
 
 		// Specify options and arguments for input
-		$input = new InspectableArgvInput([null, '--include-before', 'in-before cli', 'src-before cli']);
+		$input = new InspectableArgvInput(['php-semver-checker', '--include-before', 'in-before cli', 'src-before cli']);
 		$command = new CompareCommand();
 		$input->bind($command->getDefinition());
 		$this->assertEquals('in-before cli', $input->getOption('include-before'), 'Test setup: Could not prepare input arguments');

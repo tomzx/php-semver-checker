@@ -3,6 +3,9 @@
 This project follows [Semantic Versioning 2.0.0](http://semver.org/).
 
 ## <a name="unreleased"></a>Unreleased
+### Changed
+* Bumped minimum PHP version to ^8.2 to follow currently supported PHP versions
+* Removed PHP 8.1 from CI check
 
 ## <a name="v0.17.0"></a>v0.17.0 (2025-10-30)
 [Full Changelog](https://github.com/tomzx/php-semver-checker/compare/v0.16.0...v0.17.0)

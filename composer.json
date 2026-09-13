@@ -20,7 +20,7 @@
 		"issues": "https://github.com/tomzx/php-semver-checker/issues"
 	},
 	"require": {
-		"php": "^8.1",
+		"php": "^8.2",
 
 		"hassankhan/config": "^3.0",
 		"nikic/php-parser": "^5.2",
@@ -47,7 +47,7 @@
 	},
 	"config": {
 		"platform": {
-			"php": "8.1.0"
+			"php": "8.2.0"
 		}
 	},
 	"extra": {
