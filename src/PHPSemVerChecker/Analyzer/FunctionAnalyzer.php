@@ -18,6 +18,9 @@ use PHPSemVerChecker\Operation\FunctionParameterRemoved;
 use PHPSemVerChecker\Operation\FunctionParameterTypingAdded;
 use PHPSemVerChecker\Operation\FunctionParameterTypingRemoved;
 use PHPSemVerChecker\Operation\FunctionRemoved;
+use PHPSemVerChecker\Operation\FunctionReturnTypeAdded;
+use PHPSemVerChecker\Operation\FunctionReturnTypeChanged;
+use PHPSemVerChecker\Operation\FunctionReturnTypeRemoved;
 use PHPSemVerChecker\Registry\Registry;
 use PHPSemVerChecker\Report\Report;
 
@@ -87,6 +90,30 @@ class FunctionAnalyzer
 							$functionAfter
 						)
 					);
+				}
+
+				if ($functionBefore->returnType !== $functionAfter->returnType) {
+					print_r($functionBefore->returnType);
+					print_r($functionAfter->returnType);
+					$class = null;
+					if ($functionBefore->returnType !== null && $functionAfter->returnType === null) {
+						$class = FunctionReturnTypeAdded::class;
+					} elseif ($functionAfter->returnType !== null && $functionBefore->returnType === null) {
+						$class = FunctionReturnTypeRemoved::class;
+					} elseif (strcasecmp($functionAfter->returnType->name, $functionBefore->returnType->name) !== 0) {
+						$class = FunctionReturnTypeChanged::class;
+					}
+					if ($class) {
+						$report->add(
+							$this->context,
+							new $class(
+								$fileBefore,
+								$functionBefore,
+								$fileAfter,
+								$functionAfter
+							)
+						);
+					}
 				}
 
 				$signatureResult = Signature::analyze($functionBefore->getParams(), $functionAfter->getParams());

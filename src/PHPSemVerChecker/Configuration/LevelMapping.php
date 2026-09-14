@@ -136,6 +136,18 @@ class LevelMapping
 		'V158' => Level::PATCH,
 		'V159' => Level::PATCH,
 		'V160' => Level::PATCH,
+		'V161' => Level::PATCH,
+		'V162' => Level::PATCH,
+		'V163' => Level::PATCH,
+		'V164' => Level::PATCH,
+		'V165' => Level::PATCH,
+		'V166' => Level::PATCH,
+		'V167' => Level::PATCH,
+		'V168' => Level::PATCH,
+		'V169' => Level::PATCH,
+		'V170' => Level::PATCH,
+		'V171' => Level::PATCH,
+		'V172' => Level::PATCH,
 	];
 
 	/**

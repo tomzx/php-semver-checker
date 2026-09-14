@@ -66,7 +66,7 @@ class TraitAnalyzer
 			if ($traitBefore != $traitAfter) {
 				// Check for name case change.
 				// If we entered this section then the normalized names (lowercase) were equal.
-				if ($traitBefore->name !== $traitAfter->name) {
+				if ($traitBefore->name->toString() !== $traitAfter->name->toString()) {
 					$report->add(
 						$this->context,
 						new TraitCaseChanged(

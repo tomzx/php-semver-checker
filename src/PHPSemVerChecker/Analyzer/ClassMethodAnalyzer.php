@@ -19,6 +19,9 @@ use PHPSemVerChecker\Operation\ClassMethodParameterRemoved;
 use PHPSemVerChecker\Operation\ClassMethodParameterTypingAdded;
 use PHPSemVerChecker\Operation\ClassMethodParameterTypingRemoved;
 use PHPSemVerChecker\Operation\ClassMethodRemoved;
+use PHPSemVerChecker\Operation\ClassMethodReturnTypeAdded;
+use PHPSemVerChecker\Operation\ClassMethodReturnTypeChanged;
+use PHPSemVerChecker\Operation\ClassMethodReturnTypeRemoved;
 use PHPSemVerChecker\Report\Report;
 
 class ClassMethodAnalyzer
@@ -108,6 +111,31 @@ class ClassMethodAnalyzer
 							$methodAfter
 						)
 					);
+				}
+
+				if ($methodBefore->returnType !== $methodAfter->returnType) {
+					$class = null;
+					if ($methodBefore->returnType !== null && $methodAfter->returnType === null) {
+						$class = ClassMethodReturnTypeAdded::class;
+					} elseif ($methodAfter->returnType !== null && $methodBefore->returnType === null) {
+						$class = ClassMethodReturnTypeRemoved::class;
+					} elseif (strcasecmp($methodAfter->returnType->name, $methodBefore->returnType->name) !== 0) {
+						$class = ClassMethodReturnTypeChanged::class;
+					}
+					if ($class) {
+						$report->add(
+							$this->context,
+							new $class(
+								$this->context,
+								$this->fileBefore,
+								$contextAfter,
+								$methodBefore,
+								$this->fileAfter,
+								$contextAfter,
+								$methodAfter
+							)
+						);
+					}
 				}
 
 				$signatureResult = Signature::analyze($methodBefore->getParams(), $methodAfter->getParams());
