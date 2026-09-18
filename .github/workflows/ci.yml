@@ -29,6 +29,8 @@ jobs:
 
     - name: Install dependencies
       uses: nick-invision/retry@v2
+      env:
+          COMPOSER_AUTH: '{"github-oauth":{"github.com":"${{ secrets.COMPOSER_GITHUB_TOKEN }}"}}'
       with:
           timeout_minutes: 5
           max_attempts: 5
