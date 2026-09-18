@@ -24,28 +24,13 @@ use PHPSemVerChecker\Report\Report;
 class ClassMethodAnalyzer
 {
 	/**
-	 * @var string
-	 */
-	protected $context;
-	/**
-	 * @var null|string
-	 */
-	protected $fileBefore;
-	/**
-	 * @var null|string
-	 */
-	protected $fileAfter;
-
-	/**
 	 * @param string      $context
 	 * @param string|null $fileBefore
 	 * @param string|null $fileAfter
+	 * @param array<int,mixed> $args
 	 */
-	public function __construct(string $context, string $fileBefore = null, string $fileAfter = null)
+	public function __construct(protected string $context, protected ?string $fileBefore, protected ?string $fileAfter, protected array $args)
 	{
-		$this->context = $context;
-		$this->fileBefore = $fileBefore;
-		$this->fileAfter = $fileAfter;
 	}
 
 	/**
@@ -62,12 +47,28 @@ class ClassMethodAnalyzer
 
 		$methodsBeforeKeyed = [];
 		foreach ($methodsBefore as $method) {
-			$methodsBeforeKeyed[$method->name->toLowerString()] = $method;
+			if (!$this->args['apiOnly']) {
+				$methodsBeforeKeyed[$method->name->toLowerString()] = $method;
+				continue;
+			}
+			/** @var \PhpParser\Comment\Doc $comment */
+			$comment = $method->getDocComment();
+			if ($comment !== null && str_contains($comment->getText(),'@api')) {
+				$methodsBeforeKeyed[$method->name->toLowerString()] = $method;
+			}
 		}
 
 		$methodsAfterKeyed = [];
 		foreach ($methodsAfter as $method) {
-			$methodsAfterKeyed[$method->name->toLowerString()] = $method;
+			if (!$this->args['apiOnly']) {
+				$methodsAfterKeyed[$method->name->toLowerString()] = $method;
+				continue;
+			}
+			/** @var \PhpParser\Comment\Doc $comment */
+			$comment = $method->getDocComment();
+			if ($comment !== null && str_contains($comment->getText(),'@api')) {
+				$methodsAfterKeyed[$method->name->toLowerString()] = $method;
+			}
 		}
 
 		$methodNamesBefore = array_keys($methodsBeforeKeyed);
