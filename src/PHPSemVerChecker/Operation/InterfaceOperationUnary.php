@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace PHPSemVerChecker\Operation;
 
@@ -17,10 +18,10 @@ class InterfaceOperationUnary extends Operation
 	protected $interface;
 
 	/**
-	 * @param string                          $fileAfter
+	 * @param string|null                     $fileAfter
 	 * @param \PhpParser\Node\Stmt\Interface_ $interface
 	 */
-	public function __construct($fileAfter, Interface_ $interface)
+	public function __construct(?string $fileAfter, Interface_ $interface)
 	{
 		$this->file = $fileAfter;
 		$this->interface = $interface;
@@ -29,7 +30,7 @@ class InterfaceOperationUnary extends Operation
 	/**
 	 * @return string
 	 */
-	public function getLocation()
+	public function getLocation(): string
 	{
 		return $this->file;
 	}
@@ -37,7 +38,7 @@ class InterfaceOperationUnary extends Operation
 	/**
 	 * @return int
 	 */
-	public function getLine()
+	public function getLine(): int
 	{
 		return $this->interface->getLine();
 	}
@@ -45,7 +46,7 @@ class InterfaceOperationUnary extends Operation
 	/**
 	 * @return string
 	 */
-	public function getTarget()
+	public function getTarget(): string
 	{
 		return PInterface::getFullyQualifiedName($this->interface);
 	}

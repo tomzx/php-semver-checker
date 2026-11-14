@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace PHPSemVerChecker\Operation;
 
@@ -25,10 +26,12 @@ class InterfaceOperationDelta extends Operation
 	protected $interfaceAfter;
 
 	/**
-	 * @param string                          $fileAfter
-	 * @param \PhpParser\Node\Stmt\Interface_ $interface
+	 * @param string|null                     $fileBefore
+	 * @param \PhpParser\Node\Stmt\Interface_ $interfaceBefore
+	 * @param string|null                     $fileAfter
+	 * @param \PhpParser\Node\Stmt\Interface_ $interfaceAfter
 	 */
-	public function __construct($fileBefore, Interface_ $interfaceBefore, $fileAfter, Interface_ $interfaceAfter)
+	public function __construct(?string $fileBefore, Interface_ $interfaceBefore, ?string $fileAfter, Interface_ $interfaceAfter)
 	{
 		$this->fileBefore = $fileBefore;
 		$this->interfaceBefore = $interfaceBefore;
@@ -39,7 +42,7 @@ class InterfaceOperationDelta extends Operation
 	/**
 	 * @return string
 	 */
-	public function getLocation()
+	public function getLocation(): string
 	{
 		return $this->fileAfter;
 	}
@@ -47,7 +50,7 @@ class InterfaceOperationDelta extends Operation
 	/**
 	 * @return int
 	 */
-	public function getLine()
+	public function getLine(): int
 	{
 		return $this->interfaceAfter->getLine();
 	}
@@ -55,7 +58,7 @@ class InterfaceOperationDelta extends Operation
 	/**
 	 * @return string
 	 */
-	public function getTarget()
+	public function getTarget(): string
 	{
 		return PInterface::getFullyQualifiedName($this->interfaceAfter);
 	}

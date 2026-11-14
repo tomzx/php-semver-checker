@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace PHPSemVerChecker\Operation;
 
@@ -23,11 +24,11 @@ class PropertyOperationUnary extends PropertyOperation
 
 	/**
 	 * @param string                        $context
-	 * @param string                        $file
-	 * @param \PhpParser\Node\Stmt          $propertyContex
+	 * @param string|null                   $file
+	 * @param \PhpParser\Node\Stmt          $propertyContext
 	 * @param \PhpParser\Node\Stmt\Property $property
 	 */
-	public function __construct($context, $file, Stmt $propertyContext, Property $property)
+	public function __construct(string $context, ?string $file, Stmt $propertyContext, Property $property)
 	{
 		$this->context = $context;
 		$this->visibility = $this->getVisibility($property);
@@ -39,7 +40,7 @@ class PropertyOperationUnary extends PropertyOperation
 	/**
 	 * @return string
 	 */
-	public function getLocation()
+	public function getLocation(): string
 	{
 		return $this->file;
 	}
@@ -47,7 +48,7 @@ class PropertyOperationUnary extends PropertyOperation
 	/**
 	 * @return int
 	 */
-	public function getLine()
+	public function getLine(): int
 	{
 		return $this->property->getLine();
 	}
@@ -55,7 +56,7 @@ class PropertyOperationUnary extends PropertyOperation
 	/**
 	 * @return string
 	 */
-	public function getTarget()
+	public function getTarget(): string
 	{
 		return PProperty::getFullyQualifiedName($this->propertyContext, $this->property);
 	}

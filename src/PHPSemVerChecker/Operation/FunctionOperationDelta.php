@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace PHPSemVerChecker\Operation;
 
@@ -25,12 +26,12 @@ abstract class FunctionOperationDelta extends Operation
 	protected $functionAfter;
 
 	/**
-	 * @param string                         $fileBefore
+	 * @param string|null                    $fileBefore
 	 * @param \PhpParser\Node\Stmt\Function_ $functionBefore
-	 * @param string                         $fileAfter
+	 * @param string|null                    $fileAfter
 	 * @param \PhpParser\Node\Stmt\Function_ $functionAfter
 	 */
-	public function __construct($fileBefore, Function_ $functionBefore, $fileAfter, Function_ $functionAfter)
+	public function __construct(?string $fileBefore, Function_ $functionBefore, ?string $fileAfter, Function_ $functionAfter)
 	{
 		$this->fileBefore = $fileBefore;
 		$this->functionBefore = $functionBefore;
@@ -41,7 +42,7 @@ abstract class FunctionOperationDelta extends Operation
 	/**
 	 * @return string
 	 */
-	public function getLocation()
+	public function getLocation(): string
 	{
 		return $this->fileBefore;
 	}
@@ -49,7 +50,7 @@ abstract class FunctionOperationDelta extends Operation
 	/**
 	 * @return int
 	 */
-	public function getLine()
+	public function getLine(): int
 	{
 		return $this->functionAfter->getLine();
 	}
@@ -57,7 +58,7 @@ abstract class FunctionOperationDelta extends Operation
 	/**
 	 * @return string
 	 */
-	public function getTarget()
+	public function getTarget(): string
 	{
 		return PFunction::getFullyQualifiedName($this->functionAfter);
 	}

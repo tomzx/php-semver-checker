@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace PHPSemVerChecker\Reporter;
 
@@ -36,7 +37,7 @@ class Reporter
 	 * @param bool $fullPath
 	 * @return $this
 	 */
-	public function setFullPath($fullPath)
+	public function setFullPath(bool $fullPath): Reporter
 	{
 		$this->fullPath = $fullPath;
 
@@ -70,7 +71,7 @@ class Reporter
 	 * @param \PHPSemVerChecker\Report\Report                   $report
 	 * @param string                                            $context
 	 */
-	protected function outputReport(OutputInterface $output, Report $report, $context)
+	protected function outputReport(OutputInterface $output, Report $report, string $context)
 	{
 		if ( ! $report->hasDifferences($context)) {
 			return;
@@ -86,7 +87,7 @@ class Reporter
 	 * @param \PHPSemVerChecker\Report\Report                   $report
 	 * @param string                                            $context
 	 */
-	protected function outputTable(OutputInterface $output, Report $report, $context)
+	protected function outputTable(OutputInterface $output, Report $report, string $context)
 	{
 		$table = new Table($output);
 		$table->setHeaders(['Level', 'Location', 'Target', 'Reason', 'Code']);
@@ -104,7 +105,7 @@ class Reporter
 	 * @param \PHPSemVerChecker\Operation\Operation $operation
 	 * @return string
 	 */
-	protected function getLocation(Operation $operation)
+	protected function getLocation(Operation $operation): string
 	{
 		$isFullPath = $this->fullPath;
 		if ($isFullPath) {

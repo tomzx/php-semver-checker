@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace PHPSemVerChecker\Analyzer;
 
@@ -24,11 +25,11 @@ class PropertyAnalyzer
 	protected $fileAfter;
 
 	/**
-	 * @param string $context
-	 * @param string $fileBefore
-	 * @param string $fileAfter
+	 * @param string      $context
+	 * @param string|null $fileBefore
+	 * @param string|null $fileAfter
 	 */
-	public function __construct($context, $fileBefore = null, $fileAfter = null)
+	public function __construct(string $context, string $fileBefore = null, string $fileAfter = null)
 	{
 		$this->context = $context;
 		$this->fileBefore = $fileBefore;
@@ -40,7 +41,7 @@ class PropertyAnalyzer
 	 * @param \PhpParser\Node\Stmt $contextAfter
 	 * @return \PHPSemVerChecker\Report\Report
 	 */
-	public function analyze(Stmt $contextBefore, Stmt $contextAfter)
+	public function analyze(Stmt $contextBefore, Stmt $contextAfter): Report
 	{
 		$report = new Report();
 
@@ -82,7 +83,7 @@ class PropertyAnalyzer
 	 * @param \PhpParser\Node\Stmt $context
 	 * @return array
 	 */
-	protected function getProperties(Stmt $context)
+	protected function getProperties(Stmt $context): array
 	{
 		$properties = [];
 		foreach ($context->stmts as $stmt) {
@@ -97,7 +98,7 @@ class PropertyAnalyzer
 	 * @param \PhpParser\Node\Stmt\Property $property
 	 * @return string
 	 */
-	protected function getName(Property $property)
+	protected function getName(Property $property): string
 	{
 		return $property->props[0]->name->toString();
 	}

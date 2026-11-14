@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace PHPSemVerChecker\Operation;
 
@@ -18,7 +19,7 @@ abstract class PropertyOperation extends Operation
 	/**
 	 * @return string
 	 */
-	public function getCode()
+	public function getCode(): string
 	{
 		return $this->code[$this->context][Visibility::get($this->visibility)];
 	}
@@ -26,7 +27,7 @@ abstract class PropertyOperation extends Operation
 	/**
 	 * @return string
 	 */
-	public function getReason()
+	public function getReason(): string
 	{
 		return '[' . Visibility::toString($this->visibility) . '] ' . $this->reason;
 	}
@@ -35,7 +36,7 @@ abstract class PropertyOperation extends Operation
 	 * @param \PhpParser\Node\Stmt $context
 	 * @return int
 	 */
-	protected function getVisibility(Stmt $context)
+	protected function getVisibility(Stmt $context): int
 	{
 		return Visibility::getForContext($context);
 	}

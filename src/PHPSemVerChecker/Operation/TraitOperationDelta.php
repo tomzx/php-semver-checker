@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace PHPSemVerChecker\Operation;
 
@@ -35,7 +36,7 @@ class TraitOperationDelta extends Operation
 	/**
 	 * @return string
 	 */
-	public function getLocation()
+	public function getLocation(): string
 	{
 		return $this->fileAfter;
 	}
@@ -43,7 +44,7 @@ class TraitOperationDelta extends Operation
 	/**
 	 * @return int
 	 */
-	public function getLine()
+	public function getLine(): int
 	{
 		return $this->traitAfter->getLine();
 	}
@@ -51,7 +52,7 @@ class TraitOperationDelta extends Operation
 	/**
 	 * @return string
 	 */
-	public function getTarget()
+	public function getTarget(): string
 	{
 		return PTrait::getFullyQualifiedName($this->traitAfter);
 	}

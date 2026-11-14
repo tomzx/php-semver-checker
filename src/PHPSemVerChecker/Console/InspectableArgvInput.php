@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace PHPSemVerChecker\Console;
 
@@ -13,7 +14,7 @@ class InspectableArgvInput extends ArgvInput
 	 *
 	 * @return bool true if the argument is set (not a default value)
 	 */
-	public function hasArgumentSet($name)
+	public function hasArgumentSet(string $name): bool
 	{
 		return isset($this->arguments[$name]);
 	}
@@ -25,7 +26,7 @@ class InspectableArgvInput extends ArgvInput
 	 *
 	 * @return bool true if the option is set (not a default value)
 	 */
-	public function hasOptionSet($name)
+	public function hasOptionSet(string $name): bool
 	{
 		return isset($this->options[$name]);
 	}

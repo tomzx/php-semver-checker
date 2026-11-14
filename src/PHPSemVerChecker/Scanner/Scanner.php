@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace PHPSemVerChecker\Scanner;
 
@@ -31,7 +32,7 @@ class Scanner
 	public function __construct()
 	{
 		$this->registry = new Registry();
-		$this->parser = (new ParserFactory())->create(ParserFactory::PREFER_PHP7);
+		$this->parser = (new ParserFactory())->createForNewestSupportedVersion();
 		$this->traverser = new NodeTraverser();
 
 		$visitors = [
@@ -50,7 +51,7 @@ class Scanner
 	/**
 	 * @param string $file
 	 */
-	public function scan($file)
+	public function scan(string $file)
 	{
 		// Set the current file used by the registry so that we can tell where the change was scanned.
 		$this->registry->setCurrentFile($file);
@@ -68,7 +69,7 @@ class Scanner
 	/**
 	 * @return \PHPSemVerChecker\Registry\Registry
 	 */
-	public function getRegistry()
+	public function getRegistry(): Registry
 	{
 		return $this->registry;
 	}

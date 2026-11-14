@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace PHPSemVerChecker\Operation;
 
@@ -31,11 +32,11 @@ abstract class ClassMethodOperationUnary extends Operation
 
 	/**
 	 * @param string                           $context
-	 * @param string                           $file
+	 * @param string|null                      $file
 	 * @param \PhpParser\Node\Stmt             $contextValue
 	 * @param \PhpParser\Node\Stmt\ClassMethod $classMethod
 	 */
-	public function __construct($context, $file, Stmt $contextValue, ClassMethod $classMethod)
+	public function __construct(string $context, ?string $file, Stmt $contextValue, ClassMethod $classMethod)
 	{
 		$this->context = $context;
 		$this->visibility = $this->getVisibility($classMethod);
@@ -47,7 +48,7 @@ abstract class ClassMethodOperationUnary extends Operation
 	/**
 	 * @return string
 	 */
-	public function getLocation()
+	public function getLocation(): string
 	{
 		return $this->file;
 	}
@@ -55,7 +56,7 @@ abstract class ClassMethodOperationUnary extends Operation
 	/**
 	 * @return int
 	 */
-	public function getLine()
+	public function getLine(): int
 	{
 		return $this->classMethod->getLine();
 	}
@@ -63,7 +64,7 @@ abstract class ClassMethodOperationUnary extends Operation
 	/**
 	 * @return string
 	 */
-	public function getTarget()
+	public function getTarget(): string
 	{
 		return PClassMethod::getFullyQualifiedName($this->contextValue, $this->classMethod);
 	}
@@ -71,7 +72,7 @@ abstract class ClassMethodOperationUnary extends Operation
 	/**
 	 * @return string
 	 */
-	public function getCode()
+	public function getCode(): string
 	{
 		return $this->code[$this->context][Visibility::get($this->visibility)];
 	}
@@ -79,7 +80,7 @@ abstract class ClassMethodOperationUnary extends Operation
 	/**
 	 * @return string
 	 */
-	public function getReason()
+	public function getReason(): string
 	{
 		return '[' . Visibility::toString($this->visibility) . '] ' . $this->reason;
 	}
@@ -88,7 +89,7 @@ abstract class ClassMethodOperationUnary extends Operation
 	 * @param mixed $context
 	 * @return int
 	 */
-	protected function getVisibility($context)
+	protected function getVisibility($context): int
 	{
 		return Visibility::getForContext($context);
 	}

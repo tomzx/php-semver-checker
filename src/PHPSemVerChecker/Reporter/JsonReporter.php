@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace PHPSemVerChecker\Reporter;
 
@@ -26,7 +27,7 @@ class JsonReporter
 	 * @param string                               $path
 	 * @param \PHPSemVerChecker\Wrapper\Filesystem $filesystem
 	 */
-	public function __construct(Report $report, $path, Filesystem $filesystem = null)
+	public function __construct(Report $report, string $path, Filesystem $filesystem = null)
 	{
 		$this->report = $report;
 		$this->path = $path;
@@ -36,7 +37,7 @@ class JsonReporter
 	/**
 	 * @return array
 	 */
-	public function getOutput()
+	public function getOutput(): array
 	{
 		$output = [];
 		$output['level'] = Level::toString($this->report->getSuggestedLevel());

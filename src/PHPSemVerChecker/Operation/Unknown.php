@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace PHPSemVerChecker\Operation;
 
@@ -22,10 +23,10 @@ class Unknown extends Operation
 	protected $fileAfter;
 
 	/**
-	 * @param string $fileBefore
-	 * @param string $fileAfter
+	 * @param string|null $fileBefore
+	 * @param string|null $fileAfter
 	 */
-	public function __construct($fileBefore = null, $fileAfter = null)
+	public function __construct(string $fileBefore = null, string $fileAfter = null)
 	{
 		$this->fileBefore = $fileBefore;
 		$this->fileAfter = $fileAfter;
@@ -34,7 +35,7 @@ class Unknown extends Operation
 	/**
 	 * @return string
 	 */
-	public function getLocation()
+	public function getLocation(): string
 	{
 		return $this->fileBefore . ' ' . $this->fileAfter;
 	}
@@ -42,7 +43,7 @@ class Unknown extends Operation
 	/**
 	 * @return int
 	 */
-	public function getLine()
+	public function getLine(): int
 	{
 		return 0;
 	}

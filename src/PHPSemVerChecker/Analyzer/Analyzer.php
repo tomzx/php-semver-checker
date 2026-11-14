@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace PHPSemVerChecker\Analyzer;
 
@@ -14,7 +15,7 @@ class Analyzer
 	 * @param \PHPSemVerChecker\Registry\Registry $registryAfter
 	 * @return \PHPSemVerChecker\Report\Report
 	 */
-	public function analyze(Registry $registryBefore, Registry $registryAfter)
+	public function analyze(Registry $registryBefore, Registry $registryAfter): Report
 	{
 		$finalReport = new Report();
 

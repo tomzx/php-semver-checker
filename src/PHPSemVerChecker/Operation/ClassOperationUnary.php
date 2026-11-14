@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace PHPSemVerChecker\Operation;
 
@@ -17,10 +18,10 @@ class ClassOperationUnary extends Operation
 	protected $class;
 
 	/**
-	 * @param string                      $file
+	 * @param string|null                 $file
 	 * @param \PhpParser\Node\Stmt\Class_ $class
 	 */
-	public function __construct($file, Class_ $class)
+	public function __construct(?string $file, Class_ $class)
 	{
 		$this->file = $file;
 		$this->class = $class;
@@ -29,7 +30,7 @@ class ClassOperationUnary extends Operation
 	/**
 	 * @return string
 	 */
-	public function getLocation()
+	public function getLocation(): string
 	{
 		return $this->file;
 	}
@@ -37,7 +38,7 @@ class ClassOperationUnary extends Operation
 	/**
 	 * @return int
 	 */
-	public function getLine()
+	public function getLine(): int
 	{
 		return $this->class->getLine();
 	}
@@ -45,7 +46,7 @@ class ClassOperationUnary extends Operation
 	/**
 	 * @return string
 	 */
-	public function getTarget()
+	public function getTarget(): string
 	{
 		return PClass::getFullyQualifiedName($this->class);
 	}

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace PHPSemVerChecker\Console\Command;
 
@@ -41,7 +42,7 @@ class CompareCommand extends BaseCommand
 	 * @param \Symfony\Component\Console\Input\InputInterface   $input
 	 * @param \Symfony\Component\Console\Output\OutputInterface $output
 	 */
-	protected function execute(InputInterface $input, OutputInterface $output)
+	protected function execute(InputInterface $input, OutputInterface $output): int
 	{
 		$startTime = microtime(true);
 
@@ -75,7 +76,7 @@ class CompareCommand extends BaseCommand
 		$report = $analyzer->analyze($registryBefore, $registryAfter);
 
 		$reporter = new Reporter($report);
-		$reporter->setFullPath($this->config->get('full-path'));
+		$reporter->setFullPath((bool)$this->config->get('full-path'));
 		$reporter->output($output);
 
 		$toJson = $this->config->get('to-json');

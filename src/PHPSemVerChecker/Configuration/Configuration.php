@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace PHPSemVerChecker\Configuration;
 
@@ -31,7 +32,7 @@ class Configuration
 	 * @return \PHPSemVerChecker\Configuration\Configuration
 	 * @throws \Noodlehaus\Exception\EmptyDirectoryException
 	 */
-	public static function fromFile($file)
+	public static function fromFile($file): Configuration
 	{
 		return new Configuration($file);
 	}
@@ -41,7 +42,7 @@ class Configuration
 	 * @return \PHPSemVerChecker\Configuration\Configuration
 	 * @throws \Noodlehaus\Exception\EmptyDirectoryException
 	 */
-	public static function defaults($name)
+	public static function defaults(string $name): Configuration
 	{
 		return self::fromFile(['?' . $name . '.yml.dist', '?' . $name . '.yml']);
 	}
@@ -60,28 +61,28 @@ class Configuration
 	/**
 	 * @return array
 	 */
-	public function getLevelMapping()
+	public function getLevelMapping(): array
 	{
 		return $this->mapping;
 	}
 
 	/**
-	 * @see \Noodlehaus\Config::get
 	 * @param string     $key
 	 * @param mixed|null $default
 	 * @return array|mixed|null
+	 *@see \Noodlehaus\Config::get
 	 */
-	public function get($key, $default = null)
+	public function get(string $key, $default = null)
 	{
 		return $this->config->get($key, $default);
 	}
 
 	/**
-	 * @see \Noodlehaus\Config::set
 	 * @param string $key
 	 * @param mixed  $value
+		  *@see \Noodlehaus\Config::set
 	 */
-	public function set($key, $value)
+	public function set(string $key, $value)
 	{
 		$this->config->set($key, $value);
 	}
@@ -93,7 +94,7 @@ class Configuration
 	 *
 	 * @param array $data
 	 */
-	public function merge($data)
+	public function merge(array $data)
 	{
 		foreach ($data as $key => $value) {
 			$this->set($key, $value);

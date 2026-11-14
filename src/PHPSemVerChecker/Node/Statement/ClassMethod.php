@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace PHPSemVerChecker\Node\Statement;
 
@@ -12,7 +13,7 @@ class ClassMethod
 	 * @param \PhpParser\Node\Stmt\ClassMethod $classMethod
 	 * @return string
 	 */
-	public static function getFullyQualifiedName(Stmt $context, BaseClassMethod $classMethod)
+	public static function getFullyQualifiedName(Stmt $context, BaseClassMethod $classMethod): string
 	{
 		$namespace = $context->name->toString();
 		if (isset($context->namespacedName)) {

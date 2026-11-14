@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace PHPSemVerChecker\Comparator;
 
@@ -9,7 +10,7 @@ class Signature
 	 * @param array $parametersB
 	 * @return array
 	 */
-	public static function analyze(array $parametersA, array $parametersB)
+	public static function analyze(array $parametersA, array $parametersB): array
 	{
 		$changes = [
 			'parameter_added'                 => false,

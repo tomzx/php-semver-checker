@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace PHPSemVerChecker\Registry;
 
@@ -78,7 +79,7 @@ class Registry
 	 * @param string $context
 	 * @param Stmt   $node
 	 */
-	protected function addNode($context, Stmt $node)
+	protected function addNode(string $context, Stmt $node)
 	{
 		$fullyQualifiedName = $this->fullyQualifiedName($node);
 		$this->data[$context][$fullyQualifiedName] = $node;
@@ -89,7 +90,7 @@ class Registry
 	 * @param Stmt $node
 	 * @return string
 	 */
-	protected function fullyQualifiedName(Stmt $node)
+	protected function fullyQualifiedName(Stmt $node): string
 	{
 		return isset($node->namespacedName) ? $node->namespacedName->toString() : $node->name->toString();
 	}
@@ -97,15 +98,15 @@ class Registry
 	/**
 	 * @param string $file
 	 */
-	public function setCurrentFile($file)
+	public function setCurrentFile(string $file)
 	{
 		$this->currentFile = realpath($file);
 	}
 
 	/**
-	 * @return string
+	 * @return string|null
 	 */
-	public function getCurrentFile()
+	public function getCurrentFile(): ?string
 	{
 		return $this->currentFile;
 	}

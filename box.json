@@ -1,7 +1,7 @@
 {
     "alias": "php-semver-checker.phar",
-    "compactors": ["Herrera\\Box\\Compactor\\Php"],
-    "compression": "GZ",
+    "compactors": ["KevinGH\\Box\\Compactor\\Php"],
+    "compression": "BZ2",
     "directories": ["src"],
     "files": ["LICENSE"],
     "finder": [
@@ -11,7 +11,7 @@
             "in": "vendor"
         }
     ],
-    "git-version": "package_version",
+    "git-tag": "package_version",
     "main": "bin/php-semver-checker",
     "output": "php-semver-checker.phar",
     "stub": true

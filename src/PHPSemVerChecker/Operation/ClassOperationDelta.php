@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace PHPSemVerChecker\Operation;
 
@@ -39,7 +40,7 @@ class ClassOperationDelta extends Operation
 	/**
 	 * @return string
 	 */
-	public function getLocation()
+	public function getLocation(): string
 	{
 		return $this->fileAfter;
 	}
@@ -47,7 +48,7 @@ class ClassOperationDelta extends Operation
 	/**
 	 * @return int
 	 */
-	public function getLine()
+	public function getLine(): int
 	{
 		return $this->classAfter->getLine();
 	}
@@ -55,7 +56,7 @@ class ClassOperationDelta extends Operation
 	/**
 	 * @return string
 	 */
-	public function getTarget()
+	public function getTarget(): string
 	{
 		return PClass::getFullyQualifiedName($this->classAfter);
 	}

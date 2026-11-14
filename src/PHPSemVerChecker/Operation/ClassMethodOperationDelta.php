@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace PHPSemVerChecker\Operation;
 
@@ -43,19 +44,19 @@ abstract class ClassMethodOperationDelta extends Operation
 
 	/**
 	 * @param string                           $context
-	 * @param string                           $fileBefore
+	 * @param string|null                      $fileBefore
 	 * @param \PhpParser\Node\Stmt             $contextBefore
 	 * @param \PhpParser\Node\Stmt\ClassMethod $classMethodBefore
-	 * @param string                           $fileAfter
+	 * @param string|null                      $fileAfter
 	 * @param \PhpParser\Node\Stmt             $contextAfter
 	 * @param \PhpParser\Node\Stmt\ClassMethod $classMethodAfter
 	 */
-	public function __construct($context,
-								$fileBefore,
-								Stmt $contextBefore,
+	public function __construct(string      $context,
+								?string      $fileBefore,
+								Stmt        $contextBefore,
 								ClassMethod $classMethodBefore,
-								$fileAfter,
-								Stmt $contextAfter,
+								?string      $fileAfter,
+								Stmt        $contextAfter,
 								ClassMethod $classMethodAfter)
 	{
 		$this->context = $context;
@@ -71,7 +72,7 @@ abstract class ClassMethodOperationDelta extends Operation
 	/**
 	 * @return string
 	 */
-	public function getLocation()
+	public function getLocation(): string
 	{
 		return $this->fileAfter;
 	}
@@ -79,7 +80,7 @@ abstract class ClassMethodOperationDelta extends Operation
 	/**
 	 * @return int
 	 */
-	public function getLine()
+	public function getLine(): int
 	{
 		return $this->classMethodAfter->getLine();
 	}
@@ -87,7 +88,7 @@ abstract class ClassMethodOperationDelta extends Operation
 	/**
 	 * @return string
 	 */
-	public function getTarget()
+	public function getTarget(): string
 	{
 		return PClassMethod::getFullyQualifiedName($this->contextAfter, $this->classMethodAfter);
 	}
@@ -95,7 +96,7 @@ abstract class ClassMethodOperationDelta extends Operation
 	/**
 	 * @return string
 	 */
-	public function getCode()
+	public function getCode(): string
 	{
 		return $this->code[$this->context][Visibility::get($this->visibility)];
 	}
@@ -103,7 +104,7 @@ abstract class ClassMethodOperationDelta extends Operation
 	/**
 	 * @return string
 	 */
-	public function getReason()
+	public function getReason(): string
 	{
 		return '[' . Visibility::toString($this->visibility) . '] ' . $this->reason;
 	}
@@ -112,7 +113,7 @@ abstract class ClassMethodOperationDelta extends Operation
 	 * @param mixed $context
 	 * @return int
 	 */
-	protected function getVisibility($context)
+	protected function getVisibility($context): int
 	{
 		return Visibility::getForContext($context);
 	}
